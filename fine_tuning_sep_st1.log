@@ -1,0 +1,139 @@
+Validation loss decreased (inf --> 0.215279).  Saving model ...
+Validation loss decreased (0.215279 --> 0.202866).  Saving model ...
+EarlyStopping counter: 1 out of 3
+Validation loss decreased (0.202866 --> 0.200779).  Saving model ...
+EarlyStopping counter: 1 out of 3
+Validation loss decreased (0.200779 --> 0.199792).  Saving model ...
+Validation loss decreased (0.199792 --> 0.197986).  Saving model ...
+EarlyStopping counter: 1 out of 3
+EarlyStopping counter: 2 out of 3
+EarlyStopping counter: 3 out of 3
+hour2
+pred_len:96
+total_test_loss__:0.27689746022224426
+total_test_loss_s:0.1501774936914444
+total_test_loss_t:0.10736966878175735
+hour2
+multidec_mae
+pred_len:96
+backbone:vanilla
+random_init:True
+frozen_num:0
+mask_size:1
+mask_rate:0.25
+mask_num:3
+window_size:169
+is_decomp:True
+is_norm:True
+CI:True
+d_model:16
+encoder_depth:2
+part:s
+t_model:Linear
+avg_val_loss:0.27689746022224426
+model=multidec_mae enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=ETTh2 input_len=720 pred_len=96 mask_size=1 lr=0.0001
+ avg_val_loss:0.27689746022224426
+Validation loss decreased (inf --> 0.270131).  Saving model ...
+Validation loss decreased (0.270131 --> 0.268396).  Saving model ...
+Validation loss decreased (0.268396 --> 0.263949).  Saving model ...
+EarlyStopping counter: 1 out of 3
+Validation loss decreased (0.263949 --> 0.261557).  Saving model ...
+EarlyStopping counter: 1 out of 3
+EarlyStopping counter: 2 out of 3
+EarlyStopping counter: 3 out of 3
+hour2
+pred_len:192
+total_test_loss__:0.3391108810901642
+total_test_loss_s:0.16378960013389587
+total_test_loss_t:0.15409912168979645
+hour2
+multidec_mae
+pred_len:192
+backbone:vanilla
+random_init:True
+frozen_num:0
+mask_size:1
+mask_rate:0.25
+mask_num:3
+window_size:169
+is_decomp:True
+is_norm:True
+CI:True
+d_model:16
+encoder_depth:2
+part:s
+t_model:Linear
+avg_val_loss:0.3391108810901642
+model=multidec_mae enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=ETTh2 input_len=720 pred_len=192 mask_size=1 lr=0.0001
+ avg_val_loss:0.3391108810901642
+Validation loss decreased (inf --> 0.356221).  Saving model ...
+EarlyStopping counter: 1 out of 3
+EarlyStopping counter: 2 out of 3
+Validation loss decreased (0.356221 --> 0.349373).  Saving model ...
+EarlyStopping counter: 1 out of 3
+EarlyStopping counter: 2 out of 3
+EarlyStopping counter: 3 out of 3
+hour2
+pred_len:336
+total_test_loss__:0.3642879128456116
+total_test_loss_s:0.16926705837249756
+total_test_loss_t:0.17269213497638702
+hour2
+multidec_mae
+pred_len:336
+backbone:vanilla
+random_init:True
+frozen_num:0
+mask_size:1
+mask_rate:0.25
+mask_num:3
+window_size:169
+is_decomp:True
+is_norm:True
+CI:True
+d_model:16
+encoder_depth:2
+part:s
+t_model:Linear
+avg_val_loss:0.3642879128456116
+model=multidec_mae enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=ETTh2 input_len=720 pred_len=336 mask_size=1 lr=0.0001
+ avg_val_loss:0.3642879128456116
+Validation loss decreased (inf --> 0.625536).  Saving model ...
+Validation loss decreased (0.625536 --> 0.616284).  Saving model ...
+Validation loss decreased (0.616284 --> 0.614535).  Saving model ...
+Validation loss decreased (0.614535 --> 0.605757).  Saving model ...
+Validation loss decreased (0.605757 --> 0.603981).  Saving model ...
+EarlyStopping counter: 1 out of 3
+Validation loss decreased (0.603981 --> 0.602700).  Saving model ...
+EarlyStopping counter: 1 out of 3
+EarlyStopping counter: 2 out of 3
+EarlyStopping counter: 3 out of 3
+hour2
+pred_len:720
+total_test_loss__:0.3830414116382599
+total_test_loss_s:0.1749282032251358
+total_test_loss_t:0.18972106277942657
+hour2
+multidec_mae
+pred_len:720
+backbone:vanilla
+random_init:True
+frozen_num:0
+mask_size:1
+mask_rate:0.25
+mask_num:3
+window_size:169
+is_decomp:True
+is_norm:True
+CI:True
+d_model:16
+encoder_depth:2
+part:s
+t_model:Linear
+avg_val_loss:0.3830414116382599
+model=multidec_mae enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=ETTh2 input_len=720 pred_len=720 mask_size=1 lr=0.0001
+ avg_val_loss:0.3830414116382599
+pred_len:96 avg_val_loss:0.27689746022224426
+pred_len:192 avg_val_loss:0.3391108810901642
+pred_len:336 avg_val_loss:0.3642879128456116
+pred_len:720 avg_val_loss:0.3830414116382599

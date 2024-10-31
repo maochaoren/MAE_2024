@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/data1/home/xurui/MAE/model_test.py", line 94, in <module>
+    ft_model=torch.load(path)
+  File "/data1/home/xurui/anaconda3/envs/python3/lib/python3.9/site-packages/torch/serialization.py", line 791, in load
+    with _open_file_like(f, 'rb') as opened_file:
+  File "/data1/home/xurui/anaconda3/envs/python3/lib/python3.9/site-packages/torch/serialization.py", line 271, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+  File "/data1/home/xurui/anaconda3/envs/python3/lib/python3.9/site-packages/torch/serialization.py", line 252, in __init__
+    super().__init__(open(name, mode))
+FileNotFoundError: [Errno 2] No such file or directory: 'fine_tuning_distangle_mae/ft_ETTh1_168_96_True_0.25_0.75.pt'

@@ -1,0 +1,177 @@
+total_train_loss:0.27182042598724365
+Validation loss decreased (inf --> 0.135824).  Saving model ...
+total_train_loss:0.23877198994159698
+Validation loss decreased (0.135824 --> 0.131979).  Saving model ...
+total_train_loss:0.2295757383108139
+Validation loss decreased (0.131979 --> 0.124226).  Saving model ...
+total_train_loss:0.22333896160125732
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.21885889768600464
+EarlyStopping counter: 2 out of 3
+total_train_loss:0.21482700109481812
+EarlyStopping counter: 3 out of 3
+test_loss:0.17281609773635864
+test_loss_s:0.0
+test_loss_t:0.0
+min2
+SimMTM
+pred_len:96
+backbone:vanilla
+random_init:True
+frozen_num:0
+mask_size:336
+mask_rate:0.25
+mask_num:3
+decomp:fft
+st_sep:3.5
+topk:25
+lpf:0
+is_decomp:True
+is_norm:True
+CI:True
+d_model:16
+encoder_depth:2
+part:s
+t_model:Linear
+avg_val_loss:0.17281609773635864
+model=SimMTM enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=ETTm2 input_len=336 pred_len=96 mask_size=336 lr=0.0001
+ avg_val_loss:0.17281609773635864
+total_train_loss:0.3544086813926697
+Validation loss decreased (inf --> 0.179091).  Saving model ...
+total_train_loss:0.31724774837493896
+Validation loss decreased (0.179091 --> 0.170931).  Saving model ...
+total_train_loss:0.3077186644077301
+Validation loss decreased (0.170931 --> 0.166956).  Saving model ...
+total_train_loss:0.3003757894039154
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.294808030128479
+Validation loss decreased (0.166956 --> 0.165607).  Saving model ...
+total_train_loss:0.2897385358810425
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.2854861915111542
+EarlyStopping counter: 2 out of 3
+total_train_loss:0.2818126678466797
+Validation loss decreased (0.165607 --> 0.164155).  Saving model ...
+total_train_loss:0.27850306034088135
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.2751908302307129
+EarlyStopping counter: 2 out of 3
+total_train_loss:0.2723107933998108
+Validation loss decreased (0.164155 --> 0.162625).  Saving model ...
+total_train_loss:0.27022016048431396
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.26782745122909546
+EarlyStopping counter: 2 out of 3
+total_train_loss:0.2666817307472229
+Validation loss decreased (0.162625 --> 0.161399).  Saving model ...
+total_train_loss:0.2649984061717987
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.2635411322116852
+EarlyStopping counter: 2 out of 3
+total_train_loss:0.2624374032020569
+EarlyStopping counter: 3 out of 3
+test_loss:0.22603042423725128
+test_loss_s:0.0
+test_loss_t:0.0
+min2
+SimMTM
+pred_len:192
+backbone:vanilla
+random_init:True
+frozen_num:0
+mask_size:336
+mask_rate:0.25
+mask_num:3
+decomp:fft
+st_sep:3.5
+topk:25
+lpf:0
+is_decomp:True
+is_norm:True
+CI:True
+d_model:16
+encoder_depth:2
+part:s
+t_model:Linear
+avg_val_loss:0.22603042423725128
+model=SimMTM enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=ETTm2 input_len=336 pred_len=192 mask_size=336 lr=0.0001
+ avg_val_loss:0.22603042423725128
+total_train_loss:0.43937137722969055
+Validation loss decreased (inf --> 0.215312).  Saving model ...
+total_train_loss:0.4021260440349579
+Validation loss decreased (0.215312 --> 0.214067).  Saving model ...
+total_train_loss:0.38615089654922485
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.37417933344841003
+EarlyStopping counter: 2 out of 3
+total_train_loss:0.3629831075668335
+EarlyStopping counter: 3 out of 3
+test_loss:0.2937491536140442
+test_loss_s:0.0
+test_loss_t:0.0
+min2
+SimMTM
+pred_len:336
+backbone:vanilla
+random_init:True
+frozen_num:0
+mask_size:336
+mask_rate:0.25
+mask_num:3
+decomp:fft
+st_sep:3.5
+topk:25
+lpf:0
+is_decomp:True
+is_norm:True
+CI:True
+d_model:16
+encoder_depth:2
+part:s
+t_model:Linear
+avg_val_loss:0.2937491536140442
+model=SimMTM enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=ETTm2 input_len=336 pred_len=336 mask_size=336 lr=0.0001
+ avg_val_loss:0.2937491536140442
+total_train_loss:0.5579438805580139
+Validation loss decreased (inf --> 0.286352).  Saving model ...
+total_train_loss:0.5209561586380005
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.5104616284370422
+Validation loss decreased (0.286352 --> 0.272016).  Saving model ...
+total_train_loss:0.4982336461544037
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.49120256304740906
+EarlyStopping counter: 2 out of 3
+total_train_loss:0.4854423701763153
+EarlyStopping counter: 3 out of 3
+test_loss:0.383723646402359
+test_loss_s:0.0
+test_loss_t:0.0
+min2
+SimMTM
+pred_len:720
+backbone:vanilla
+random_init:True
+frozen_num:0
+mask_size:336
+mask_rate:0.25
+mask_num:3
+decomp:fft
+st_sep:3.5
+topk:25
+lpf:0
+is_decomp:True
+is_norm:True
+CI:True
+d_model:16
+encoder_depth:2
+part:s
+t_model:Linear
+avg_val_loss:0.383723646402359
+model=SimMTM enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=ETTm2 input_len=336 pred_len=720 mask_size=336 lr=0.0001
+ avg_val_loss:0.383723646402359
+pred_len:96 avg_val_loss:0.173
+pred_len:192 avg_val_loss:0.226
+pred_len:336 avg_val_loss:0.294
+pred_len:720 avg_val_loss:0.384
+avg_loss:0.269

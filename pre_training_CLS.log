@@ -1,0 +1,27 @@
+HAR
+epoch: 1/8
+total_train_loss:0.07867062836885452
+total_val_loss:0.056223902851343155
+epoch: 2/8
+total_train_loss:0.054775893688201904
+total_val_loss:0.05520367622375488
+epoch: 3/8
+total_train_loss:0.049010682851076126
+total_val_loss:0.04412310570478439
+epoch: 4/8
+total_train_loss:0.042474426329135895
+total_val_loss:0.04066341370344162
+epoch: 5/8
+total_train_loss:0.040508855134248734
+total_val_loss:0.0396888442337513
+epoch: 6/8
+total_train_loss:0.03938429057598114
+total_val_loss:0.03911501169204712
+epoch: 7/8
+total_train_loss:0.03878357633948326
+total_val_loss:0.03831670060753822
+epoch: 8/8
+total_train_loss:0.03828168660402298
+total_val_loss:0.03800222650170326
+model=retro_mae enhance_decoding=True series_embed_len:1 data=HAR encoder_depth=3 decoder_depth=1 enc_mask_rate=0.25 dec_mask_rate=0.75 lr=0.001 d_model=32 patch_size=1 train_shuffle:True 
+ min_val_loss:inf

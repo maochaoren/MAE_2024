@@ -1,0 +1,225 @@
+total_train_loss:0.4545164406299591
+Validation loss decreased (inf --> 0.764580).  Saving model ...
+total_train_loss:0.3787725865840912
+Validation loss decreased (0.764580 --> 0.730130).  Saving model ...
+total_train_loss:0.3677824139595032
+Validation loss decreased (0.730130 --> 0.715693).  Saving model ...
+total_train_loss:0.36113110184669495
+Validation loss decreased (0.715693 --> 0.711450).  Saving model ...
+total_train_loss:0.3562203347682953
+Validation loss decreased (0.711450 --> 0.703607).  Saving model ...
+total_train_loss:0.3524625897407532
+Validation loss decreased (0.703607 --> 0.697891).  Saving model ...
+total_train_loss:0.3496158719062805
+Validation loss decreased (0.697891 --> 0.691952).  Saving model ...
+total_train_loss:0.34750786423683167
+Validation loss decreased (0.691952 --> 0.690303).  Saving model ...
+total_train_loss:0.3458367586135864
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.34461674094200134
+Validation loss decreased (0.690303 --> 0.688130).  Saving model ...
+total_train_loss:0.34363511204719543
+Validation loss decreased (0.688130 --> 0.685337).  Saving model ...
+total_train_loss:0.3427756726741791
+Validation loss decreased (0.685337 --> 0.682656).  Saving model ...
+total_train_loss:0.34190747141838074
+Validation loss decreased (0.682656 --> 0.681935).  Saving model ...
+total_train_loss:0.3413321077823639
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.34082794189453125
+EarlyStopping counter: 2 out of 3
+total_train_loss:0.3404228687286377
+EarlyStopping counter: 3 out of 3
+test_loss:0.39241263270378113
+test_loss_s:0.0
+test_loss_t:0.0
+hour1
+SimMTM
+pred_len:96
+backbone:vanilla
+random_init:True
+frozen_num:0
+mask_size:336
+mask_rate:0.25
+mask_num:3
+decomp:fft
+st_sep:3.5
+topk:25
+lpf:0
+is_decomp:True
+is_norm:True
+CI:True
+d_model:16
+encoder_depth:1
+part:s
+t_model:Linear
+avg_val_loss:0.39241263270378113
+model=SimMTM enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=ETTh1 input_len=336 pred_len=96 mask_size=336 lr=0.0001
+ avg_val_loss:0.39241263270378113
+total_train_loss:0.5151334404945374
+Validation loss decreased (inf --> 0.997237).  Saving model ...
+total_train_loss:0.43111252784729004
+Validation loss decreased (0.997237 --> 0.957368).  Saving model ...
+total_train_loss:0.42009761929512024
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.41404566168785095
+Validation loss decreased (0.957368 --> 0.950574).  Saving model ...
+total_train_loss:0.4096314609050751
+Validation loss decreased (0.950574 --> 0.931487).  Saving model ...
+total_train_loss:0.40613776445388794
+Validation loss decreased (0.931487 --> 0.930483).  Saving model ...
+total_train_loss:0.40339595079421997
+Validation loss decreased (0.930483 --> 0.925619).  Saving model ...
+total_train_loss:0.4012923538684845
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.3997110426425934
+EarlyStopping counter: 2 out of 3
+total_train_loss:0.3985719680786133
+Validation loss decreased (0.925619 --> 0.921514).  Saving model ...
+total_train_loss:0.3975071609020233
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.39665114879608154
+Validation loss decreased (0.921514 --> 0.920179).  Saving model ...
+total_train_loss:0.39594143629074097
+Validation loss decreased (0.920179 --> 0.919039).  Saving model ...
+total_train_loss:0.3955323100090027
+Validation loss decreased (0.919039 --> 0.917234).  Saving model ...
+total_train_loss:0.3948526084423065
+Validation loss decreased (0.917234 --> 0.913381).  Saving model ...
+total_train_loss:0.3943428099155426
+Validation loss decreased (0.913381 --> 0.911960).  Saving model ...
+total_train_loss:0.39403167366981506
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.393569678068161
+Validation loss decreased (0.911960 --> 0.911226).  Saving model ...
+total_train_loss:0.39321258664131165
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.3929259181022644
+EarlyStopping counter: 2 out of 3
+test_loss:0.41273221373558044
+test_loss_s:0.0
+test_loss_t:0.0
+hour1
+SimMTM
+pred_len:192
+backbone:vanilla
+random_init:True
+frozen_num:0
+mask_size:336
+mask_rate:0.25
+mask_num:3
+decomp:fft
+st_sep:3.5
+topk:25
+lpf:0
+is_decomp:True
+is_norm:True
+CI:True
+d_model:16
+encoder_depth:1
+part:s
+t_model:Linear
+avg_val_loss:0.41273221373558044
+model=SimMTM enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=ETTh1 input_len=336 pred_len=192 mask_size=336 lr=0.0001
+ avg_val_loss:0.41273221373558044
+total_train_loss:0.5528212785720825
+Validation loss decreased (inf --> 1.222911).  Saving model ...
+total_train_loss:0.4867164194583893
+Validation loss decreased (1.222911 --> 1.189451).  Saving model ...
+total_train_loss:0.47571641206741333
+Validation loss decreased (1.189451 --> 1.177587).  Saving model ...
+total_train_loss:0.4694529175758362
+Validation loss decreased (1.177587 --> 1.170000).  Saving model ...
+total_train_loss:0.46477553248405457
+Validation loss decreased (1.170000 --> 1.168969).  Saving model ...
+total_train_loss:0.4611583948135376
+Validation loss decreased (1.168969 --> 1.167285).  Saving model ...
+total_train_loss:0.4588361978530884
+Validation loss decreased (1.167285 --> 1.160801).  Saving model ...
+total_train_loss:0.4568778872489929
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.4555518627166748
+Validation loss decreased (1.160801 --> 1.158395).  Saving model ...
+total_train_loss:0.4543496072292328
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.4536493718624115
+EarlyStopping counter: 2 out of 3
+total_train_loss:0.45277801156044006
+Validation loss decreased (1.158395 --> 1.157769).  Saving model ...
+total_train_loss:0.45199114084243774
+Validation loss decreased (1.157769 --> 1.148372).  Saving model ...
+total_train_loss:0.45146241784095764
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.4507962763309479
+EarlyStopping counter: 2 out of 3
+total_train_loss:0.4502025246620178
+EarlyStopping counter: 3 out of 3
+test_loss:0.42083364725112915
+test_loss_s:0.0
+test_loss_t:0.0
+hour1
+SimMTM
+pred_len:336
+backbone:vanilla
+random_init:True
+frozen_num:0
+mask_size:336
+mask_rate:0.25
+mask_num:3
+decomp:fft
+st_sep:3.5
+topk:25
+lpf:0
+is_decomp:True
+is_norm:True
+CI:True
+d_model:16
+encoder_depth:1
+part:s
+t_model:Linear
+avg_val_loss:0.42083364725112915
+model=SimMTM enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=ETTh1 input_len=336 pred_len=336 mask_size=336 lr=0.0001
+ avg_val_loss:0.42083364725112915
+total_train_loss:0.7038514018058777
+Validation loss decreased (inf --> 1.488198).  Saving model ...
+total_train_loss:0.6021740436553955
+Validation loss decreased (1.488198 --> 1.461607).  Saving model ...
+total_train_loss:0.5844967365264893
+Validation loss decreased (1.461607 --> 1.456967).  Saving model ...
+total_train_loss:0.5734764933586121
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.5595836639404297
+EarlyStopping counter: 2 out of 3
+total_train_loss:0.5478390455245972
+EarlyStopping counter: 3 out of 3
+test_loss:0.5139854550361633
+test_loss_s:0.0
+test_loss_t:0.0
+hour1
+SimMTM
+pred_len:720
+backbone:vanilla
+random_init:True
+frozen_num:0
+mask_size:336
+mask_rate:0.25
+mask_num:3
+decomp:fft
+st_sep:3.5
+topk:25
+lpf:0
+is_decomp:True
+is_norm:True
+CI:True
+d_model:16
+encoder_depth:1
+part:s
+t_model:Linear
+avg_val_loss:0.5139854550361633
+model=SimMTM enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=ETTh1 input_len=336 pred_len=720 mask_size=336 lr=0.0001
+ avg_val_loss:0.5139854550361633
+pred_len:96 avg_val_loss:0.392
+pred_len:192 avg_val_loss:0.413
+pred_len:336 avg_val_loss:0.421
+pred_len:720 avg_val_loss:0.514
+avg_loss:0.435

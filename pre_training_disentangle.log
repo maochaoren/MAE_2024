@@ -1,0 +1,161 @@
+retro_mae
+epoch: 1/40
+total_train_loss:0.28093913197517395
+total_val_loss:0.08639607578516006
+Validation loss decreased (inf --> 0.086396).  Saving model ...
+epoch: 2/40
+total_train_loss:0.1125052347779274
+total_val_loss:0.08350283652544022
+Validation loss decreased (0.086396 --> 0.083503).  Saving model ...
+epoch: 3/40
+total_train_loss:0.10623552650213242
+total_val_loss:0.07833749800920486
+Validation loss decreased (0.083503 --> 0.078337).  Saving model ...
+epoch: 4/40
+total_train_loss:0.09913178533315659
+total_val_loss:0.07244835793972015
+Validation loss decreased (0.078337 --> 0.072448).  Saving model ...
+epoch: 5/40
+total_train_loss:0.09056100249290466
+total_val_loss:0.06572713702917099
+Validation loss decreased (0.072448 --> 0.065727).  Saving model ...
+epoch: 6/40
+total_train_loss:0.08398343622684479
+total_val_loss:0.062263719737529755
+Validation loss decreased (0.065727 --> 0.062264).  Saving model ...
+epoch: 7/40
+total_train_loss:0.08030971139669418
+total_val_loss:0.06017240136861801
+Validation loss decreased (0.062264 --> 0.060172).  Saving model ...
+epoch: 8/40
+total_train_loss:0.07744486629962921
+total_val_loss:0.05818026512861252
+Validation loss decreased (0.060172 --> 0.058180).  Saving model ...
+epoch: 9/40
+total_train_loss:0.07491053640842438
+total_val_loss:0.05661974102258682
+Validation loss decreased (0.058180 --> 0.056620).  Saving model ...
+epoch: 10/40
+total_train_loss:0.07251741737127304
+total_val_loss:0.055170707404613495
+Validation loss decreased (0.056620 --> 0.055171).  Saving model ...
+epoch: 11/40
+total_train_loss:0.07015612721443176
+total_val_loss:0.053600311279296875
+Validation loss decreased (0.055171 --> 0.053600).  Saving model ...
+epoch: 12/40
+total_train_loss:0.06777741014957428
+total_val_loss:0.051903292536735535
+Validation loss decreased (0.053600 --> 0.051903).  Saving model ...
+epoch: 13/40
+total_train_loss:0.0656185895204544
+total_val_loss:0.0504419282078743
+Validation loss decreased (0.051903 --> 0.050442).  Saving model ...
+epoch: 14/40
+total_train_loss:0.06325948238372803
+total_val_loss:0.049318261444568634
+Validation loss decreased (0.050442 --> 0.049318).  Saving model ...
+epoch: 15/40
+total_train_loss:0.061808355152606964
+total_val_loss:0.04819931462407112
+Validation loss decreased (0.049318 --> 0.048199).  Saving model ...
+epoch: 16/40
+total_train_loss:0.05992107838392258
+total_val_loss:0.046931639313697815
+Validation loss decreased (0.048199 --> 0.046932).  Saving model ...
+epoch: 17/40
+total_train_loss:0.05843593552708626
+total_val_loss:0.04578773304820061
+Validation loss decreased (0.046932 --> 0.045788).  Saving model ...
+epoch: 18/40
+total_train_loss:0.056979358196258545
+total_val_loss:0.04471459984779358
+Validation loss decreased (0.045788 --> 0.044715).  Saving model ...
+epoch: 19/40
+total_train_loss:0.05550288036465645
+total_val_loss:0.04382193833589554
+Validation loss decreased (0.044715 --> 0.043822).  Saving model ...
+epoch: 20/40
+total_train_loss:0.054202619940042496
+total_val_loss:0.042860761284828186
+Validation loss decreased (0.043822 --> 0.042861).  Saving model ...
+epoch: 21/40
+total_train_loss:0.05293634906411171
+total_val_loss:0.04203343391418457
+Validation loss decreased (0.042861 --> 0.042033).  Saving model ...
+epoch: 22/40
+total_train_loss:0.05212072655558586
+total_val_loss:0.04155608266592026
+Validation loss decreased (0.042033 --> 0.041556).  Saving model ...
+epoch: 23/40
+total_train_loss:0.051059745252132416
+total_val_loss:0.040632955729961395
+Validation loss decreased (0.041556 --> 0.040633).  Saving model ...
+epoch: 24/40
+total_train_loss:0.050142575055360794
+total_val_loss:0.03990654647350311
+Validation loss decreased (0.040633 --> 0.039907).  Saving model ...
+epoch: 25/40
+total_train_loss:0.04892478883266449
+total_val_loss:0.03902026265859604
+Validation loss decreased (0.039907 --> 0.039020).  Saving model ...
+epoch: 26/40
+total_train_loss:0.04816189408302307
+total_val_loss:0.038361139595508575
+Validation loss decreased (0.039020 --> 0.038361).  Saving model ...
+epoch: 27/40
+total_train_loss:0.0471259206533432
+total_val_loss:0.03782748058438301
+Validation loss decreased (0.038361 --> 0.037827).  Saving model ...
+epoch: 28/40
+total_train_loss:0.04646977782249451
+total_val_loss:0.037469588220119476
+Validation loss decreased (0.037827 --> 0.037470).  Saving model ...
+epoch: 29/40
+total_train_loss:0.04582342877984047
+total_val_loss:0.03677032142877579
+Validation loss decreased (0.037470 --> 0.036770).  Saving model ...
+epoch: 30/40
+total_train_loss:0.04507945477962494
+total_val_loss:0.03623278811573982
+Validation loss decreased (0.036770 --> 0.036233).  Saving model ...
+epoch: 31/40
+total_train_loss:0.044568441808223724
+total_val_loss:0.03587789461016655
+Validation loss decreased (0.036233 --> 0.035878).  Saving model ...
+epoch: 32/40
+total_train_loss:0.04385659471154213
+total_val_loss:0.03518310934305191
+Validation loss decreased (0.035878 --> 0.035183).  Saving model ...
+epoch: 33/40
+total_train_loss:0.043314818292856216
+total_val_loss:0.03519822284579277
+EarlyStopping counter: 1 out of 3
+epoch: 34/40
+total_train_loss:0.043149445205926895
+total_val_loss:0.03500337153673172
+Validation loss decreased (0.035183 --> 0.035003).  Saving model ...
+epoch: 35/40
+total_train_loss:0.04267587512731552
+total_val_loss:0.03464203327894211
+Validation loss decreased (0.035003 --> 0.034642).  Saving model ...
+epoch: 36/40
+total_train_loss:0.041986461728811264
+total_val_loss:0.034638237208127975
+Validation loss decreased (0.034642 --> 0.034638).  Saving model ...
+epoch: 37/40
+total_train_loss:0.04185790941119194
+total_val_loss:0.03448241204023361
+Validation loss decreased (0.034638 --> 0.034482).  Saving model ...
+epoch: 38/40
+total_train_loss:0.04133901000022888
+total_val_loss:0.03422746807336807
+Validation loss decreased (0.034482 --> 0.034227).  Saving model ...
+epoch: 39/40
+total_train_loss:0.04125092923641205
+total_val_loss:0.034204985946416855
+Validation loss decreased (0.034227 --> 0.034205).  Saving model ...
+epoch: 40/40
+total_train_loss:0.04110844433307648
+total_val_loss:0.03388221189379692
+Validation loss decreased (0.034205 --> 0.033882).  Saving model ...

@@ -1,0 +1,40 @@
+pred_len:96
+mode:both
+total_test_loss:0.3574172833520108
+dim0: total_test_loss:0.7128768619557899
+dim1: total_test_loss:0.2024888098560929
+dim2: total_test_loss:0.7344091884537702
+dim3: total_test_loss:0.16570911236254487
+dim4: total_test_loss:0.48117513605251344
+dim5: total_test_loss:0.11636926729760436
+dim6: total_test_loss:0.08889199056574001
+pred_len:192
+mode:both
+total_test_loss:0.40976062575088235
+dim0: total_test_loss:0.8307153964938174
+dim1: total_test_loss:0.23010169923327678
+dim2: total_test_loss:0.8598115296113797
+dim3: total_test_loss:0.18537755861917185
+dim4: total_test_loss:0.5166570820210813
+dim5: total_test_loss:0.13077598222794254
+dim6: total_test_loss:0.11488518762783563
+pred_len:336
+mode:both
+total_test_loss:0.46785842952784423
+dim0: total_test_loss:0.9169570772961689
+dim1: total_test_loss:0.25870548390686393
+dim2: total_test_loss:0.938535655083497
+dim3: total_test_loss:0.205590892259639
+dim4: total_test_loss:0.6010073558754911
+dim5: total_test_loss:0.1530248016177554
+dim6: total_test_loss:0.20118899841908153
+pred_len:720
+mode:both
+total_test_loss:0.4697124221440065
+dim0: total_test_loss:0.8377138744179489
+dim1: total_test_loss:0.2646797882743811
+dim2: total_test_loss:0.8409375813425497
+dim3: total_test_loss:0.21570749207813947
+dim4: total_test_loss:0.7066659993564901
+dim5: total_test_loss:0.16286624200583497
+dim6: total_test_loss:0.2594155413527447

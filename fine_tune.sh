@@ -1,0 +1,25 @@
+export CUDA_VISIBLE_DEVICES=4
+python -u fine_tuning.py\
+    --model SimMTM \
+    --data_set hour1 \
+    --backbone vanilla \
+    --t_model transformer \
+    --part sep \
+    --encoder_depth 1 \
+    --input_len 336 \
+    --n_head 8 \
+    --d_model 16 \
+    --mask_size 336 \
+    --mask_rate 0.5 \
+    --mask_num 3 \
+    --tau 0.2 \
+    --decomp fft \
+    --st_sep 3.5 \
+    --topk 15 \
+    --window_size 169 \
+    --base_lr 0.0001 \
+    --batch_size 32 \
+    --patience 3 \
+    --epochs 30 \
+    --random_init 0 \
+    --frozen_num 0 \

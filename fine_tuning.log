@@ -1,0 +1,144 @@
+Namespace(model='SimMTM', data_set='hour1', backbone='vanilla', encoder_depth=2, input_len=336, n_head=16, d_model=16, mask_size=336, mask_rate=0.5, mask_num=3, tau=0.2, decomp='fft', st_sep=3.5, topk=50, window_size=169, base_lr=0.0001, batch_size=4, patience=3, epochs=30, window_list=[25, 13, 1], part='st', t_model='transformer', random_init=0, frozen_num=0, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0')
+total_train_loss:0.39260128140449524
+Validation loss decreased (inf --> 0.713625).  Saving model ...
+total_train_loss:0.3484647274017334
+Validation loss decreased (0.713625 --> 0.701029).  Saving model ...
+total_train_loss:0.3382309377193451
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.3314937651157379
+EarlyStopping counter: 2 out of 3
+total_train_loss:0.3261776864528656
+EarlyStopping counter: 3 out of 3
+test_loss:0.3813217282295227
+hour1
+SimMTM
+pred_len:96
+backbone:vanilla
+random_init:0
+frozen_num:0
+mask_size:336
+mask_rate:0.5
+mask_num:3
+decomp:fft
+st_sep:3.5
+topk:50
+lpf:0
+is_decomp:True
+is_norm:True
+CI:True
+d_model:16
+encoder_depth:2
+part:st
+t_model:transformer
+avg_val_loss:0.3813217282295227
+model=SimMTM enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=ETTh1 input_len=336 pred_len=96 mask_size=336 lr=0.0001
+ avg_val_loss:0.3813217282295227
+total_train_loss:0.4670991897583008
+Validation loss decreased (inf --> 0.972574).  Saving model ...
+total_train_loss:0.4055669903755188
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.39254599809646606
+EarlyStopping counter: 2 out of 3
+total_train_loss:0.3838050961494446
+EarlyStopping counter: 3 out of 3
+test_loss:0.4120051860809326
+hour1
+SimMTM
+pred_len:192
+backbone:vanilla
+random_init:0
+frozen_num:0
+mask_size:336
+mask_rate:0.5
+mask_num:3
+decomp:fft
+st_sep:3.5
+topk:50
+lpf:0
+is_decomp:True
+is_norm:True
+CI:True
+d_model:16
+encoder_depth:2
+part:st
+t_model:transformer
+avg_val_loss:0.4120051860809326
+model=SimMTM enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=ETTh1 input_len=336 pred_len=192 mask_size=336 lr=0.0001
+ avg_val_loss:0.4120051860809326
+total_train_loss:0.4861728250980377
+Validation loss decreased (inf --> 1.257445).  Saving model ...
+total_train_loss:0.4357012212276459
+Validation loss decreased (1.257445 --> 1.207263).  Saving model ...
+total_train_loss:0.42187413573265076
+Validation loss decreased (1.207263 --> 1.197845).  Saving model ...
+total_train_loss:0.41089630126953125
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.40221062302589417
+EarlyStopping counter: 2 out of 3
+total_train_loss:0.3945440351963043
+EarlyStopping counter: 3 out of 3
+test_loss:0.5542452931404114
+hour1
+SimMTM
+pred_len:336
+backbone:vanilla
+random_init:0
+frozen_num:0
+mask_size:336
+mask_rate:0.5
+mask_num:3
+decomp:fft
+st_sep:3.5
+topk:50
+lpf:0
+is_decomp:True
+is_norm:True
+CI:True
+d_model:16
+encoder_depth:2
+part:st
+t_model:transformer
+avg_val_loss:0.5542452931404114
+model=SimMTM enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=ETTh1 input_len=336 pred_len=336 mask_size=336 lr=0.0001
+ avg_val_loss:0.5542452931404114
+total_train_loss:0.5718590617179871
+Validation loss decreased (inf --> 1.655306).  Saving model ...
+total_train_loss:0.5078794360160828
+Validation loss decreased (1.655306 --> 1.591223).  Saving model ...
+total_train_loss:0.48961833119392395
+Validation loss decreased (1.591223 --> 1.514216).  Saving model ...
+total_train_loss:0.4786831736564636
+EarlyStopping counter: 1 out of 3
+total_train_loss:0.46959054470062256
+EarlyStopping counter: 2 out of 3
+total_train_loss:0.46076157689094543
+EarlyStopping counter: 3 out of 3
+test_loss:0.4784451127052307
+hour1
+SimMTM
+pred_len:720
+backbone:vanilla
+random_init:0
+frozen_num:0
+mask_size:336
+mask_rate:0.5
+mask_num:3
+decomp:fft
+st_sep:3.5
+topk:50
+lpf:0
+is_decomp:True
+is_norm:True
+CI:True
+d_model:16
+encoder_depth:2
+part:st
+t_model:transformer
+avg_val_loss:0.4784451127052307
+model=SimMTM enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=ETTh1 input_len=336 pred_len=720 mask_size=336 lr=0.0001
+ avg_val_loss:0.4784451127052307
+pred_len:96 avg_val_loss:0.381
+pred_len:192 avg_val_loss:0.412
+pred_len:336 avg_val_loss:0.554
+pred_len:720 avg_val_loss:0.478
+avg_loss:0.457

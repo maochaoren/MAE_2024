@@ -1,0 +1,42 @@
+/data1/home/xurui/anaconda3/envs/python3/lib/python3.9/site-packages/torch/cuda/__init__.py:546: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+Detected kernel version 4.15.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+hour1
+SimMTM
+input_len:336
+backbone:vanilla
+encoder_depth:1
+mask_size:336
+mask_rate:0.5
+mask_num:3
+is_decomp:True
+is_norm:True
+CI:True
+part:sep
+decomp:fft
+st_sep:3.5
+topk:15
+epoch: 1/20
+total_train_loss:2.043834924697876
+total_val_loss:2.539818048477173
+Validation loss decreased (inf --> 2.539818).  Saving model ...
+epoch: 2/20
+total_train_loss:1.7199701070785522
+total_val_loss:2.508490800857544
+Validation loss decreased (2.539818 --> 2.508491).  Saving model ...
+epoch: 3/20
+total_train_loss:1.6736363172531128
+total_val_loss:2.528714179992676
+EarlyStopping counter: 1 out of 3
+epoch: 4/20
+total_train_loss:1.6486728191375732
+total_val_loss:2.564060926437378
+EarlyStopping counter: 2 out of 3
+epoch: 5/20
+total_train_loss:1.6295669078826904
+total_val_loss:2.561580181121826
+EarlyStopping counter: 3 out of 3
+early_stopping
+model:SimMTM
+model=SimMTM enhance_decoding=True series_embed_len:1 data=ETTh1 input_len=336 encoder_depth=1 decoder_depth=1 enc_mask_rate=0.25 dec_mask_rate=0.75 lr=0.0003 d_model=16 patch_size=336 train_shuffle:True 
+ min_val_loss:2.508490800857544

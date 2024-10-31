@@ -1,0 +1,18 @@
+train_loss:0.034128088504076004
+val_loss:0.03855682909488678
+Validation loss decreased (inf --> 0.038557).  Saving model ...
+train_loss:0.03124918043613434
+val_loss:0.03675436973571777
+Validation loss decreased (0.038557 --> 0.036754).  Saving model ...
+train_loss:0.03105427511036396
+val_loss:0.037130165845155716
+EarlyStopping counter: 1 out of 2
+train_loss:0.0305884201079607
+val_loss:0.02796352468430996
+Validation loss decreased (0.036754 --> 0.027964).  Saving model ...
+train_loss:0.030459057539701462
+val_loss:0.02789626084268093
+EarlyStopping counter: 1 out of 2
+train_loss:0.030439632013440132
+val_loss:0.028280243277549744
+EarlyStopping counter: 2 out of 2

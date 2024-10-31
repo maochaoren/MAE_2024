@@ -1,0 +1,156 @@
+Validation loss decreased (inf --> 0.770420).  Saving model ...
+Validation loss decreased (0.770420 --> 0.724047).  Saving model ...
+Validation loss decreased (0.724047 --> 0.707955).  Saving model ...
+Validation loss decreased (0.707955 --> 0.706529).  Saving model ...
+Validation loss decreased (0.706529 --> 0.694213).  Saving model ...
+EarlyStopping counter: 1 out of 3
+EarlyStopping counter: 2 out of 3
+Validation loss decreased (0.694213 --> 0.689692).  Saving model ...
+Validation loss decreased (0.689692 --> 0.686637).  Saving model ...
+Validation loss decreased (0.686637 --> 0.681589).  Saving model ...
+EarlyStopping counter: 1 out of 3
+EarlyStopping counter: 2 out of 3
+EarlyStopping counter: 3 out of 3
+test_loss:0.4229905307292938
+test_loss_s:0.0
+test_loss_t:0.0
+hour1
+SimMTM
+pred_len:96
+backbone:vanilla
+random_init:True
+frozen_num:0
+mask_size:336
+mask_rate:0.25
+mask_num:3
+decomp:fft
+st_sep:3.5
+topk:15
+lpf:75
+is_decomp:True
+is_norm:True
+CI:True
+d_model:16
+encoder_depth:1
+part:s
+t_model:Linear
+avg_val_loss:0.4229905307292938
+model=SimMTM enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=ETTh1 input_len=336 pred_len=96 mask_size=336 lr=0.0001
+ avg_val_loss:0.4229905307292938
+Validation loss decreased (inf --> 1.009575).  Saving model ...
+Validation loss decreased (1.009575 --> 0.965222).  Saving model ...
+Validation loss decreased (0.965222 --> 0.951584).  Saving model ...
+EarlyStopping counter: 1 out of 3
+Validation loss decreased (0.951584 --> 0.943174).  Saving model ...
+EarlyStopping counter: 1 out of 3
+Validation loss decreased (0.943174 --> 0.939074).  Saving model ...
+Validation loss decreased (0.939074 --> 0.928327).  Saving model ...
+EarlyStopping counter: 1 out of 3
+EarlyStopping counter: 2 out of 3
+Validation loss decreased (0.928327 --> 0.919629).  Saving model ...
+EarlyStopping counter: 1 out of 3
+Validation loss decreased (0.919629 --> 0.912559).  Saving model ...
+EarlyStopping counter: 1 out of 3
+Validation loss decreased (0.912559 --> 0.908200).  Saving model ...
+EarlyStopping counter: 1 out of 3
+EarlyStopping counter: 2 out of 3
+EarlyStopping counter: 3 out of 3
+test_loss:0.41251808404922485
+test_loss_s:0.0
+test_loss_t:0.0
+hour1
+SimMTM
+pred_len:192
+backbone:vanilla
+random_init:True
+frozen_num:0
+mask_size:336
+mask_rate:0.25
+mask_num:3
+decomp:fft
+st_sep:3.5
+topk:15
+lpf:75
+is_decomp:True
+is_norm:True
+CI:True
+d_model:16
+encoder_depth:1
+part:s
+t_model:Linear
+avg_val_loss:0.41251808404922485
+model=SimMTM enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=ETTh1 input_len=336 pred_len=192 mask_size=336 lr=0.0001
+ avg_val_loss:0.41251808404922485
+Validation loss decreased (inf --> 1.224987).  Saving model ...
+Validation loss decreased (1.224987 --> 1.190433).  Saving model ...
+Validation loss decreased (1.190433 --> 1.176539).  Saving model ...
+EarlyStopping counter: 1 out of 3
+EarlyStopping counter: 2 out of 3
+Validation loss decreased (1.176539 --> 1.171331).  Saving model ...
+Validation loss decreased (1.171331 --> 1.156233).  Saving model ...
+EarlyStopping counter: 1 out of 3
+EarlyStopping counter: 2 out of 3
+EarlyStopping counter: 3 out of 3
+test_loss:0.43350374698638916
+test_loss_s:0.0
+test_loss_t:0.0
+hour1
+SimMTM
+pred_len:336
+backbone:vanilla
+random_init:True
+frozen_num:0
+mask_size:336
+mask_rate:0.25
+mask_num:3
+decomp:fft
+st_sep:3.5
+topk:15
+lpf:75
+is_decomp:True
+is_norm:True
+CI:True
+d_model:16
+encoder_depth:1
+part:s
+t_model:Linear
+avg_val_loss:0.43350374698638916
+model=SimMTM enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=ETTh1 input_len=336 pred_len=336 mask_size=336 lr=0.0001
+ avg_val_loss:0.43350374698638916
+Validation loss decreased (inf --> 1.482894).  Saving model ...
+Validation loss decreased (1.482894 --> 1.439881).  Saving model ...
+EarlyStopping counter: 1 out of 3
+Validation loss decreased (1.439881 --> 1.435979).  Saving model ...
+EarlyStopping counter: 1 out of 3
+EarlyStopping counter: 2 out of 3
+EarlyStopping counter: 3 out of 3
+test_loss:0.4557296931743622
+test_loss_s:0.0
+test_loss_t:0.0
+hour1
+SimMTM
+pred_len:720
+backbone:vanilla
+random_init:True
+frozen_num:0
+mask_size:336
+mask_rate:0.25
+mask_num:3
+decomp:fft
+st_sep:3.5
+topk:15
+lpf:75
+is_decomp:True
+is_norm:True
+CI:True
+d_model:16
+encoder_depth:1
+part:s
+t_model:Linear
+avg_val_loss:0.4557296931743622
+model=SimMTM enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=ETTh1 input_len=336 pred_len=720 mask_size=336 lr=0.0001
+ avg_val_loss:0.4557296931743622
+pred_len:96 avg_val_loss:0.4229905307292938
+pred_len:192 avg_val_loss:0.41251808404922485
+pred_len:336 avg_val_loss:0.43350374698638916
+pred_len:720 avg_val_loss:0.4557296931743622

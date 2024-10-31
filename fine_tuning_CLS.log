@@ -1,0 +1,219 @@
+HAR
+
+total_train_loss:1.184933066368103
+total_train_acc:0.5004251003265381
+total_val_loss:0.8541491627693176
+total_val_acc:0.6250637769699097
+Validation loss decreased (inf --> 0.854149).  Saving model ...
+
+total_train_loss:0.8551123738288879
+total_train_acc:0.601768434047699
+total_val_loss:0.7635204792022705
+total_val_acc:0.6488692760467529
+Validation loss decreased (0.854149 --> 0.763520).  Saving model ...
+
+total_train_loss:0.7893632650375366
+total_train_acc:0.6337357759475708
+total_val_loss:0.8020744323730469
+total_val_acc:0.6092501282691956
+EarlyStopping counter: 1 out of 4
+
+total_train_loss:0.767727255821228
+total_train_acc:0.6427478790283203
+total_val_loss:0.694454550743103
+total_val_acc:0.6823669672012329
+Validation loss decreased (0.763520 --> 0.694455).  Saving model ...
+
+total_train_loss:0.7348993420600891
+total_train_acc:0.6597517728805542
+total_val_loss:0.753326416015625
+total_val_acc:0.58034348487854
+EarlyStopping counter: 1 out of 4
+
+total_train_loss:0.7177613973617554
+total_train_acc:0.6655331254005432
+total_val_loss:0.714032769203186
+total_val_acc:0.6920592188835144
+EarlyStopping counter: 2 out of 4
+
+total_train_loss:0.7075573205947876
+total_train_acc:0.6696140170097351
+total_val_loss:0.6597207188606262
+total_val_acc:0.6944397687911987
+Validation loss decreased (0.694455 --> 0.659721).  Saving model ...
+
+total_train_loss:0.6923140287399292
+total_train_acc:0.678115963935852
+total_val_loss:0.6560567021369934
+total_val_acc:0.7027716636657715
+Validation loss decreased (0.659721 --> 0.656057).  Saving model ...
+
+total_train_loss:0.6821466088294983
+total_train_acc:0.6825370192527771
+total_val_loss:0.641489565372467
+total_val_acc:0.7022615671157837
+Validation loss decreased (0.656057 --> 0.641490).  Saving model ...
+
+total_train_loss:0.6776954531669617
+total_train_acc:0.685257613658905
+total_val_loss:0.6350066065788269
+total_val_acc:0.7077028155326843
+Validation loss decreased (0.641490 --> 0.635007).  Saving model ...
+
+total_train_loss:0.6674517393112183
+total_train_acc:0.6915490627288818
+total_val_loss:0.630106508731842
+total_val_acc:0.7075327634811401
+Validation loss decreased (0.635007 --> 0.630107).  Saving model ...
+
+total_train_loss:0.6619437336921692
+total_train_acc:0.6966502666473389
+total_val_loss:0.6504956483840942
+total_val_acc:0.7080428600311279
+EarlyStopping counter: 1 out of 4
+
+total_train_loss:0.6595491170883179
+total_train_acc:0.6935895681381226
+total_val_loss:0.643913984298706
+total_val_acc:0.7056623101234436
+EarlyStopping counter: 2 out of 4
+
+total_train_loss:0.6483139991760254
+total_train_acc:0.7014113664627075
+total_val_loss:0.6115906238555908
+total_val_acc:0.7207958102226257
+Validation loss decreased (0.630107 --> 0.611591).  Saving model ...
+
+total_train_loss:0.6348675489425659
+total_train_acc:0.7077028155326843
+total_val_loss:0.6127113103866577
+total_val_acc:0.7155246138572693
+EarlyStopping counter: 1 out of 4
+
+total_train_loss:0.6314672827720642
+total_train_acc:0.704642117023468
+total_val_loss:0.5979222059249878
+total_val_acc:0.7192654609680176
+Validation loss decreased (0.611591 --> 0.597922).  Saving model ...
+
+total_train_loss:0.635197639465332
+total_train_acc:0.7090631127357483
+total_val_loss:0.6219463348388672
+total_val_acc:0.712463915348053
+EarlyStopping counter: 1 out of 4
+
+total_train_loss:0.6241681575775146
+total_train_acc:0.712463915348053
+total_val_loss:0.5920315980911255
+total_val_acc:0.7265771627426147
+Validation loss decreased (0.597922 --> 0.592032).  Saving model ...
+
+total_train_loss:0.6238046884536743
+total_train_acc:0.705322265625
+total_val_loss:0.5924956202507019
+total_val_acc:0.7267471551895142
+EarlyStopping counter: 1 out of 4
+
+total_train_loss:0.620306134223938
+total_train_acc:0.712463915348053
+total_val_loss:0.5901430249214172
+total_val_acc:0.7294678092002869
+Validation loss decreased (0.592032 --> 0.590143).  Saving model ...
+
+total_train_loss:0.6140486598014832
+total_train_acc:0.7162047624588013
+total_val_loss:0.5941726565361023
+total_val_acc:0.7279374599456787
+EarlyStopping counter: 1 out of 4
+
+total_train_loss:0.6190351843833923
+total_train_acc:0.7126339077949524
+total_val_loss:0.6066709160804749
+total_val_acc:0.7223261594772339
+EarlyStopping counter: 2 out of 4
+
+total_train_loss:0.6214346885681152
+total_train_acc:0.7077028155326843
+total_val_loss:0.5863229036331177
+total_val_acc:0.7281075119972229
+Validation loss decreased (0.590143 --> 0.586323).  Saving model ...
+
+total_train_loss:0.6070001125335693
+total_train_acc:0.7185853123664856
+total_val_loss:0.6585077047348022
+total_val_acc:0.7031117677688599
+EarlyStopping counter: 1 out of 4
+
+total_train_loss:0.6155304908752441
+total_train_acc:0.7151845097541809
+total_val_loss:0.5874200463294983
+total_val_acc:0.7277674078941345
+EarlyStopping counter: 2 out of 4
+
+total_train_loss:0.5949135422706604
+total_train_acc:0.7236864566802979
+total_val_loss:0.5875238180160522
+total_val_acc:0.7275973558425903
+EarlyStopping counter: 3 out of 4
+
+total_train_loss:0.5925166010856628
+total_train_acc:0.7216460108757019
+total_val_loss:0.5636579394340515
+total_val_acc:0.7389900088310242
+Validation loss decreased (0.586323 --> 0.563658).  Saving model ...
+
+total_train_loss:0.5928536653518677
+total_train_acc:0.7230063080787659
+total_val_loss:0.559222400188446
+total_val_acc:0.7349090576171875
+Validation loss decreased (0.563658 --> 0.559222).  Saving model ...
+
+total_train_loss:0.5935027599334717
+total_train_acc:0.7214759588241577
+total_val_loss:0.5637156367301941
+total_val_acc:0.7391600608825684
+EarlyStopping counter: 1 out of 4
+
+total_train_loss:0.5905563235282898
+total_train_acc:0.7264071106910706
+total_val_loss:0.5558688044548035
+total_val_acc:0.740180253982544
+Validation loss decreased (0.559222 --> 0.555869).  Saving model ...
+
+total_train_loss:0.5839584469795227
+total_train_acc:0.7262370586395264
+total_val_loss:0.5643919706344604
+total_val_acc:0.7393300533294678
+EarlyStopping counter: 1 out of 4
+
+total_train_loss:0.5861904621124268
+total_train_acc:0.7255569100379944
+total_val_loss:0.5505926012992859
+total_val_acc:0.7444312572479248
+Validation loss decreased (0.555869 --> 0.550593).  Saving model ...
+
+total_train_loss:0.5761747360229492
+total_train_acc:0.7282775044441223
+total_val_loss:0.5562096238136292
+total_val_acc:0.7396701574325562
+EarlyStopping counter: 1 out of 4
+
+total_train_loss:0.5744379758834839
+total_train_acc:0.7315082550048828
+total_val_loss:0.5538473129272461
+total_val_acc:0.7379697561264038
+EarlyStopping counter: 2 out of 4
+
+total_train_loss:0.5737683773040771
+total_train_acc:0.7326985597610474
+total_val_loss:0.6532195210456848
+total_val_acc:0.7017514109611511
+EarlyStopping counter: 3 out of 4
+
+total_train_loss:0.5732994675636292
+total_train_acc:0.732358455657959
+total_val_loss:0.5506505370140076
+total_val_acc:0.7396701574325562
+EarlyStopping counter: 4 out of 4
+model=retro_mae use_cls_token=True enhance_decoding=True mask_rate_enc=0.25 mask_rate_dec=0.75 data=HAR mask_size=1 lr=8e-05
+ avg_val_loss:0
