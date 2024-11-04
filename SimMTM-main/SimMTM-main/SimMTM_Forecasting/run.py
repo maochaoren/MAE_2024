@@ -64,7 +64,7 @@ if __name__ == '__main__':
     parser.add_argument('--pct_start', type=float, default=0.3, help='pct_start')
     parser.add_argument('--window_size', type=int, default=24*4+1, help='moving avg decompsition window size')
     parser.add_argument('--st_sep', type=int, default=24, help='threshold of fft season-trend decomposition')
-    parser.add_argument('--top_k_fft', type=int, default=50, help='Top-k strongest frequency selection')
+    parser.add_argument('--top_k_fft', type=int, default=25, help='Top-k strongest frequency selection')
 
     # optimization
     parser.add_argument('--num_workers', type=int, default=5, help='data loader num workers')
