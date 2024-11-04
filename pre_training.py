@@ -1,7 +1,8 @@
 import torch 
+print(torch.cuda.is_available())
 import argparse
 torch.autograd.set_detect_anomaly(True)
-from accelerate import Accelerator
+import pandas as pd
 from data_loader import *
 from torch.utils.data import DataLoader
 from mae_model import MaskedAutoEncoder as mae_model
@@ -19,13 +20,13 @@ print(get_device())
     #return 'cpu'
 parser=argparse.ArgumentParser()
 
-parser.add_argument('--model', type=str, default=336, help='input sequence length')
+parser.add_argument('--model', type=str, default='SimMTM', help='input sequence length')
 parser.add_argument('--data_set', type=str, default='hour1', help='type of dataset')
 parser.add_argument('--backbone', type=str, default='vanilla', help='type of backbone')
 parser.add_argument('--encoder_depth', type=int, default=1, help='depth of encoder')
 parser.add_argument('--input_len', type=int, default=336, help='input sequence length')
 parser.add_argument('--n_head', type=int, default=8, help='number of heads in MultiHeadAttention')
-parser.add_argument('--d_model', type=int, default=64, help='dimension of model')
+parser.add_argument('--d_model', type=int, default=16, help='dimension of model')
 parser.add_argument('--mask_size', type=int, default=1, help='mask size')
 parser.add_argument('--mask_rate', type=float, default=0.25, help='mask rate')
 parser.add_argument('--mask_num', type=int, default=3, help='mask number')
@@ -47,6 +48,7 @@ parser.add_argument('--use_multi_gpu', action='store_true', help='use multiple g
 parser.add_argument('--devices', type=str, default='0', help='device ids of multile gpus')
 
 args=parser.parse_args()
+print(args)
 args.use_gpu = True if torch.cuda.is_available() and args.use_gpu else False
 if args.use_gpu and args.use_multi_gpu:
     args.devices = args.devices.replace(' ', '')
@@ -193,12 +195,15 @@ for input_len in input_len_list:
                 mae=SimMTM(c_in=dataset_train.dim(),d_model=d_model,n_head=n_head,input_len=input_len,window_size=window_size,st_sep=st_sep,topk=topk,encoder_depth=encoder_depth,mask_rate=mask_rate,is_norm=is_norm,time_block=mask_size,window_list=window_list,CI=CI,mask_num=mask_num,tau=tau,is_decomp=is_decomp,backbone=backbone
                            ,part=part).to(get_device())
                 model_save_path='pre_train_SimMTM/'
-            optimizer=torch.optim.Adam(mae.parameters(),lr=base_lr,betas=(0.9,0.999))
-            scaler=torch.cuda.amp.GradScaler()
-            acc=Accelerator()
-            device=acc.device
-            mae=mae.to(device)
-            mae,optimizer,data_loader_train=acc.prepare(mae,optimizer,data_loader_train)
+            # 初始化模型、优化器和损失函数
+            optimizer = torch.optim.Adam(mae.parameters(), lr=base_lr, betas=(0.9, 0.999))
+            scaler = torch.cuda.amp.GradScaler()  # 使用 CUDA AMP 的 GradScaler
+
+            # 检查是否有可用的 GPU
+            device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+            # 将模型移动到设备
+            mae = mae.to(device)  
 
             if model=='retro_mae' or model=='distangle_mae':
                 path=model_save_path+data_name+'_'+str(input_len)+'_'+str(mask_size)+'_'+str(enhance_decoding)+'_'+str(mask_rate_enc)+'_'+str(mask_rate_dec)+'.pt'
@@ -241,17 +246,16 @@ for input_len in input_len_list:
                     mae.train()
                     x,_,x_mask,_=data
                     x=x.float()
-                    #x=x.to(get_device())
+                    x=x.to(get_device())
                     #print(x.shape)
                     #x_mask=x_mask.to(get_device())
-                    _,loss=mae(x)
-                    #optimizer.zero_grad()
-                    #loss.backward()
-                    #print(loss)
+                    with torch.cuda.amp.autocast():
+                        _,loss=mae(x)
                     total_train_loss+=loss*x.shape[0]
                     #optimizer.step()
-                    acc.backward(loss)
-                    optimizer.step()
+                    scaler.scale(loss).backward()
+                    scaler.step(optimizer)
+                    scaler.update()
                 total_train_loss/=len(data_loader_train.dataset)
                 print("total_train_loss:{}".format(total_train_loss))
                 #验证

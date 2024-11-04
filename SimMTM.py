@@ -1,4 +1,5 @@
 import torch
+import numpy as np
 import torch.nn as nn
 torch.autograd.set_detect_anomaly(True)
 import torch.nn.functional as F
@@ -132,6 +133,64 @@ class Pooler_Head(nn.Module):
         x = self.pooler(x) # [(bs * n_vars) x dimension]
         return x
 
+class ContrastiveWeight(nn.Module):
+
+    def __init__(self, temperature, positive_nums):
+        super(ContrastiveWeight, self).__init__()
+        self.temperature = temperature
+        self.softmax = torch.nn.Softmax(dim=-1)
+        self.log_softmax = torch.nn.LogSoftmax(dim=-1)
+        self.kl = torch.nn.KLDivLoss(reduction='batchmean')
+        self.positive_nums = positive_nums
+
+    def get_positive_and_negative_mask(self, similarity_matrix, cur_batch_size):
+        diag = np.eye(cur_batch_size)
+        mask = torch.from_numpy(diag)
+        mask = mask.type(torch.bool)
+
+        oral_batch_size = cur_batch_size // (self.positive_nums + 1) #一个Batch中原始序列的数量
+
+        positives_mask = np.zeros(similarity_matrix.size())
+        for i in range(self.positive_nums + 1):
+            ll = np.eye(cur_batch_size, cur_batch_size, k=oral_batch_size * i)
+            lr = np.eye(cur_batch_size, cur_batch_size, k=-oral_batch_size * i)
+            positives_mask += ll
+            positives_mask += lr
+
+        positives_mask = torch.from_numpy(positives_mask).to(similarity_matrix.device)
+        positives_mask[mask] = 0
+
+        negatives_mask = 1 - positives_mask
+        negatives_mask[mask] = 0
+
+        return positives_mask.type(torch.bool), negatives_mask.type(torch.bool)
+
+    def forward(self, batch_emb_om):
+        cur_batch_shape = batch_emb_om.shape
+        print(batch_emb_om.shape)
+
+        # get similarity matrix among mask samples
+        norm_emb = F.normalize(batch_emb_om, dim=1)
+        similarity_matrix = torch.matmul(norm_emb, norm_emb.transpose(0, 1))
+
+        # get positives and negatives similarity
+        positives_mask, negatives_mask = self.get_positive_and_negative_mask(similarity_matrix, cur_batch_shape[0])
+
+        positives = similarity_matrix[positives_mask].view(cur_batch_shape[0], -1)
+        negatives = similarity_matrix[negatives_mask].view(cur_batch_shape[0], -1)
+        #print(positives_mask)
+
+        # generate predict and target probability distributions matrix
+        logits = torch.cat((positives, negatives), dim=-1)
+        #print(positives_mask.shape)
+        y_true = torch.cat((torch.ones(cur_batch_shape[0], positives.shape[-1]), torch.zeros(cur_batch_shape[0], negatives.shape[-1])), dim=-1).to(batch_emb_om.device).float()
+
+        # multiple positives - KL divergence
+        predict = self.log_softmax(logits / self.temperature)
+        loss = self.kl(predict, y_true)
+
+        return loss, similarity_matrix, logits, positives_mask
+
 
 class SimMTM(nn.Module):
     def __init__(self,mask_rate,window_size,st_sep,topk,encoder_depth,c_in,d_model,n_head,input_len,is_norm,time_block,window_list=[1],CI=False,mask_num=2,tau=0.2,is_decomp=True,
@@ -202,6 +261,7 @@ class SimMTM(nn.Module):
         self.projection_s=Flatten_Head(seq_len=input_len,d_model=d_model,pred_len=input_len,head_dropout=0.1)
 
         self.is_norm=is_norm
+        self.contrastive_s = ContrastiveWeight(temperature=self.tau, positive_nums=mask_num)
         self.mse_loss=nn.MSELoss()
         self.auto_loss=AutomaticWeightedLoss()
         self.apply(self._init_weights)
@@ -325,25 +385,27 @@ class SimMTM(nn.Module):
             
         return x_masked
     
-    def instance_contrastive_loss(self,z1, z2):
-        B, T = z1.size(0), z1.size(1)
-        if B == 1:
-            return z1.new_tensor(0.)
-        z = torch.cat([z1, z2], dim=0)  # 2B x T x C
-        z = z.transpose(0, 1)  # T x 2B x C
-        sim = torch.matmul(z, z.transpose(1, 2))  # T x 2B x 2B
-        #sim=sim/self.tau
-        #sim=F.cosine_similarity(z, z.transpose(1, 2))
-        logits = torch.tril(sim, diagonal=-1)[:, :, :-1]    # T x 2B x (2B-1)  -1代表最后一个？ 
-        logits += torch.triu(sim, diagonal=1)[:, :, 1:]     #diagonal=-1:对角线为0，=1::对角线为原值。对角线(aii,i<=min(d1,d2))
-        logits = -F.log_softmax(logits/self.tau, dim=-1)
+    #def instance_contrastive_loss(self,z1, z2):
+    #    B, T = z1.size(0), z1.size(1)
+    #    if B == 1:
+    #        return z1.new_tensor(0.)
+    #    z = torch.cat([z1, z2], dim=0)  # 2B x T x C
+    #    z = z.transpose(0, 1)  # T x 2B x C
+    #    sim = torch.matmul(z, z.transpose(1, 2))  # T x 2B x 2B
+    #    #sim=sim/self.tau
+    #    #sim=F.cosine_similarity(z, z.transpose(1, 2))
+    #    logits = torch.tril(sim, diagonal=-1)[:, :, :-1]    # T x 2B x (2B-1)  -1代表最后一个？ 
+    #    logits += torch.triu(sim, diagonal=1)[:, :, 1:]     #diagonal=-1:对角线为0，=1::对角线为原值。对角线(aii,i<=min(d1,d2))
+    #    logits = -F.log_softmax(logits/self.tau, dim=-1)
+    #
+    #    i = torch.arange(B, device=z1.device)
+    #    loss = (logits[:, i, B + i - 1].mean() + logits[:, B + i, i].mean()) / 2
+    #    return loss
+    #
+    #def contrastive_loss(self,z1, z2):
 
-        i = torch.arange(B, device=z1.device)
-        loss = (logits[:, i, B + i - 1].mean() + logits[:, B + i, i].mean()) / 2
-        return loss
-
-    def series_contrastive_learning(self,x,mask_num):
-        num,_,_=x.shape
+    def series_contrastive_learning(self,x,mask_num): # x:(B*nvar*patch_num)*dimension
+        num,_=x.shape
         num=num//(mask_num+1)
         
         contrastive_loss=0
@@ -383,8 +445,8 @@ class SimMTM(nn.Module):
     def aggregation(self,x,x_patch):
         #x:(B*nvar)*L*d_model
         patch_num=x_patch.shape[0]*x_patch.shape[1]//(self.mask_num+1)
-        #print(x_patch.shape)
-        x_patch=torch.reshape(x_patch,(x_patch.shape[0]*(self.input_len//self.time_block),1,x_patch.shape[2])).squeeze(1)
+        #print(patch_num,x_patch.shape)
+        #x_patch=torch.reshape(x_patch,(x_patch.shape[0]*(self.input_len//self.time_block),1,x_patch.shape[2]))
         x=torch.reshape(x,(x.shape[0]*(self.input_len//self.time_block),self.time_block,x.shape[2]))
         #patch similarity
         x_patch0=x_patch[:patch_num,:]
@@ -461,12 +523,14 @@ class SimMTM(nn.Module):
 
         #patching ,contrastive learining
         #x_s_patch=self.Patching_s(x_s)#x:(B*nvar)*patch_num*d_model
-        x_s_patch=self.pooler_s(x_s).unsqueeze(1)
+        #print(x_s_patch.shape)
+        x_s_patch=self.pooler_s(x_s)
         #x_t_patch=self.Patching_t(x_t)
-
+        print(x_s_patch.shape)
         x_s_patch=F.normalize(x_s_patch,dim=-1)
 
-        contrastive_loss_s=self.series_contrastive_learning(x_s_patch,self.mask_num)
+        #contrastive_loss_s=self.series_contrastive_learning(x_s_patch,self.mask_num)
+        
 
         contrastive_loss=contrastive_loss_s
         #x_s_patch:(B*nvar)*patch_num*d_model as patch_embed
