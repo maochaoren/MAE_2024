@@ -180,7 +180,7 @@ class Exp_SimMTM(Exp_Basic):
             train_loss.append(loss.item())
             train_cl_loss.append(loss_cl.item())
             train_rb_loss.append(loss_rb.item())
-            print("train_loss:%.4f,train_cl_loss:%.4f,train_rb_loss:%.4f " % (loss.item(), loss_cl.item(), loss_rb.item()))
+            #print("train_loss:%.4f,train_cl_loss:%.4f,train_rb_loss:%.4f " % (loss.item(), loss_cl.item(), loss_rb.item()))
         model_scheduler.step()
 
         train_loss = np.average(train_loss)

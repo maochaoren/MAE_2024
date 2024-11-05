@@ -270,7 +270,7 @@ class ContrastiveWeight(nn.Module):
 
     def forward(self, batch_emb_om):
         cur_batch_shape = batch_emb_om.shape
-        print(batch_emb_om.shape)
+        #print(batch_emb_om.shape)
 
         # get similarity matrix among mask samples
         norm_emb = F.normalize(batch_emb_om, dim=1)
