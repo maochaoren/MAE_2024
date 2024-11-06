@@ -60,8 +60,11 @@ if __name__ == '__main__':
     parser.add_argument('--activation', type=str, default='gelu', help='activation')
     parser.add_argument('--output_attention', action='store_true', help='whether to output attention in ecoder')
     parser.add_argument('--individual', type=int, default=0, help='individual head; True 1 False 0')
-    
     parser.add_argument('--pct_start', type=float, default=0.3, help='pct_start')
+
+    #decomp
+    parser.add_argument('--decomp', type = bool, default=False, help='whether to decompose the time series')
+    parser.add_argument('--decomp_method', type=str, default='mov_avg', help='decomposition method')
     parser.add_argument('--window_size', type=int, default=24*4+1, help='moving avg decompsition window size')
     parser.add_argument('--st_sep', type=int, default=24, help='threshold of fft season-trend decomposition')
     parser.add_argument('--top_k_fft', type=int, default=25, help='Top-k strongest frequency selection')
@@ -108,11 +111,16 @@ if __name__ == '__main__':
     if args.task_name == 'pretrain':
         for ii in range(args.itr):
             # setting record of experiments
-            setting = '{}_{}_{}_{}_sl{}_ll{}_pl{}_dm{}_df{}_nh{}_el{}_dl{}_fc{}_dp{}_hdp{}_ep{}_bs{}_lr{}_lm{}_pn{}_mr{}_tp{}'.format(
+            setting = '{}_{}_{}_{}_isdec{}_decmet{}_win{}_sep{}_topk{}_sl{}_ll{}_pl{}_dm{}_df{}_nh{}_el{}_dl{}_fc{}_dp{}_hdp{}_ep{}_bs{}_lr{}_lm{}_pn{}_mr{}_tp{}'.format(
                 args.task_name,
                 args.model,
                 args.data,
                 args.features,
+                args.decomp,
+                args.decomp_method,
+                args.window_size,
+                args.st_sep,
+                args.top_k_fft,
                 args.seq_len,
                 args.label_len,
                 args.pred_len,
@@ -139,11 +147,16 @@ if __name__ == '__main__':
     elif args.task_name == 'finetune':
         for ii in range(args.itr):
             # setting record of experiments
-            setting = '{}_{}_{}_{}_sl{}_ll{}_pl{}_dm{}_df{}_nh{}_el{}_dl{}_fc{}_dp{}_hdp{}_ep{}_bs{}_lr{}'.format(
+            setting = '{}_{}_{}_{}_isdec{}_decmet{}_win{}_sep{}_topk{}_sl{}_ll{}_pl{}_dm{}_df{}_nh{}_el{}_dl{}_fc{}_dp{}_hdp{}_ep{}_bs{}_lr{}'.format(
                 args.task_name,
                 args.model,
                 args.data,
                 args.features,
+                args.decomp,
+                args.decomp_method,
+                args.window_size,
+                args.st_sep,
+                args.top_k_fft,
                 args.seq_len,
                 args.label_len,
                 args.pred_len,

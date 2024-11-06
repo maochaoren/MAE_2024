@@ -8,6 +8,7 @@ python -u run.py \
     --model SimMTM \
     --data ETTh1 \
     --features M \
+    --decomp True \
     --seq_len 336 \
     --e_layers 1 \
     --enc_in 7 \
@@ -20,6 +21,6 @@ python -u run.py \
     --mask_rate 0.5 \
     --learning_rate 0.001 \
     --batch_size 8 \
-    --train_epochs 50
+    --train_epochs 50 
 
 

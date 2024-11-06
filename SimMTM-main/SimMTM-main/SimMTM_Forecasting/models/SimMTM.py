@@ -130,9 +130,11 @@ class Model(nn.Module):
 
         # Decomposition
         #decomp method
-        self.series_decomp=series_decomp(kernel_size=configs.window_size)
-        self.fft_decomp=fft_decomp(st_sep=configs.st_sep,padding_rate=9,lpf=0)
-        self.topk_fft_decomp=topk_fft_decomp(k=configs.top_k_fft)
+        if configs.decomp_method=='mov_avg':
+            self.series_decomp=series_decomp(kernel_size=configs.window_size)
+        elif configs.decomp_method=='fft':
+            self.series_decomp=fft_decomp(st_sep=configs.st_sep,padding_rate=9,lpf=0)
+        self.topk_freq=topk_fft_decomp(k=configs.top_k_fft)
 
         # Embedding
         self.enc_embedding = DataEmbedding(1, configs.d_model, configs.embed, configs.freq, configs.dropout)
@@ -170,39 +172,86 @@ class Model(nn.Module):
             self.head = Flatten_Head(configs.seq_len, configs.d_model, configs.pred_len, head_dropout=configs.head_dropout)
 
     def forecast(self, x_enc, x_mark_enc):
+        if self.configs.decomp == False:
+            # data shape
+            bs, seq_len, n_vars = x_enc.shape
 
-        # data shape
-        bs, seq_len, n_vars = x_enc.shape
+            # normalization
+            means = x_enc.mean(1, keepdim=True).detach()
+            x_enc = x_enc - means
+            stdev = torch.sqrt(torch.var(x_enc, dim=1, keepdim=True, unbiased=False) + 1e-5)
+            x_enc /= stdev
 
-        # normalization
-        means = x_enc.mean(1, keepdim=True).detach()
-        x_enc = x_enc - means
-        stdev = torch.sqrt(torch.var(x_enc, dim=1, keepdim=True, unbiased=False) + 1e-5)
-        x_enc /= stdev
+            # channel independent
+            x_enc = x_enc.permute(0, 2, 1) # x_enc: [bs x n_vars x seq_len]
+            x_enc = x_enc.reshape(-1, seq_len, 1) # x_enc: [(bs * n_vars) x seq_len x 1]
 
-        # channel independent
-        x_enc = x_enc.permute(0, 2, 1) # x_enc: [bs x n_vars x seq_len]
-        x_enc = x_enc.reshape(-1, seq_len, 1) # x_enc: [(bs * n_vars) x seq_len x 1]
+            # embedding
+            #x_mark_enc = torch.repeat_interleave(x_mark_enc, repeats=n_vars, dim=0)
+            #enc_out = self.enc_embedding(enc_out, x_mark_enc)
+            enc_out = self.enc_embedding(x_enc) # enc_out: [(bs * n_vars) x seq_len x d_model]
 
-        # embedding
-        #x_mark_enc = torch.repeat_interleave(x_mark_enc, repeats=n_vars, dim=0)
-        #enc_out = self.enc_embedding(enc_out, x_mark_enc)
-        enc_out = self.enc_embedding(x_enc) # enc_out: [(bs * n_vars) x seq_len x d_model]
+            # encoder
+            enc_out, attns = self.encoder(enc_out) # enc_out: [(bs * n_vars) x seq_len x d_model]
 
-        # encoder
-        enc_out, attns = self.encoder(enc_out) # enc_out: [(bs * n_vars) x seq_len x d_model]
+            enc_out = torch.reshape(enc_out, (bs, n_vars, seq_len, -1)) # enc_out: [bs x n_vars x seq_len x d_model]
 
-        enc_out = torch.reshape(enc_out, (bs, n_vars, seq_len, -1)) # enc_out: [bs x n_vars x seq_len x d_model]
+            # decoder
+            dec_out = self.head(enc_out)  # dec_out: [bs x n_vars x pred_len]
+            dec_out = dec_out.permute(0, 2, 1) # dec_out: [bs x pred_len x n_vars]
 
-        # decoder
-        dec_out = self.head(enc_out)  # dec_out: [bs x n_vars x pred_len]
-        dec_out = dec_out.permute(0, 2, 1) # dec_out: [bs x pred_len x n_vars]
+            # de-Normalization from Non-stationary Transformer
+            dec_out = dec_out * (stdev[:, 0, :].unsqueeze(1).repeat(1, self.pred_len, 1))
+            dec_out = dec_out + (means[:, 0, :].unsqueeze(1).repeat(1, self.pred_len, 1))
 
-        # de-Normalization from Non-stationary Transformer
-        dec_out = dec_out * (stdev[:, 0, :].unsqueeze(1).repeat(1, self.pred_len, 1))
-        dec_out = dec_out + (means[:, 0, :].unsqueeze(1).repeat(1, self.pred_len, 1))
+            return dec_out
+        
+        elif self.configs.decomp == True:
+            # data shape
+            bs, seq_len, n_vars = x_enc.shape
 
-        return dec_out
+            # normalization
+            means = x_enc.mean(1, keepdim=True).detach()
+            x_enc = x_enc - means
+            stdev = torch.sqrt(torch.var(x_enc, dim=1, keepdim=True, unbiased=False) + 1e-5)
+            x_enc /= stdev
+
+            # channel independent
+            x_enc = x_enc.permute(0, 2, 1)
+            x_enc = x_enc.reshape(-1, seq_len, 1)
+
+            # decomposition
+            x_enc_s, x_enc_t = self.series_decomp(x_enc)
+
+            # embedding
+            enc_out_s = self.enc_embedding(x_enc_s)
+            enc_out_t = self.enc_embedding(x_enc_t)
+
+            # encoder
+            enc_out_s, attns = self.encoder(enc_out_s)
+            enc_out_t, attns = self.encoder(enc_out_t)
+
+            enc_out_s = torch.reshape(enc_out_s, (bs, n_vars, seq_len, -1))
+            enc_out_t = torch.reshape(enc_out_t, (bs, n_vars, seq_len, -1))
+
+            # decoder
+            dec_out_s = self.head(enc_out_s)
+            dec_out_t = self.head(enc_out_t)
+            dec_out_s = dec_out_s.permute(0, 2, 1)
+            dec_out_t = dec_out_t.permute(0, 2, 1)
+
+            
+
+            # de-Normalization from Non-stationary Transformer
+            dec_out_s = dec_out_s * (stdev[:, 0, :].unsqueeze(1).repeat(1, self.pred_len, 1))
+            dec_out_s = dec_out_s + (means[:, 0, :].unsqueeze(1).repeat(1, self.pred_len, 1))
+            
+            dec_out_t = dec_out_t * (stdev[:, 0, :].unsqueeze(1).repeat(1, self.pred_len, 1))
+            dec_out_t = dec_out_t + (means[:, 0, :].unsqueeze(1).repeat(1, self.pred_len, 1))
+
+            dec_out = dec_out_s + dec_out_t
+
+            return dec_out
 
     def pretrain_reb_agg(self, x_enc, x_mark_enc, mask):
 
@@ -246,58 +295,125 @@ class Model(nn.Module):
         return dec_out, pooler_out
 
     def pretrain(self, x_enc, x_mark_enc, batch_x, mask):
+        if self.configs.decomp == False:
+            # data shape
+            bs, seq_len, n_vars = x_enc.shape
 
-        # data shape
-        bs, seq_len, n_vars = x_enc.shape
+            # normalization
+            means = torch.sum(x_enc, dim=1) / torch.sum(mask == 1, dim=1)
+            means = means.unsqueeze(1).detach()
+            x_enc = x_enc - means
+            x_enc = x_enc.masked_fill(mask == 0, 0)
+            stdev = torch.sqrt(torch.sum(x_enc * x_enc, dim=1) / torch.sum(mask == 1, dim=1) + 1e-5)
+            stdev = stdev.unsqueeze(1).detach()
+            x_enc /= stdev
 
-        # normalization
-        means = torch.sum(x_enc, dim=1) / torch.sum(mask == 1, dim=1)
-        means = means.unsqueeze(1).detach()
-        x_enc = x_enc - means
-        x_enc = x_enc.masked_fill(mask == 0, 0)
-        stdev = torch.sqrt(torch.sum(x_enc * x_enc, dim=1) / torch.sum(mask == 1, dim=1) + 1e-5)
-        stdev = stdev.unsqueeze(1).detach()
-        x_enc /= stdev
+            # channel independent
+            x_enc = x_enc.permute(0, 2, 1) # x_enc: [bs x n_vars x seq_len]
+            x_enc = x_enc.unsqueeze(-1) # x_enc: [bs x n_vars x seq_len x 1]
+            x_enc = x_enc.reshape(-1, seq_len, 1) # x_enc: [(bs * n_vars) x seq_len x 1]
 
-        # channel independent
-        x_enc = x_enc.permute(0, 2, 1) # x_enc: [bs x n_vars x seq_len]
-        x_enc = x_enc.unsqueeze(-1) # x_enc: [bs x n_vars x seq_len x 1]
-        x_enc = x_enc.reshape(-1, seq_len, 1) # x_enc: [(bs * n_vars) x seq_len x 1]
+            # embedding
+            enc_out = self.enc_embedding(x_enc) # enc_out: [(bs * n_vars) x seq_len x d_model]
 
-        # embedding
-        enc_out = self.enc_embedding(x_enc) # enc_out: [(bs * n_vars) x seq_len x d_model]
+            # encoder
+            # point-wise representation
+            p_enc_out, attns = self.encoder(enc_out) # p_enc_out: [(bs * n_vars) x seq_len x d_model]
 
-        # encoder
-        # point-wise representation
-        p_enc_out, attns = self.encoder(enc_out) # p_enc_out: [(bs * n_vars) x seq_len x d_model]
+            # series-wise representation
+            s_enc_out = self.pooler(p_enc_out) # s_enc_out: [(bs * n_vars) x dimension]
 
-        # series-wise representation
-        s_enc_out = self.pooler(p_enc_out) # s_enc_out: [(bs * n_vars) x dimension]
+            # series weight learning
+            loss_cl, similarity_matrix, logits, positives_mask = self.contrastive(s_enc_out) # similarity_matrix: [(bs * n_vars) x (bs * n_vars)]
+            rebuild_weight_matrix, agg_enc_out = self.aggregation(similarity_matrix, p_enc_out) # agg_enc_out: [(bs * n_vars) x seq_len x d_model]
 
-        # series weight learning
-        loss_cl, similarity_matrix, logits, positives_mask = self.contrastive(s_enc_out) # similarity_matrix: [(bs * n_vars) x (bs * n_vars)]
-        rebuild_weight_matrix, agg_enc_out = self.aggregation(similarity_matrix, p_enc_out) # agg_enc_out: [(bs * n_vars) x seq_len x d_model]
+            agg_enc_out = agg_enc_out.reshape(bs, n_vars, seq_len, -1) # agg_enc_out: [bs x n_vars x seq_len x d_model]
 
-        agg_enc_out = agg_enc_out.reshape(bs, n_vars, seq_len, -1) # agg_enc_out: [bs x n_vars x seq_len x d_model]
+            # decoder
+            dec_out = self.projection(agg_enc_out)  # dec_out: [bs x n_vars x seq_len]
+            dec_out = dec_out.permute(0, 2, 1) # dec_out: [bs x seq_len x n_vars]
 
-        # decoder
-        dec_out = self.projection(agg_enc_out)  # dec_out: [bs x n_vars x seq_len]
-        dec_out = dec_out.permute(0, 2, 1) # dec_out: [bs x seq_len x n_vars]
+            # de-Normalization
+            dec_out = dec_out * (stdev[:, 0, :].unsqueeze(1).repeat(1, self.seq_len, 1))
+            dec_out = dec_out + (means[:, 0, :].unsqueeze(1).repeat(1, self.seq_len, 1))
 
-        # de-Normalization
-        dec_out = dec_out * (stdev[:, 0, :].unsqueeze(1).repeat(1, self.seq_len, 1))
-        dec_out = dec_out + (means[:, 0, :].unsqueeze(1).repeat(1, self.seq_len, 1))
+            pred_batch_x = dec_out[:batch_x.shape[0]]
 
-        pred_batch_x = dec_out[:batch_x.shape[0]]
+            # series reconstruction
+            loss_rb = self.mse(pred_batch_x, batch_x.detach())
 
-        # series reconstruction
-        loss_rb = self.mse(pred_batch_x, batch_x.detach())
+            # loss
+            loss = self.awl(loss_cl, loss_rb)
+            #print('loss_cl: {}, loss_rb: {}, loss: {}'.format(loss_cl.item(), loss_rb.item(), loss.item()))
 
-        # loss
-        loss = self.awl(loss_cl, loss_rb)
-        #print('loss_cl: {}, loss_rb: {}, loss: {}'.format(loss_cl.item(), loss_rb.item(), loss.item()))
+            return loss, loss_cl, loss_rb, positives_mask, logits, rebuild_weight_matrix, pred_batch_x
+        
+        elif self.configs.decomp == True:
+            # data shape
+            bs, seq_len, n_vars = x_enc.shape
 
-        return loss, loss_cl, loss_rb, positives_mask, logits, rebuild_weight_matrix, pred_batch_x
+            # normalization
+            means = torch.sum(x_enc, dim=1) / torch.sum(mask == 1, dim=1)
+            means = means.unsqueeze(1).detach()
+            x_enc = x_enc - means
+            x_enc = x_enc.masked_fill(mask == 0, 0)
+            stdev = torch.sqrt(torch.sum(x_enc * x_enc, dim=1) / torch.sum(mask == 1, dim=1) + 1e-5)
+            stdev = stdev.unsqueeze(1).detach()
+            x_enc /= stdev
+
+            # channel independent
+            x_enc = x_enc.permute(0, 2, 1)
+            x_enc = x_enc.unsqueeze(-1)
+            x_enc = x_enc.reshape(-1, seq_len, 1)
+
+            # decomposition
+            x_enc_s, x_enc_t = self.series_decomp(x_enc)
+
+            # embedding
+            enc_out_s = self.enc_embedding(x_enc_s)
+            enc_out_t = self.enc_embedding(x_enc_t)
+
+            # encoder
+            # point-wise representation
+            p_enc_out_s, attns = self.encoder(enc_out_s)
+            p_enc_out_t, attns = self.encoder(enc_out_t)
+
+            # series-wise representation
+            s_enc_out_s = self.pooler(p_enc_out_s)
+            s_enc_out_t = self.pooler(p_enc_out_t)
+
+            # series weight learning
+            loss_cl_s, similarity_matrix_s, logits_s, positives_mask_s = self.contrastive(s_enc_out_s)
+            loss_cl_t, similarity_matrix_t, logits_t, positives_mask_t = self.contrastive(s_enc_out_t)
+
+            rebuild_weight_matrix_s, agg_enc_out_s = self.aggregation(similarity_matrix_s, p_enc_out_s)
+            rebuild_weight_matrix_t, agg_enc_out_t = self.aggregation(similarity_matrix_t, p_enc_out_t)
+
+            agg_enc_out_s = agg_enc_out_s.reshape(bs, n_vars, seq_len, -1)
+            agg_enc_out_t = agg_enc_out_t.reshape(bs, n_vars, seq_len, -1)
+
+            # decoder
+            dec_out_s = self.projection(agg_enc_out_s)
+            dec_out_t = self.projection(agg_enc_out_t)
+            dec_out_s = dec_out_s.permute(0, 2, 1)
+            dec_out_t = dec_out_t.permute(0, 2, 1)
+
+            dec_out = dec_out_s + dec_out_t
+            # de-Normalization
+            dec_out = dec_out * (stdev[:, 0, :].unsqueeze(1).repeat(1, self.seq_len, 1))
+            dec_out = dec_out + (means[:, 0, :].unsqueeze(1).repeat(1, self.seq_len, 1))
+
+            pred_batch_x = dec_out[:batch_x.shape[0]]
+
+            # series reconstruction
+            loss_rb = self.mse(pred_batch_x, batch_x.detach())
+
+            # loss
+            loss_cl = loss_cl_s + loss_cl_t
+            loss = self.awl(loss_cl, loss_rb)
+
+            return loss, loss_cl, loss_rb, positives_mask_s, logits_s, rebuild_weight_matrix_s, pred_batch_x
+
 
     def forward(self, x_enc, x_mark_enc, batch_x=None, mask=None):
 
