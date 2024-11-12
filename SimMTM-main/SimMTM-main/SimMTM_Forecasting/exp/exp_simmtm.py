@@ -74,6 +74,7 @@ class Exp_SimMTM(Exp_Basic):
 
         # pre-training
         min_vali_loss = None
+        earlystop_cnt = 0
         for epoch in range(self.args.train_epochs):
             start_time = time.time()
 
@@ -100,6 +101,7 @@ class Exp_SimMTM(Exp_Basic):
 
             # checkpoint saving
             if not min_vali_loss or vali_loss <= min_vali_loss:
+                earlystop_cnt = 0
                 if epoch == 0:
                     min_vali_loss = vali_loss
 
@@ -115,21 +117,26 @@ class Exp_SimMTM(Exp_Basic):
                         self.encoder_state_dict[k] = v
                 encoder_ckpt = {'epoch': epoch, 'model_state_dict': self.encoder_state_dict}
                 torch.save(encoder_ckpt, os.path.join(path, f"ckpt_best.pth"))
-
-            if (epoch + 1) % 10 == 0:
-                print("Saving model at epoch {}...".format(epoch + 1))
-
-                self.encoder_state_dict = OrderedDict()
-                for k, v in self.model.state_dict().items():
-                    if 'encoder' in k or 'enc_embedding' in k:
-                        if 'module.' in k:
-                            k = k.replace('module.', '')
-                        self.encoder_state_dict[k] = v
-                encoder_ckpt = {'epoch': epoch, 'model_state_dict': self.encoder_state_dict}
-                torch.save(encoder_ckpt, os.path.join(path, f"ckpt{epoch + 1}.pth"))
-
-                self.show(5, epoch + 1, 'train')
-                self.show(5, epoch + 1, 'valid')
+            else:
+                earlystop_cnt += 1
+                print(f"Early stopping count: {earlystop_cnt}")
+                if earlystop_cnt >= self.args.patience:
+                    print("Early stopping")
+                    break
+            #if (epoch + 1) % 10 == 0:
+            #    print("Saving model at epoch {}...".format(epoch + 1))
+            #
+            #    self.encoder_state_dict = OrderedDict()
+            #    for k, v in self.model.state_dict().items():
+            #        if 'encoder' in k or 'enc_embedding' in k:
+            #            if 'module.' in k:
+            #                k = k.replace('module.', '')
+            #            self.encoder_state_dict[k] = v
+            #    encoder_ckpt = {'epoch': epoch, 'model_state_dict': self.encoder_state_dict}
+            #    torch.save(encoder_ckpt, os.path.join(path, f"ckpt{epoch + 1}.pth"))
+            #
+            #    self.show(5, epoch + 1, 'train')
+            #    self.show(5, epoch + 1, 'valid')
 
     def pretrain_one_epoch(self, train_loader, model_optim, model_scheduler):
 
