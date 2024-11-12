@@ -172,7 +172,7 @@ class Model(nn.Module):
             self.head = Flatten_Head(configs.seq_len, configs.d_model, configs.pred_len, head_dropout=configs.head_dropout)
 
     def forecast(self, x_enc, x_mark_enc):
-        if self.configs.decomp == False:
+        if self.configs.decomp == 0:
             # data shape
             bs, seq_len, n_vars = x_enc.shape
 
@@ -206,7 +206,7 @@ class Model(nn.Module):
 
             return dec_out
         
-        elif self.configs.decomp == True:
+        elif self.configs.decomp == 1:
             # data shape
             bs, seq_len, n_vars = x_enc.shape
 
@@ -295,7 +295,7 @@ class Model(nn.Module):
         return dec_out, pooler_out
 
     def pretrain(self, x_enc, x_mark_enc, batch_x, mask):
-        if self.configs.decomp == False:
+        if self.configs.decomp == 0:
             # data shape
             bs, seq_len, n_vars = x_enc.shape
 
@@ -348,7 +348,7 @@ class Model(nn.Module):
 
             return loss, loss_cl, loss_rb, positives_mask, logits, rebuild_weight_matrix, pred_batch_x
         
-        elif self.configs.decomp == True:
+        elif self.configs.decomp == 1:
             # data shape
             bs, seq_len, n_vars = x_enc.shape
 

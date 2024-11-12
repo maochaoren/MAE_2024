@@ -8,7 +8,7 @@ python -u run.py \
     --model SimMTM \
     --data ETTh1 \
     --features M \
-    --decomp True \
+    --decomp 0 \
     --seq_len 336 \
     --e_layers 1 \
     --enc_in 7 \
