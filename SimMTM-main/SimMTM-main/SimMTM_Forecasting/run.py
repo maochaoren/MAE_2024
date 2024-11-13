@@ -173,6 +173,7 @@ if __name__ == '__main__':
                 args.learning_rate
             )
             args.load_checkpoints = os.path.join(args.pretrain_checkpoints, args.data, args.transfer_checkpoints)
+            print(args.load_checkpoints)
             exp = Exp(args)  # set experiments
             print('>>>>>>>start training : {}>>>>>>>>>>>>>>>>>>>>>>>>>>'.format(setting))
             exp.train(setting)

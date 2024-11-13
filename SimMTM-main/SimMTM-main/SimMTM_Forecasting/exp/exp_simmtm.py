@@ -354,7 +354,8 @@ class Exp_SimMTM(Exp_Basic):
                 
 
                 # record
-                total_loss.append(loss)
+                
+                total_loss.append(loss.cpu().numpy())
 
         total_loss = np.average(total_loss)
         self.model.train()
