@@ -71,6 +71,8 @@ class Exp_SimMTM(Exp_Basic):
         #model_optim.add_param_group({'params': self.awl.parameters(), 'weight_decay': 0})
         model_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer=model_optim,
                                                                      T_max=self.args.train_epochs)
+        # 初始化 GradScaler
+        scaler = torch.cuda.amp.GradScaler()
 
         # pre-training
         min_vali_loss = None
@@ -78,8 +80,8 @@ class Exp_SimMTM(Exp_Basic):
         for epoch in range(self.args.train_epochs):
             start_time = time.time()
 
-            train_loss, train_cl_loss, train_rb_loss = self.pretrain_one_epoch(train_loader, model_optim, model_scheduler)
-            vali_loss, valid_cl_loss, valid_rb_loss = self.valid_one_epoch(vali_loader)
+            train_loss, train_cl_loss, train_rb_loss = self.pretrain_one_epoch(train_loader, model_optim, model_scheduler, scaler)
+            vali_loss, valid_cl_loss, valid_rb_loss = self.valid_one_epoch(vali_loader, scaler)
 
             # log and Loss
             end_time = time.time()
@@ -138,7 +140,7 @@ class Exp_SimMTM(Exp_Basic):
             #    self.show(5, epoch + 1, 'train')
             #    self.show(5, epoch + 1, 'valid')
 
-    def pretrain_one_epoch(self, train_loader, model_optim, model_scheduler):
+    def pretrain_one_epoch(self, train_loader, model_optim, model_scheduler, scaler):
 
         train_loss = []
         train_cl_loss = []
@@ -177,11 +179,13 @@ class Exp_SimMTM(Exp_Basic):
             batch_x_mark = batch_x_mark.float().to(self.device)
 
             # encoder
-            loss, loss_cl, loss_rb, _, _, _, _ = self.model(batch_x_om, batch_x_mark, batch_x, mask=mask_om)
+            with torch.cuda.amp.autocast():
+                loss, loss_cl, loss_rb, _, _, _, _ = self.model(batch_x_om, batch_x_mark, batch_x, mask=mask_om)
 
             # backward
-            loss.backward()
-            model_optim.step()
+            scaler.scale(loss).backward()
+            scaler.step(model_optim)
+            scaler.update()
 
             # record
             train_loss.append(loss.item())
@@ -219,7 +223,8 @@ class Exp_SimMTM(Exp_Basic):
             batch_x_mark = batch_x_mark.float().to(self.device)
 
             # encoder
-            loss, loss_cl, loss_rb, _, _, _, _ = self.model(batch_x_om, batch_x_mark, batch_x, mask=mask_om)
+            with torch.cuda.amp.autocast():
+                loss, loss_cl, loss_rb, _, _, _, _ = self.model(batch_x_om, batch_x_mark, batch_x, mask=mask_om)
 
             # Record
             valid_loss.append(loss.item())
@@ -255,6 +260,7 @@ class Exp_SimMTM(Exp_Basic):
                                             pct_start=self.args.pct_start,
                                             epochs=self.args.train_epochs,
                                             max_lr=self.args.learning_rate)
+        scaler = torch.cuda.amp.GradScaler()
 
         for epoch in range(self.args.train_epochs):
             iter_count = 0
@@ -283,17 +289,21 @@ class Exp_SimMTM(Exp_Basic):
                 batch_x_mark = batch_x_mark.float().to(self.device)
 
                 # encoder
-                outputs = self.model(batch_x, batch_x_mark)
+                with torch.cuda.amp.autocast():
+                    outputs = self.model(batch_x, batch_x_mark)
 
-                f_dim = -1 if self.args.features == 'MS' else 0
+                    f_dim = -1 if self.args.features == 'MS' else 0
 
-                outputs = outputs[:, -self.args.pred_len:, f_dim:]
-                batch_y = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)
+                    outputs = outputs[:, -self.args.pred_len:, f_dim:]
+                    batch_y = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)
 
-                # loss
-                loss = criterion(outputs, batch_y)
-                loss.backward()
-                model_optim.step()
+                    # loss
+                    loss = criterion(outputs, batch_y)
+
+                # backward
+                scaler.scale(loss).backward()
+                scaler.step(model_optim)
+                scaler.update()
 
                 # record
                 train_loss.append(loss.item())
@@ -320,7 +330,7 @@ class Exp_SimMTM(Exp_Basic):
 
         return self.model
 
-    def vali(self, vali_loader, criterion):
+    def vali(self, vali_loader, criterion, scaler):
         total_loss = []
 
         self.model.eval()
@@ -331,15 +341,17 @@ class Exp_SimMTM(Exp_Basic):
                 batch_x_mark = batch_x_mark.float().to(self.device)
 
                 # encoder
-                outputs = self.model(batch_x, batch_x_mark)
+                with torch.cuda.amp.autocast():
+                    outputs = self.model(batch_x, batch_x_mark)
 
-                # loss
-                f_dim = -1 if self.args.features == 'MS' else 0
-                outputs = outputs[:, -self.args.pred_len:, f_dim:]
-                batch_y = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)
+                    # loss
+                    f_dim = -1 if self.args.features == 'MS' else 0
+                    outputs = outputs[:, -self.args.pred_len:, f_dim:]
+                    batch_y = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)
+                    loss = criterion(outputs, batch_y)
                 pred = outputs.detach().cpu()
                 true = batch_y.detach().cpu()
-                loss = criterion(pred, true)
+                
 
                 # record
                 total_loss.append(loss)
