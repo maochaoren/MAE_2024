@@ -330,7 +330,7 @@ class Exp_SimMTM(Exp_Basic):
 
         return self.model
 
-    def vali(self, vali_loader, criterion, scaler):
+    def vali(self, vali_loader, criterion):
         total_loss = []
 
         self.model.eval()
