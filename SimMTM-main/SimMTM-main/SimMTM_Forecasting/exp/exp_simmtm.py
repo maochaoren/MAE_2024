@@ -81,7 +81,7 @@ class Exp_SimMTM(Exp_Basic):
             start_time = time.time()
 
             train_loss, train_cl_loss, train_rb_loss = self.pretrain_one_epoch(train_loader, model_optim, model_scheduler, scaler)
-            vali_loss, valid_cl_loss, valid_rb_loss = self.valid_one_epoch(vali_loader, scaler)
+            vali_loss, valid_cl_loss, valid_rb_loss = self.valid_one_epoch(vali_loader)
 
             # log and Loss
             end_time = time.time()
