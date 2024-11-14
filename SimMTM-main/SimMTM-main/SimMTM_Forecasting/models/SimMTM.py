@@ -265,16 +265,12 @@ class Model(nn.Module):
         dec_out_t = self.head_t(enc_out_t)
         dec_out_s = dec_out_s.permute(0, 2, 1)
         dec_out_t = dec_out_t.permute(0, 2, 1)
-        # de-Normalization from Non-stationary Transformer
-        dec_out_s = dec_out_s * (stdev[:, 0, :].unsqueeze(1).repeat(1, self.pred_len, 1))
-        dec_out_s = dec_out_s + (means[:, 0, :].unsqueeze(1).repeat(1, self.pred_len, 1))
-        dec_out_t = dec_out_t * (stdev[:, 0, :].unsqueeze(1).repeat(1, self.pred_len, 1))
-        dec_out_t = dec_out_t + (means[:, 0, :].unsqueeze(1).repeat(1, self.pred_len, 1))
+        # add & de-Normalization from Non-stationary Transformer
         dec_out = dec_out_s + dec_out_t
+        dec_out = dec_out * (stdev[:, 0, :].unsqueeze(1).repeat(1, self.pred_len, 1))
+        dec_out = dec_out + (means[:, 0, :].unsqueeze(1).repeat(1, self.pred_len, 1))
+
         return dec_out
-
-
-
             
     def pretrain_reb_agg(self, x_enc, x_mark_enc, mask):
 
@@ -429,9 +425,9 @@ class Model(nn.Module):
 
         if self.task_name == 'pretrain':
             if not self.configs.decomp:
-                return self.pretrain(x_enc, x_mark_enc, mask)
+                return self.pretrain(x_enc, x_mark_enc,batch_x, mask)
             else:
-                return self.pretrain_decomp(x_enc, x_mark_enc, batch_x, mask)
+                return self.pretrain_decomp(x_enc, x_mark_enc, batch_x,batch_x, mask)
         if self.task_name == 'finetune':
             if not self.configs.decomp:
                 dec_out = self.forecast(x_enc, x_mark_enc)
