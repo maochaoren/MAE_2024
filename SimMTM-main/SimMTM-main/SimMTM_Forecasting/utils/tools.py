@@ -172,6 +172,8 @@ def transfer_weights(weights_path, model, exclude_head=True, device='cpu'):
         raise Exception("No shared weight names were found between the models")
     else:
         if len(unmatched_layers) > 0:
+            print(matched_layers, "weights from the weights file were successfully transferred, but the following layers were unmatched:")
+            print(f'check unmatched_layers num: {len(unmatched_layers)}')
             print(f'check unmatched_layers: {unmatched_layers}')
         else:
             print(f"weights from {weights_path} successfully transferred!\n")
