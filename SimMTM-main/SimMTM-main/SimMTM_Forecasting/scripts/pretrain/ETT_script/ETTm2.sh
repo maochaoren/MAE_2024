@@ -1,4 +1,4 @@
-export CUDA_VISIBLE_DEVICES=0,1
+export CUDA_VISIBLE_DEVICES=7
 
 python -u run.py \
     --task_name pretrain \
@@ -9,15 +9,17 @@ python -u run.py \
     --data ETTm2 \
     --features M \
     --seq_len 336 \
-    --e_layers 3 \
+    --e_layers 1 \
     --enc_in 7 \
     --dec_in 7 \
     --c_out 7 \
-    --n_heads 8 \
-    --d_model 8 \
-    --d_ff 16 \
-    --positive_nums 2 \
+    --n_heads 16 \
+    --d_model 16 \
+    --d_ff 64 \
+    --positive_nums 3 \
     --mask_rate 0.5 \
     --learning_rate 0.001 \
-    --batch_size 16 \
+    --batch_size 8 \
     --train_epochs 50
+
+

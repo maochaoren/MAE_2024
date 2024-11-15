@@ -6,10 +6,10 @@ python -u run.py \
     --data_path ETTh2.csv \
     --model_id ETTh2 \
     --model SimMTM \
-    --data ETTh1 \
+    --data ETTh2 \
     --features M \
     --seq_len 336 \
-    --e_layers 2 \
+    --e_layers 1 \
     --enc_in 7 \
     --dec_in 7 \
     --c_out 7 \
@@ -19,7 +19,7 @@ python -u run.py \
     --positive_nums 3 \
     --mask_rate 0.5 \
     --learning_rate 0.001 \
-    --batch_size 4 \
+    --batch_size 8 \
     --train_epochs 50
 
 
