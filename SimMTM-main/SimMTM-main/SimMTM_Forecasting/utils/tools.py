@@ -169,8 +169,11 @@ def transfer_weights(weights_path, model, exclude_head=True, device='cpu'):
                 unmatched_layers.append(name)
         else:
             unmatched_layers.append(name)
-            unmatched_layers_shapes.append(param.shape)
-            unmatched_layers_pretrain_shapes.append(new_state_dict[name].shape)
+            print(f"unmatched layer: {name}")
+            print(f"unmatched layer shape: {param.shape}")
+            print(f"unmatched layer pretrain shape: {new_state_dict[name].shape}")
+            #unmatched_layers_shapes.append(param.shape)
+            #unmatched_layers_pretrain_shapes.append(new_state_dict[name].shape)
             pass # these are weights that weren't in the original model, such as a new head
     if matched_layers == 0:
         raise Exception("No shared weight names were found between the models")
@@ -179,10 +182,10 @@ def transfer_weights(weights_path, model, exclude_head=True, device='cpu'):
             print(matched_layers, "weights from the weights file were successfully transferred, but the following layers were unmatched:")
             print(f'check unmatched_layers num: {len(unmatched_layers)}')
             print(f'check unmatched_layers: {unmatched_layers}')
-            for i in range(len(unmatched_layers)):
-                print(f"unmatched layer: {unmatched_layers[i]}")
-                print(f"unmatched layer shape: {unmatched_layers_shapes[i]}")
-                print(f"unmatched layer pretrain shape: {unmatched_layers_pretrain_shapes[i]}")
+            #for i in range(len(unmatched_layers)):
+            #    print(f"unmatched layer: {unmatched_layers[i]}")
+            #    print(f"unmatched layer shape: {unmatched_layers_shapes[i]}")
+            #    print(f"unmatched layer pretrain shape: {unmatched_layers_pretrain_shapes[i]}")
         else:
             print(f"weights from {weights_path} successfully transferred!\n")
     model = model.to(device)
