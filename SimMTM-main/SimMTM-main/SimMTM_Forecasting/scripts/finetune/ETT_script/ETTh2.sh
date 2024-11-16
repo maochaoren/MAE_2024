@@ -1,4 +1,4 @@
-export CUDA_VISIBLE_DEVICES=2
+export CUDA_VISIBLE_DEVICES=3
 
 for pred_len in 96 192 336 720; do
     python -u run.py \
@@ -19,7 +19,7 @@ for pred_len in 96 192 336 720; do
         --c_out 7 \
         --n_heads 16 \
         --d_model 16 \
-        --d_ff 64 \
+        --d_ff 32 \
         --dropout 0.2 \
         --batch_size 16
 done
