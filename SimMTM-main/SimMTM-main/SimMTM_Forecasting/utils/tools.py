@@ -167,11 +167,11 @@ def transfer_weights(weights_path, model, exclude_head=True, device='cpu'):
                 param.copy_(input_param)
             else:
                 unmatched_layers.append(name)
+                print(f"unmatched layer: {name}")
+                print(f"unmatched layer shape: {param.shape}")
+                print(f"unmatched layer pretrain shape: {new_state_dict[name].shape}")
         else:
             unmatched_layers.append(name)
-            print(f"unmatched layer: {name}")
-            print(f"unmatched layer shape: {param.shape}")
-            print(f"unmatched layer pretrain shape: {new_state_dict[name].shape}")
             #unmatched_layers_shapes.append(param.shape)
             #unmatched_layers_pretrain_shapes.append(new_state_dict[name].shape)
             pass # these are weights that weren't in the original model, such as a new head
