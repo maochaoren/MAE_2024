@@ -256,8 +256,8 @@ class Model(nn.Module):
         enc_out_s = self.enc_embedding(x_enc_s)
         enc_out_t = self.enc_embedding(x_enc_t)
         # encoder
-        enc_out_s, attns = self.encoder(enc_out_s)
-        enc_out_t, attns = self.encoder(enc_out_t)
+        enc_out_s, attns = self.encoder_s(enc_out_s)
+        enc_out_t, attns = self.encoder_t(enc_out_t)
         enc_out_s = torch.reshape(enc_out_s, (bs, n_vars, seq_len, -1))
         enc_out_t = torch.reshape(enc_out_t, (bs, n_vars, seq_len, -1))
         # decoder
