@@ -8,9 +8,9 @@ python -u run.py \
     --model SimMTM \
     --data ETTh1 \
     --features M \
-    --decomp 0 \
+    --decomp 1 \
     --seq_len 336 \
-    --e_layers 1 \
+    --e_layers 2 \
     --enc_in 7 \
     --dec_in 7 \
     --c_out 7 \

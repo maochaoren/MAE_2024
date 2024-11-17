@@ -10,7 +10,7 @@ python -u run.py \
     --features M \
     --decomp 0 \
     --seq_len 336 \
-    --e_layers 1 \
+    --e_layers 2 \
     --enc_in 7 \
     --dec_in 7 \
     --c_out 7 \

@@ -427,7 +427,7 @@ class Model(nn.Module):
             if not self.configs.decomp:
                 return self.pretrain(x_enc, x_mark_enc,batch_x, mask)
             else:
-                return self.pretrain_decomp(x_enc, x_mark_enc, batch_x,batch_x, mask)
+                return self.pretrain_decomp(x_enc, x_mark_enc, batch_x, mask)
         if self.task_name == 'finetune':
             if not self.configs.decomp:
                 dec_out = self.forecast(x_enc, x_mark_enc)
