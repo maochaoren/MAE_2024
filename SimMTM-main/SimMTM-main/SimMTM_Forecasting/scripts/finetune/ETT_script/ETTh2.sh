@@ -10,6 +10,7 @@ for pred_len in 96 192 336 720; do
         --model SimMTM \
         --data ETTh2 \
         --features M \
+        --decomp 1 \
         --seq_len 336 \
         --label_len 48 \
         --pred_len $pred_len \

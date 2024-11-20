@@ -1,4 +1,4 @@
-export CUDA_VISIBLE_DEVICES=4
+export CUDA_VISIBLE_DEVICES=0
 
 python -u run.py \
     --task_name pretrain \
@@ -9,6 +9,8 @@ python -u run.py \
     --data ETTh1 \
     --features M \
     --decomp 1 \
+    --patching_s 1 \
+    --patch_len_s 24 \
     --seq_len 336 \
     --e_layers 2 \
     --enc_in 7 \
@@ -20,7 +22,7 @@ python -u run.py \
     --positive_nums 3 \
     --mask_rate 0.5 \
     --learning_rate 0.001 \
-    --batch_size 8 \
+    --batch_size 4 \
     --train_epochs 50 
 
 

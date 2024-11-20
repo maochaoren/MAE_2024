@@ -1,4 +1,4 @@
-xport CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=0
 
 for pred_len in 96 192 336 720; do
     python -u run.py \
@@ -10,6 +10,7 @@ for pred_len in 96 192 336 720; do
         --model SimMTM \
         --data ETTm2 \
         --features M \
+        --decomp 1 \
         --seq_len 336 \
         --label_len 48 \
         --pred_len $pred_len \

@@ -135,7 +135,15 @@ class Model(nn.Module):
         elif configs.decomp_method=='fft':
             self.series_decomp=fft_decomp(st_sep=configs.st_sep,padding_rate=9,lpf=0)
         self.topk_freq=topk_fft_decomp(k=configs.top_k_fft)
+        self.patching_s=configs.patching_s
+        self.patching_t=configs.patching_t
 
+        if self.patching_t:
+            self.stride=configs.stride  
+            self.patch_len_t = configs.patch_len_t
+
+        if self.patching_s:
+            self.patch_len_s = configs.patch_len_s
         # Embedding
         self.enc_embedding = DataEmbedding(1, configs.d_model, configs.embed, configs.freq, configs.dropout)
 
@@ -198,7 +206,7 @@ class Model(nn.Module):
                 self.projection_s = Flatten_Head(configs.seq_len, configs.d_model, configs.seq_len, head_dropout=configs.head_dropout)
                 self.projection_t = Flatten_Head(configs.seq_len, configs.d_model, configs.seq_len, head_dropout=configs.head_dropout)
 
-                self.pooler_s = Pooler_Head(configs.seq_len, configs.d_model, head_dropout=configs.head_dropout)
+                self.pooler_s = Pooler_Head(configs.patch_len_s if configs.patching_s else  configs.seq_len, configs.d_model, head_dropout=configs.head_dropout)
                 self.pooler_t = Pooler_Head(configs.seq_len, configs.d_model, head_dropout=configs.head_dropout)
 
             self.awl = AutomaticWeightedLoss(2)
@@ -385,6 +393,10 @@ class Model(nn.Module):
         p_enc_out_t, attns = self.encoder_t(enc_out_t)
 
         # series-wise representation
+        if self.patching_s:
+            # p_enc_out_s : [(bs*n_vars)*patch_num x self.patch_len_s x d_model]
+            p_enc_out_s = p_enc_out_s.reshape(-1, self.patch_len_s, self.configs.d_model)
+        
         s_enc_out_s = self.pooler_s(p_enc_out_s)
         s_enc_out_t = self.pooler_t(p_enc_out_t)
 
@@ -394,6 +406,7 @@ class Model(nn.Module):
 
         rebuild_weight_matrix_s, agg_enc_out_s = self.aggregation(similarity_matrix_s, p_enc_out_s)
         rebuild_weight_matrix_t, agg_enc_out_t = self.aggregation(similarity_matrix_t, p_enc_out_t)
+
 
         agg_enc_out_s = agg_enc_out_s.reshape(bs, n_vars, seq_len, -1)
         agg_enc_out_t = agg_enc_out_t.reshape(bs, n_vars, seq_len, -1)

@@ -69,6 +69,13 @@ if __name__ == '__main__':
     parser.add_argument('--st_sep', type=int, default=24, help='threshold of fft season-trend decomposition')
     parser.add_argument('--top_k_fft', type=int, default=25, help='Top-k strongest frequency selection')
 
+    #patching
+    parser.add_argument('--patching_s', type=int, default=0, help='whether to use patching for seasonal part')
+    parser.add_argument('--patching_t', type=int, default=0, help='whether to use patching for trend part')
+    parser.add_argument('--patch_len_s', type=int, default=24, help='patch length of seasonal part')
+    parser.add_argument('--patch_len_t', type=int, default=16, help='patch length of trend part')
+    parser.add_argument('--stride', type=int, default=8, help='stride of patching')
+
     # optimization
     parser.add_argument('--num_workers', type=int, default=5, help='data loader num workers')
     parser.add_argument('--itr', type=int, default=1, help='experiments times')
