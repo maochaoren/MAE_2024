@@ -21,6 +21,6 @@ python -u run.py \
     --mask_rate 0.5 \
     --learning_rate 0.001 \
     --batch_size 8 \
-    --train_epochs 50
+    --train_epochs 15
 
 

@@ -1,6 +1,6 @@
-export CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=5
 
-python -u run.py \
+nohup python -u run.py \
     --task_name pretrain \
     --root_path ./dataset/ETT-small/ \
     --data_path ETTh1.csv \
@@ -10,7 +10,7 @@ python -u run.py \
     --features M \
     --decomp 1 \
     --patching_s 1 \
-    --patch_len_s 24 \
+    --patch_len_s 12 \
     --seq_len 336 \
     --e_layers 2 \
     --enc_in 7 \
@@ -23,6 +23,7 @@ python -u run.py \
     --mask_rate 0.5 \
     --learning_rate 0.001 \
     --batch_size 4 \
-    --train_epochs 50 
+    --train_epochs 15  \
+     > ./output_log/ETTh1.log 2>&1 &
 
 
