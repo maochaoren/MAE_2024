@@ -336,3 +336,53 @@ class AggregationRebuild(torch.nn.Module):
         rebuild_oral_batch_emb = rebuild_batch_emb.reshape(cur_batch_shape[0], cur_batch_shape[1], -1)
 
         return rebuild_weight_matrix, rebuild_oral_batch_emb
+
+class moving_avg(nn.Module):
+    def __init__(self, kernel_size, stride):
+        super(moving_avg, self).__init__()
+        self.kernel_size = kernel_size
+        self.avg = nn.AvgPool1d(kernel_size=kernel_size, stride=stride, padding=0)
+
+    def forward(self, x):
+        # padding on the both ends of time series (same pad)
+        front = x[:, 0:1, :].repeat(1, (self.kernel_size - 1) // 2, 1)
+        end = x[:, -1:, :].repeat(1, (self.kernel_size - 1) // 2, 1)
+        x = torch.cat([front, x, end], dim=1)
+        x = self.avg(x.permute(0, 2, 1))
+        x = x.permute(0, 2, 1)
+        return x
+
+class series_decomp(nn.Module):
+    def __init__(self, kernel_size):
+        super(series_decomp, self).__init__()
+        self.moving_avg = moving_avg(kernel_size, stride=1)
+
+    def forward(self, x):
+        moving_mean = self.moving_avg(x)
+        res = x - moving_mean
+        return res, moving_mean #s t
+    
+class fft_decomp(nn.Module):
+    def __init__(self,st_sep,padding_rate=9,lpf=0):
+        super(fft_decomp,self).__init__()
+        self.st_sep=st_sep
+        self.lpf=lpf
+        self.padding_rate=padding_rate
+    def forward(self,x):
+        _,L,_=x.shape
+        padding=nn.Parameter(torch.zeros(x.shape[0],L*self.padding_rate,x.shape[2])).to(x.device)
+        x=torch.cat([x,padding],dim=1)
+        x_fft=torch.fft.rfft(x,dim=1)
+        x_s=x_fft.clone()
+        x_t=x_fft.clone()
+        x_s[:,:int(self.st_sep*(self.padding_rate+1)),:]=0
+        x_t=x_fft-x_s
+
+        if self.lpf>0:
+            x_s[:,int(self.lpf*(self.padding_rate+1)):,:]=0
+        
+
+        x_s=torch.fft.irfft(x_s,dim=1)[:,:L,:]
+        x_t=torch.fft.irfft(x_t,dim=1)[:,:L,:]
+
+        return x_s,x_t

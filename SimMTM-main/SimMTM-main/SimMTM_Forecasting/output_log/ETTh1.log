@@ -1,51 +1,29 @@
 Args in experiment:
-Namespace(task_name='pretrain', is_training=1, model_id='ETTh1', model='SimMTM', data='ETTh1', root_path='./dataset/ETT-small/', data_path='ETTh1.csv', features='M', target='OT', freq='h', checkpoints='./outputs/checkpoints/', pretrain_checkpoints='./outputs/pretrain_checkpoints/', transfer_checkpoints='ckpt_best.pth', load_checkpoints=None, select_channels=1, seq_len=336, label_len=48, pred_len=96, seasonal_patterns='Monthly', top_k=5, num_kernels=3, enc_in=7, dec_in=7, c_out=7, d_model=16, n_heads=16, e_layers=2, d_layers=1, d_ff=64, moving_avg=25, factor=1, distil=True, dropout=0.1, fc_dropout=0, head_dropout=0.1, embed='timeF', activation='gelu', output_attention=False, individual=0, pct_start=0.3, decomp=1, decomp_method='mov_avg', window_size=97, st_sep=24, top_k_fft=25, patching_s=1, patching_t=0, patch_len_s=24, patch_len_t=16, stride=8, num_workers=5, itr=1, train_epochs=15, batch_size=4, patience=3, learning_rate=0.001, des='test', loss='MSE', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0', lm=3, positive_nums=3, rbtp=1, temperature=0.2, masked_rule='geometric', mask_rate=0.5)
+Namespace(task_name='pretrain', is_training=1, model_id='ETTh1', model='SimMTM', data='ETTh1', root_path='./dataset/ETT-small/', data_path='ETTh1.csv', features='M', target='OT', freq='h', checkpoints='./outputs/checkpoints/', pretrain_checkpoints='./outputs/pretrain_checkpoints/', transfer_checkpoints='ckpt_best.pth', load_checkpoints=None, select_channels=1, seq_len=336, label_len=48, pred_len=96, seasonal_patterns='Monthly', top_k=5, num_kernels=3, enc_in=7, dec_in=7, c_out=7, d_model=4, n_heads=4, e_layers=1, d_layers=1, d_ff=64, moving_avg=25, factor=1, distil=True, dropout=0.1, fc_dropout=0, head_dropout=0.1, embed='timeF', activation='gelu', output_attention=False, individual=0, pct_start=0.3, decomp=1, decomp_method='mov_avg', window_size=97, st_sep=24, top_k_fft=25, patching_s=1, patching_t=0, patch_len_s=24, patch_len_t=16, stride=8, num_workers=5, itr=1, train_epochs=15, batch_size=1, patience=3, learning_rate=0.001, des='test', loss='MSE', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0', lm=3, positive_nums=1, rbtp=1, temperature=0.2, masked_rule='geometric', mask_rate=0.5)
 Use GPU: cuda:0
-number of model params 18344146
->>>>>>>start pre_training : pretrain_SimMTM_ETTh1_M_isdec1_decmetmov_avg_win97_sep24_topk25_sl336_ll48_pl96_dm16_df64_nh16_el2_dl1_fc1_dp0.1_hdp0.1_ep15_bs4_lr0.001_lm3_pn3_mr0.5_tp0.2>>>>>>>>>>>>>>>>>>>>>>>>>>
+number of model params 1861383
+>>>>>>>start pre_training : pretrain_SimMTM_ETTh1_M_isdec1_decmetmov_avg_win97_sep24_topk25_sl336_ll48_pl96_dm4_df64_nh4_el1_dl1_fc1_dp0.1_hdp0.1_ep15_bs1_lr0.001_lm3_pn1_mr0.5_tp0.2>>>>>>>>>>>>>>>>>>>>>>>>>>
 <class 'numpy.ndarray'>
 (8640, 7)
-train 8209 2052
+train 8209 8209
 <class 'numpy.ndarray'>
 (3216, 7)
-val 2785 696
+val 2785 2785
+torch.Size([1, 1, 336, 7])
+torch.Size([1, 1, 336, 7])
 Traceback (most recent call last):
   File "/data1/home/xurui/MAE_2024/SimMTM-main/SimMTM-main/SimMTM_Forecasting/run.py", line 153, in <module>
     exp.pretrain()
-  File "/data1/home/xurui/MAE_2024/SimMTM-main/SimMTM-main/SimMTM_Forecasting/exp/exp_simmtm.py", line 83, in pretrain
+  File "/data1/home/xurui/MAE_2024/SimMTM-main/SimMTM-main/SimMTM_Forecasting/exp/exp_simmtm.py", line 84, in pretrain
     train_loss, train_cl_s_loss, train_cl_t_loss, train_rb_loss = self.pretrain_one_epoch(train_loader, model_optim, model_scheduler, scaler)
-  File "/data1/home/xurui/MAE_2024/SimMTM-main/SimMTM-main/SimMTM_Forecasting/exp/exp_simmtm.py", line 187, in pretrain_one_epoch
-    loss, loss_cl_s, loss_cl_t, loss_rb, _, _, _, _ = self.model(batch_x_om, batch_x_mark, batch_x, mask=mask_om)
+  File "/data1/home/xurui/MAE_2024/SimMTM-main/SimMTM-main/SimMTM_Forecasting/exp/exp_simmtm.py", line 174, in pretrain_one_epoch
+    loss, loss_cl_s, loss_cl_t, loss_rb, _, _, _, _ = self.model( batch_x,batch_x_mark)
   File "/data1/home/xurui/.conda/envs/py3.9/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
     return self._call_impl(*args, **kwargs)
   File "/data1/home/xurui/.conda/envs/py3.9/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
     return forward_call(*args, **kwargs)
-  File "/data1/home/xurui/MAE_2024/SimMTM-main/SimMTM-main/SimMTM_Forecasting/models/SimMTM.py", line 442, in forward
-    return self.pretrain_decomp(x_enc, x_mark_enc, batch_x, mask)
-  File "/data1/home/xurui/MAE_2024/SimMTM-main/SimMTM-main/SimMTM_Forecasting/models/SimMTM.py", line 393, in pretrain_decomp
-    p_enc_out_t, attns = self.encoder_t(enc_out_t)
-  File "/data1/home/xurui/.conda/envs/py3.9/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-  File "/data1/home/xurui/.conda/envs/py3.9/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/data1/home/xurui/MAE_2024/SimMTM-main/SimMTM-main/SimMTM_Forecasting/layers/Transformer_EncDec.py", line 74, in forward
-    x, attn = attn_layer(x, attn_mask=attn_mask, tau=tau, delta=delta)
-  File "/data1/home/xurui/.conda/envs/py3.9/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-  File "/data1/home/xurui/.conda/envs/py3.9/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/data1/home/xurui/MAE_2024/SimMTM-main/SimMTM-main/SimMTM_Forecasting/layers/Transformer_EncDec.py", line 40, in forward
-    new_x, attn = self.attention(
-  File "/data1/home/xurui/.conda/envs/py3.9/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-  File "/data1/home/xurui/.conda/envs/py3.9/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/data1/home/xurui/MAE_2024/SimMTM-main/SimMTM-main/SimMTM_Forecasting/layers/SelfAttention_Family.py", line 202, in forward
-    out, attn = self.inner_attention(
-  File "/data1/home/xurui/.conda/envs/py3.9/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-  File "/data1/home/xurui/.conda/envs/py3.9/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/data1/home/xurui/MAE_2024/SimMTM-main/SimMTM-main/SimMTM_Forecasting/layers/SelfAttention_Family.py", line 38, in forward
-    A = self.dropout(torch.softmax(scale * scores, dim=-1))
-torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 772.00 MiB. GPU 
+  File "/data1/home/xurui/MAE_2024/SimMTM-main/SimMTM-main/SimMTM_Forecasting/models/SimMTM.py", line 474, in forward
+    return self.pretrain_decomp(batch_x, x_mark_enc)
+  File "/data1/home/xurui/MAE_2024/SimMTM-main/SimMTM-main/SimMTM_Forecasting/models/SimMTM.py", line 454, in pretrain_decomp
+    dec_out = dec_out * (stdev[:, 0, :].unsqueeze(1).repeat(1, self.seq_len, 1))
+RuntimeError: Number of dimensions of repeat dims can not be smaller than number of dimensions of tensor

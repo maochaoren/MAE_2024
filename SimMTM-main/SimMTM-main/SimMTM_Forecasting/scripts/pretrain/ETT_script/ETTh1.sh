@@ -12,17 +12,17 @@ nohup python -u run.py \
     --patching_s 1 \
     --patch_len_s 24 \
     --seq_len 336 \
-    --e_layers 2 \
+    --e_layers 1 \
     --enc_in 7 \
     --dec_in 7 \
     --c_out 7 \
-    --n_heads 16 \
-    --d_model 16 \
+    --n_heads 4 \
+    --d_model 4 \
     --d_ff 64 \
-    --positive_nums 3 \
+    --positive_nums 1 \
     --mask_rate 0.5 \
     --learning_rate 0.001 \
-    --batch_size 4 \
+    --batch_size 1 \
     --train_epochs 15  \
      > ./output_log/ETTh1.log 2>&1 &
 

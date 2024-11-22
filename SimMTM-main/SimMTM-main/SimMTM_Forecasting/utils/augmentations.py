@@ -3,14 +3,18 @@ import torch
 import math
 
 
-def masked_data(sample, sample_mark, masking_ratio, lm, positive_nums=1, distribution='geometric'):
+def masked_data(sample, sample_mark, masking_ratio, lm, positive_nums=1, distribution='geometric',used_mask=None):
     """Masked time series in time dimension"""
 
     sample = sample.permute(0, 2, 1)  # [bs x nvars x seq_len]
 
     sample_repeat = sample.repeat(positive_nums, 1, 1)  # [(bs * positive_nums) x nvars x seq_len]
 
-    mask = noise_mask(sample_repeat, masking_ratio, lm, distribution=distribution)
+    if used_mask is not None:#使用先前生成过的Mask
+        mask = used_mask.permute(0, 2, 1)
+    else:
+        mask = noise_mask(sample_repeat, masking_ratio, lm, distribution=distribution)
+    mask = mask.to(sample.device)
     x_masked = mask * sample_repeat
 
     sample_mark_repeat = sample_mark.repeat(positive_nums, 1, 1)

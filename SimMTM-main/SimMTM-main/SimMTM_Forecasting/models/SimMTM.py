@@ -5,6 +5,7 @@ from layers.SelfAttention_Family import DSAttention, AttentionLayer
 from layers.Embed import DataEmbedding
 from utils.losses import AutomaticWeightedLoss
 from utils.tools import ContrastiveWeight, AggregationRebuild
+from utils.augmentations import masked_data
 
 class moving_avg(nn.Module):
     def __init__(self, kernel_size, stride):
@@ -127,7 +128,6 @@ class Model(nn.Module):
         self.label_len = configs.label_len
         self.output_attention = configs.output_attention
         self.configs = configs
-
         # Decomposition
         #decomp method
         if configs.decomp_method=='mov_avg':
@@ -362,18 +362,23 @@ class Model(nn.Module):
         return loss, loss_cl, loss_rb, positives_mask, logits, rebuild_weight_matrix, pred_batch_x
         
         
-    def pretrain_decomp(self, x_enc, x_mark_enc, batch_x, mask):
-        # data shape
-        bs, seq_len, n_vars = x_enc.shape
+    def pretrain_decomp(self,batch_x, x_mark_enc):
 
+        # data shape
+        bs, seq_len, n_vars = batch_x.shape
+        bs *= (1+self.configs.positive_nums)
+        x_enc = batch_x
         # normalization
-        means = torch.sum(x_enc, dim=1) / torch.sum(mask == 1, dim=1)
+        means = x_enc.mean(1, keepdim=True).detach()
         means = means.unsqueeze(1).detach()
         x_enc = x_enc - means
-        x_enc = x_enc.masked_fill(mask == 0, 0)
-        stdev = torch.sqrt(torch.sum(x_enc * x_enc, dim=1) / torch.sum(mask == 1, dim=1) + 1e-5)
-        stdev = stdev.unsqueeze(1).detach()
-        x_enc /= stdev
+        stdev  = torch.sqrt(torch.var(x_enc, dim=1, keepdim=True, unbiased=False) + 1e-5)
+        x_enc =x_enc / stdev
+        x_enc = x_enc.squeeze(0)
+
+        #decomposition
+        #print(x_enc.shape)
+        x_enc_s, x_enc_t = self.series_decomp(x_enc)
 
         # channel independent
         x_enc = x_enc.permute(0, 2, 1)
@@ -382,6 +387,31 @@ class Model(nn.Module):
 
         # decomposition
         x_enc_s, x_enc_t = self.series_decomp(x_enc)
+
+        #data augmentation
+        x_enc_s_m, x_s_mark_enc, mask = masked_data(x_enc_s, x_mark_enc, self.configs.mask_rate, self.configs.lm, self.configs.positive_nums)
+        x_enc_s = torch.cat([x_enc_s, x_enc_s_m], dim=0)
+        x_enc_t_m, x_t_mark_enc, mask = masked_data(x_enc_t, x_mark_enc, self.configs.mask_rate, self.configs.lm, self.configs.positive_nums)
+        x_enc_t = torch.cat([x_enc_t, x_enc_t_m], dim=0)
+
+        #mask matrix
+        #mask = mask.to(x_enc.device)
+        #mask_o = torch.ones(size=batch_x.shape).to(x_enc.device)
+        #mask_om = torch.cat([mask_o, mask], 0).to(x_enc.device)
+
+        #to device
+        x_enc_s = x_enc_s.to(x_enc.device)
+        x_enc_t = x_enc_t.to(x_enc.device)
+        x_s_mark_enc = x_s_mark_enc.to(x_enc.device)
+        x_t_mark_enc = x_t_mark_enc.to(x_enc.device)
+
+        #channel independent
+        x_enc_s = x_enc_s.permute(0, 2, 1)
+        x_enc_t = x_enc_t.permute(0, 2, 1)
+        x_enc_s = x_enc_s.unsqueeze(-1)
+        x_enc_t = x_enc_t.unsqueeze(-1)
+        x_enc_s = x_enc_s.reshape(-1, seq_len, 1)
+        x_enc_t = x_enc_t.reshape(-1, seq_len, 1)
 
         # embedding
         enc_out_s = self.enc_embedding(x_enc_s)
@@ -410,7 +440,7 @@ class Model(nn.Module):
 
         agg_enc_out_s = agg_enc_out_s.reshape(bs, n_vars, seq_len, -1)
         agg_enc_out_t = agg_enc_out_t.reshape(bs, n_vars, seq_len, -1)
-
+        #print(agg_enc_out_s.shape)
         # decoder
         dec_out_s = self.projection_s(agg_enc_out_s)
         dec_out_t = self.projection_t(agg_enc_out_t)
@@ -433,18 +463,18 @@ class Model(nn.Module):
         return loss, loss_cl_s, loss_cl_t, loss_rb, positives_mask_s, logits_s, rebuild_weight_matrix_s, pred_batch_x
         
 
-    def forward(self, x_enc, x_mark_enc, batch_x=None, mask=None):
+    def forward(self, batch_x=None, x_mark_enc=None, mask=None):
 
         if self.task_name == 'pretrain':
             if not self.configs.decomp:
-                return self.pretrain(x_enc, x_mark_enc,batch_x, mask)
+                return self.pretrain(batch_x, x_mark_enc)
             else:
-                return self.pretrain_decomp(x_enc, x_mark_enc, batch_x, mask)
+                return self.pretrain_decomp(batch_x, x_mark_enc)
         if self.task_name == 'finetune':
             if not self.configs.decomp:
-                dec_out = self.forecast(x_enc, x_mark_enc)
+                dec_out = self.forecast(batch_x, x_mark_enc)
             else:
-                dec_out = self.forecast_decomp(x_enc, x_mark_enc)
+                dec_out = self.forecast_decomp(batch_x, x_mark_enc)
             return dec_out[:, -self.pred_len:, :]  # [B, L, D]
 
         return None

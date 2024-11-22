@@ -1,6 +1,6 @@
 from data_provider.data_factory import data_provider
 from exp.exp_basic import Exp_Basic
-from utils.tools import EarlyStopping, adjust_learning_rate, transfer_weights, show_series, show_matrix
+from utils.tools import EarlyStopping, adjust_learning_rate, transfer_weights, show_series, show_matrix, series_decomp, fft_decomp
 from utils.augmentations import masked_data
 from utils.metrics import metric
 from torch.optim import lr_scheduler
@@ -22,6 +22,7 @@ class Exp_SimMTM(Exp_Basic):
     def __init__(self, args):
         super(Exp_SimMTM, self).__init__(args)
         self.writer = SummaryWriter(f"./outputs/logs")
+        self.decomp_module = series_decomp(kernel_size = args.window_size) if args.decomp_method == 'mov_avg' else fft_decomp()
 
     def _build_model(self):
         model = self.model_dict[self.args.model].Model(self.args).float()
@@ -165,26 +166,12 @@ class Exp_SimMTM(Exp_Basic):
                 index = torch.LongTensor(random.sample(range(C), random_c))
                 batch_x = torch.index_select(batch_x, 2, index)
 
-            # data augumentation
-            batch_x_m, batch_x_mark_m, mask = masked_data(batch_x, batch_x_mark, self.args.mask_rate, self.args.lm, self.args.positive_nums)
-            batch_x_om = torch.cat([batch_x, batch_x_m], 0)
-
-            batch_x = batch_x.float().to(self.device)
-            # batch_x_mark = batch_x_mark.float().to(self.device)
-
-            # masking matrix
-            mask = mask.to(self.device)
-            mask_o = torch.ones(size=batch_x.shape).to(self.device)
-            mask_om = torch.cat([mask_o, mask], 0).to(self.device)
-
             # to device
             batch_x = batch_x.float().to(self.device)
-            batch_x_om = batch_x_om.float().to(self.device)
-            batch_x_mark = batch_x_mark.float().to(self.device)
 
             # encoder
             with torch.cuda.amp.autocast():
-                loss, loss_cl_s, loss_cl_t, loss_rb, _, _, _, _ = self.model(batch_x_om, batch_x_mark, batch_x, mask=mask_om)
+                loss, loss_cl_s, loss_cl_t, loss_rb, _, _, _, _ = self.model( batch_x,batch_x_mark)
 
             # backward
             scaler.scale(loss).backward()
@@ -214,24 +201,12 @@ class Exp_SimMTM(Exp_Basic):
 
         self.model.eval()
         for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(vali_loader):
-            # data augumentation
-            batch_x_m, batch_x_mark_m, mask = masked_data(batch_x, batch_x_mark, self.args.mask_rate, self.args.lm,
-                                                          self.args.positive_nums)
-            batch_x_om = torch.cat([batch_x, batch_x_m], 0)
-
-            # masking matrix
-            mask = mask.to(self.device)
-            mask_o = torch.ones(size=batch_x.shape).to(self.device)
-            mask_om = torch.cat([mask_o, mask], 0).to(self.device)
-
             # to device
             batch_x = batch_x.float().to(self.device)
-            batch_x_om = batch_x_om.float().to(self.device)
-            batch_x_mark = batch_x_mark.float().to(self.device)
 
             # encoder
             with torch.cuda.amp.autocast():
-                loss, loss_cl_s, loss_cl_t, loss_rb, _, _, _, _ = self.model(batch_x_om, batch_x_mark, batch_x, mask=mask_om)
+                loss, loss_cl_s, loss_cl_t, loss_rb, _, _, _, _ = self.model( batch_x,batch_x_mark)
 
             # Record
             valid_loss.append(loss.item())
