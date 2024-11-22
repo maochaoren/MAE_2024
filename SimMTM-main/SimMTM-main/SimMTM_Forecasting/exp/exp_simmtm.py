@@ -80,22 +80,24 @@ class Exp_SimMTM(Exp_Basic):
         for epoch in range(self.args.train_epochs):
             start_time = time.time()
 
-            train_loss, train_cl_loss, train_rb_loss = self.pretrain_one_epoch(train_loader, model_optim, model_scheduler, scaler)
-            vali_loss, valid_cl_loss, valid_rb_loss = self.valid_one_epoch(vali_loader)
+            train_loss, train_cl_s_loss, train_cl_t_loss, train_rb_loss = self.pretrain_one_epoch(train_loader, model_optim, model_scheduler, scaler)
+            vali_loss, valid_cl_s_loss, valid_cl_t_loss, valid_rb_loss = self.valid_one_epoch(vali_loader)
 
             # log and Loss
             end_time = time.time()
             print(
-                "Epoch: {0}, Lr: {1:.7f}, Time: {2:.2f}s | Train Loss: {3:.4f}/{4:.4f}/{5:.4f} Val Loss: {6:.4f}/{7:.4f}/{8:.4f}"
-                .format(epoch, model_scheduler.get_lr()[0], end_time - start_time, train_loss, train_cl_loss,
-                        train_rb_loss, vali_loss, valid_cl_loss, valid_rb_loss))
+                "Epoch: {0}, Lr: {1:.7f}, Time: {2:.2f}s | Train Loss: {3:.4f}/{4:.4f}/{5:.4f}/{6:.4f}Val Loss: {7:.4f}/{8:.4f}/{9:.4f}/{10:.4f}"
+                .format(epoch, model_scheduler.get_lr()[0], end_time - start_time, train_loss, train_cl_s_loss,train_cl_t_loss,
+                        train_rb_loss, vali_loss, valid_cl_s_loss, valid_cl_t_loss, valid_rb_loss))
 
             loss_scalar_dict = {
                 'train_loss': train_loss,
-                'train_cl_loss': train_cl_loss,
+                'train_cl_s_loss': train_cl_s_loss,
+                'train_cl_t_loss': train_cl_t_loss,
                 'train_rb_loss': train_rb_loss,
                 'vali_loss': vali_loss,
-                'valid_cl_loss': valid_cl_loss,
+                'valid_cl_s_loss': valid_cl_s_loss,
+                'valid_cl_t_loss': valid_cl_t_loss,
                 'valid_rb_loss': valid_rb_loss,
             }
 
@@ -143,8 +145,10 @@ class Exp_SimMTM(Exp_Basic):
     def pretrain_one_epoch(self, train_loader, model_optim, model_scheduler, scaler):
 
         train_loss = []
-        train_cl_loss = []
+        train_cl_s_loss = []
+        train_cl_t_loss = []
         train_rb_loss = []
+        
 
         self.model.train()
         for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(train_loader):
@@ -180,7 +184,7 @@ class Exp_SimMTM(Exp_Basic):
 
             # encoder
             with torch.cuda.amp.autocast():
-                loss, loss_cl, loss_rb, _, _, _, _ = self.model(batch_x_om, batch_x_mark, batch_x, mask=mask_om)
+                loss, loss_cl_s, loss_cl_t, loss_rb, _, _, _, _ = self.model(batch_x_om, batch_x_mark, batch_x, mask=mask_om)
 
             # backward
             scaler.scale(loss).backward()
@@ -189,20 +193,23 @@ class Exp_SimMTM(Exp_Basic):
 
             # record
             train_loss.append(loss.item())
-            train_cl_loss.append(loss_cl.item())
+            train_cl_s_loss.append(loss_cl_s.item())
+            train_cl_t_loss.append(loss_cl_t.item())
             train_rb_loss.append(loss_rb.item())
             #print("train_loss:%.4f,train_cl_loss:%.4f,train_rb_loss:%.4f " % (loss.item(), loss_cl.item(), loss_rb.item()))
         model_scheduler.step()
 
         train_loss = np.average(train_loss)
-        train_cl_loss = np.average(train_cl_loss)
+        train_cl_s_loss = np.average(train_cl_s_loss)
+        train_cl_t_loss = np.average(train_cl_t_loss)
         train_rb_loss = np.average(train_rb_loss)
 
-        return train_loss, train_cl_loss, train_rb_loss
+        return train_loss, train_cl_s_loss, train_cl_t_loss, train_rb_loss
 
     def valid_one_epoch(self, vali_loader):
         valid_loss = []
-        valid_cl_loss = []
+        valid_cl_s_loss = []
+        valid_cl_t_loss = []
         valid_rb_loss = []
 
         self.model.eval()
@@ -224,19 +231,21 @@ class Exp_SimMTM(Exp_Basic):
 
             # encoder
             with torch.cuda.amp.autocast():
-                loss, loss_cl, loss_rb, _, _, _, _ = self.model(batch_x_om, batch_x_mark, batch_x, mask=mask_om)
+                loss, loss_cl_s, loss_cl_t, loss_rb, _, _, _, _ = self.model(batch_x_om, batch_x_mark, batch_x, mask=mask_om)
 
             # Record
             valid_loss.append(loss.item())
-            valid_cl_loss.append(loss_cl.item())
+            valid_cl_s_loss.append(loss_cl_s.item())
+            valid_cl_t_loss.append(loss_cl_t.item())
             valid_rb_loss.append(loss_rb.item())
             #print("valid_loss:{},valid_cl_loss:{},valid_rb_loss:{} " % (loss.item(), loss_cl.item(), loss_rb.item()))
         vali_loss = np.average(valid_loss)
-        valid_cl_loss = np.average(valid_cl_loss)
+        valid_cl_s_loss = np.average(valid_cl_s_loss)
+        valid_cl_t_loss = np.average(valid_cl_t_loss)
         valid_rb_loss = np.average(valid_rb_loss)
 
         self.model.train()
-        return vali_loss, valid_cl_loss, valid_rb_loss
+        return vali_loss, valid_cl_s_loss, valid_cl_t_loss, valid_rb_loss
 
     def train(self, setting):
 

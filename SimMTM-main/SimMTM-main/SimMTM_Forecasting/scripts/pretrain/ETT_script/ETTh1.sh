@@ -1,4 +1,4 @@
-export CUDA_VISIBLE_DEVICES=5
+export CUDA_VISIBLE_DEVICES=6
 
 nohup python -u run.py \
     --task_name pretrain \
@@ -10,7 +10,7 @@ nohup python -u run.py \
     --features M \
     --decomp 1 \
     --patching_s 1 \
-    --patch_len_s 12 \
+    --patch_len_s 24 \
     --seq_len 336 \
     --e_layers 2 \
     --enc_in 7 \
