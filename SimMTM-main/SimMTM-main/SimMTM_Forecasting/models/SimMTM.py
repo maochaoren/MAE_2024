@@ -209,7 +209,7 @@ class Model(nn.Module):
                 self.pooler_s = Pooler_Head(configs.patch_len_s if configs.patching_s else  configs.seq_len, configs.d_model, head_dropout=configs.head_dropout)
                 self.pooler_t = Pooler_Head(configs.seq_len, configs.d_model, head_dropout=configs.head_dropout)
 
-            self.awl = AutomaticWeightedLoss(2)
+            self.awl = AutomaticWeightedLoss(3)
             self.contrastive = ContrastiveWeight(self.configs)
             self.aggregation = AggregationRebuild(self.configs)
             self.mse = torch.nn.MSELoss()
