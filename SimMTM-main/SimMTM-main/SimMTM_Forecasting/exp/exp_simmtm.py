@@ -186,9 +186,7 @@ class Exp_SimMTM(Exp_Basic):
 
             #scaler.step(model_optim)
             #scaler.update()
-            model_optim.step()
-            
-
+            model_optim.step()           
             # record
             train_loss.append(loss.item())
             train_cl_s_loss.append(loss_cl_s.item())
@@ -216,8 +214,7 @@ class Exp_SimMTM(Exp_Basic):
             batch_x = batch_x.float().to(self.device)
 
             # encoder
-            with torch.cuda.amp.autocast():
-                loss, loss_cl_s, loss_cl_t, loss_rb, _, _, _, _ = self.model( batch_x,batch_x_mark)
+            loss, loss_cl_s, loss_cl_t, loss_rb, _, _, _, _ = self.model( batch_x,batch_x_mark)
 
             # Record
             valid_loss.append(loss.item())

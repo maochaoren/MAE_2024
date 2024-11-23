@@ -22,7 +22,7 @@ python -u run.py \
     --positive_nums 1 \
     --mask_rate 0.5 \
     --learning_rate 0.001 \
-    --batch_size 1 \
+    --batch_size 2 \
     --train_epochs 15  \
  
 
