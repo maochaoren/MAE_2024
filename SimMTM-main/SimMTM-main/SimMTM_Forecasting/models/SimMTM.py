@@ -450,7 +450,7 @@ class Model(nn.Module):
         dec_out = dec_out_s + dec_out_t
 
         pred_batch_x = dec_out[:batch_x.shape[0]]
-        print(pred_batch_x.shape,stdev.shape)
+        #print(pred_batch_x.shape,stdev.shape)
         # de-Normalization
         pred_batch_x = pred_batch_x * (stdev.squeeze(1))
         pred_batch_x = pred_batch_x + (means[:, 0, :].squeeze(1).repeat(1, self.seq_len, 1))
