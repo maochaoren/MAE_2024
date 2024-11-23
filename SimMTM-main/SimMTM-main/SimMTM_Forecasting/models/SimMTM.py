@@ -370,11 +370,11 @@ class Model(nn.Module):
         x_enc = batch_x
         # normalization
         means = x_enc.mean(1, keepdim=True).detach()
-        means = means.unsqueeze(1).detach()
+        means = means.unsqueeze(1)
         x_enc = x_enc - means
         stdev  = torch.sqrt(torch.var(x_enc, dim=1, keepdim=True, unbiased=False) + 1e-5)
         x_enc =x_enc / stdev
-        x_enc = x_enc.squeeze(0)
+        x_enc = x_enc.squeeze(1)
 
         #decomposition
         #print(x_enc.shape)
@@ -391,9 +391,8 @@ class Model(nn.Module):
         #data augmentation
         x_enc_s_m, x_s_mark_enc, mask = masked_data(x_enc_s, x_mark_enc, self.configs.mask_rate, self.configs.lm, self.configs.positive_nums)
         x_enc_s = torch.cat([x_enc_s, x_enc_s_m], dim=0)
-        x_enc_t_m, x_t_mark_enc, mask = masked_data(x_enc_t, x_mark_enc, self.configs.mask_rate, self.configs.lm, self.configs.positive_nums)
+        x_enc_t_m, x_t_mark_enc, mask = masked_data(x_enc_t, x_mark_enc, self.configs.mask_rate, self.configs.lm, self.configs.positive_nums, mask)
         x_enc_t = torch.cat([x_enc_t, x_enc_t_m], dim=0)
-
         #mask matrix
         #mask = mask.to(x_enc.device)
         #mask_o = torch.ones(size=batch_x.shape).to(x_enc.device)
@@ -415,13 +414,14 @@ class Model(nn.Module):
 
         # embedding
         enc_out_s = self.enc_embedding(x_enc_s)
+        #print(enc_out_s[0,0,0])
         enc_out_t = self.enc_embedding(x_enc_t)
 
         # encoder
         # point-wise representation
         p_enc_out_s, attns = self.encoder_s(enc_out_s)
         p_enc_out_t, attns = self.encoder_t(enc_out_t)
-
+        
         # series-wise representation
         if self.patching_s:
             # p_enc_out_s : [(bs*n_vars)*patch_num x self.patch_len_s x d_model]
@@ -459,6 +459,7 @@ class Model(nn.Module):
 
         # loss
         loss = self.awl(loss_cl_s, loss_cl_t, loss_rb)
+        print('loss_cl_s: {}, loss_cl_t: {}, loss_rb: {}, loss: {}'.format(loss_cl_s.item(), loss_cl_t.item(), loss_rb.item(), loss.item()))
 
         return loss, loss_cl_s, loss_cl_t, loss_rb, positives_mask_s, logits_s, rebuild_weight_matrix_s, pred_batch_x
         
