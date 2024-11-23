@@ -448,12 +448,12 @@ class Model(nn.Module):
         dec_out_t = dec_out_t.permute(0, 2, 1)
 
         dec_out = dec_out_s + dec_out_t
-        # de-Normalization
-        dec_out = dec_out * (stdev[:, 0, :].unsqueeze(1).repeat(1, self.seq_len, 1))
-        dec_out = dec_out + (means[:, 0, :].unsqueeze(1).repeat(1, self.seq_len, 1))
 
         pred_batch_x = dec_out[:batch_x.shape[0]]
-
+        print(pred_batch_x.shape,stdev.shape)
+        # de-Normalization
+        pred_batch_x = pred_batch_x * (stdev.squeeze(1))
+        pred_batch_x = pred_batch_x + (means[:, 0, :].squeeze(1).repeat(1, self.seq_len, 1))
         # series reconstruction
         loss_rb = self.mse(pred_batch_x, batch_x.detach())
 
