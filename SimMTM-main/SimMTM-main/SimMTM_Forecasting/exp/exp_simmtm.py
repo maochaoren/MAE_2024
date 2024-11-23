@@ -170,13 +170,24 @@ class Exp_SimMTM(Exp_Basic):
             batch_x = batch_x.float().to(self.device)
 
             # encoder
-            with torch.cuda.amp.autocast():
-                loss, loss_cl_s, loss_cl_t, loss_rb, _, _, _, _ = self.model( batch_x,batch_x_mark)
+            #torch.autograd.set_detect_anomaly(True)
+            #with torch.cuda.amp.autocast():
+            loss, loss_cl_s, loss_cl_t, loss_rb, _, _, _, _ = self.model( batch_x,batch_x_mark)
 
             # backward
-            scaler.scale(loss).backward()
-            scaler.step(model_optim)
-            scaler.update()
+            #with torch.autograd.detect_anomaly():
+            loss.backward()
+            for name, param in self.model.named_parameters():
+                if param.grad is not None and torch.isnan(param.grad).any():
+                    print("nan gradient found")
+                    print("name:",name)
+                    #print("param:",param.grad)
+                    #raise SystemExit
+
+            #scaler.step(model_optim)
+            #scaler.update()
+            model_optim.step()
+            
 
             # record
             train_loss.append(loss.item())

@@ -145,6 +145,10 @@ class Model(nn.Module):
         if self.patching_s:
             self.patch_len_s = configs.patch_len_s
         # Embedding
+        if self.configs.decomp:
+            self.enc_embedding_s = DataEmbedding(1, configs.d_model, configs.embed, configs.freq, configs.dropout)
+            self.enc_embedding_t = DataEmbedding(1, configs.d_model, configs.embed, configs.freq, configs.dropout)
+
         self.enc_embedding = DataEmbedding(1, configs.d_model, configs.embed, configs.freq, configs.dropout)
 
         # Encoder
@@ -369,8 +373,8 @@ class Model(nn.Module):
         bs *= (1+self.configs.positive_nums)
         x_enc = batch_x
         # normalization
-        means = x_enc.mean(1, keepdim=True).detach()
-        means = means.unsqueeze(1)
+        means = torch.mean(x_enc, 1,keepdim=True).detach()
+        #means = means.unsqueeze(1).detach()
         x_enc = x_enc - means
         stdev  = torch.sqrt(torch.var(x_enc, dim=1, keepdim=True, unbiased=False) + 1e-5)
         x_enc =x_enc / stdev
@@ -380,29 +384,17 @@ class Model(nn.Module):
         #print(x_enc.shape)
         x_enc_s, x_enc_t = self.series_decomp(x_enc)
 
-        # channel independent
-        x_enc = x_enc.permute(0, 2, 1)
-        x_enc = x_enc.unsqueeze(-1)
-        x_enc = x_enc.reshape(-1, seq_len, 1)
-
-        # decomposition
-        x_enc_s, x_enc_t = self.series_decomp(x_enc)
-
         #data augmentation
         x_enc_s_m, x_s_mark_enc, mask = masked_data(x_enc_s, x_mark_enc, self.configs.mask_rate, self.configs.lm, self.configs.positive_nums)
         x_enc_s = torch.cat([x_enc_s, x_enc_s_m], dim=0)
         x_enc_t_m, x_t_mark_enc, mask = masked_data(x_enc_t, x_mark_enc, self.configs.mask_rate, self.configs.lm, self.configs.positive_nums, mask)
         x_enc_t = torch.cat([x_enc_t, x_enc_t_m], dim=0)
-        #mask matrix
-        #mask = mask.to(x_enc.device)
-        #mask_o = torch.ones(size=batch_x.shape).to(x_enc.device)
-        #mask_om = torch.cat([mask_o, mask], 0).to(x_enc.device)
 
         #to device
         x_enc_s = x_enc_s.to(x_enc.device)
         x_enc_t = x_enc_t.to(x_enc.device)
-        x_s_mark_enc = x_s_mark_enc.to(x_enc.device)
-        x_t_mark_enc = x_t_mark_enc.to(x_enc.device)
+        #x_s_mark_enc = x_s_mark_enc.to(x_enc.device)
+        #x_t_mark_enc = x_t_mark_enc.to(x_enc.device)
 
         #channel independent
         x_enc_s = x_enc_s.permute(0, 2, 1)
@@ -411,11 +403,11 @@ class Model(nn.Module):
         x_enc_t = x_enc_t.unsqueeze(-1)
         x_enc_s = x_enc_s.reshape(-1, seq_len, 1)
         x_enc_t = x_enc_t.reshape(-1, seq_len, 1)
-
+        #print(x_enc_s[0,:,0])
         # embedding
-        enc_out_s = self.enc_embedding(x_enc_s)
+        enc_out_s = self.enc_embedding_s(x_enc_s)
         #print(enc_out_s[0,0,0])
-        enc_out_t = self.enc_embedding(x_enc_t)
+        enc_out_t = self.enc_embedding_t(x_enc_t)
 
         # encoder
         # point-wise representation
