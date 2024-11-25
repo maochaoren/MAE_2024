@@ -449,12 +449,13 @@ class Model(nn.Module):
         pred_batch_x = pred_batch_x + (means.repeat(1, self.seq_len, 1))
         # series reconstruction
         loss_rb = self.mse(pred_batch_x, batch_x.detach())
+        loss_cl = loss_cl_s+loss_cl_t
 
         # loss
-        loss = self.awl(loss_cl_s, loss_cl_t, loss_rb)
-        print('loss_cl_s: {}, loss_cl_t: {}, loss_rb: {}, loss: {}'.format(loss_cl_s.item(), loss_cl_t.item(), loss_rb.item(), loss.item()))
+        loss = self.awl(loss_cl, loss_rb)
+        #print('loss_cl_s: {}, loss_cl_t: {}, loss_rb: {}, loss: {}'.format(loss_cl_s.item(), loss_cl_t.item(), loss_rb.item(), loss.item()))
 
-        return loss, loss_cl_s, loss_cl_t, loss_rb, positives_mask_s, logits_s, rebuild_weight_matrix_s, pred_batch_x
+        return loss, loss_cl, loss_rb, positives_mask_s, logits_s, rebuild_weight_matrix_s, pred_batch_x
         
 
     def forward(self, batch_x=None, x_mark_enc=None, mask=None):

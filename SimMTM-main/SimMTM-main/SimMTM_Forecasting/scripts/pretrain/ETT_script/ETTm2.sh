@@ -9,6 +9,8 @@ python -u run.py \
     --data ETTm2 \
     --features M \
     --decomp 1 \
+    --patching_s 0 \
+    --patch_len_s 24 \
     --seq_len 336 \
     --e_layers 3 \
     --enc_in 7 \

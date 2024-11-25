@@ -146,8 +146,7 @@ class Exp_SimMTM(Exp_Basic):
     def pretrain_one_epoch(self, train_loader, model_optim, model_scheduler, scaler):
 
         train_loss = []
-        train_cl_s_loss = []
-        train_cl_t_loss = []
+        train_cl_loss = []
         train_rb_loss = []
         
 
@@ -172,7 +171,7 @@ class Exp_SimMTM(Exp_Basic):
             # encoder
             #torch.autograd.set_detect_anomaly(True)
             #with torch.cuda.amp.autocast():
-            loss, loss_cl_s, loss_cl_t, loss_rb, _, _, _, _ = self.model( batch_x,batch_x_mark)
+            loss, loss_cl_, loss_rb, _, _, _, _ = self.model( batch_x,batch_x_mark)
 
             # backward
             #with torch.autograd.detect_anomaly():
@@ -189,23 +188,20 @@ class Exp_SimMTM(Exp_Basic):
             model_optim.step()           
             # record
             train_loss.append(loss.item())
-            train_cl_s_loss.append(loss_cl_s.item())
-            train_cl_t_loss.append(loss_cl_t.item())
+            train_cl_loss.append(loss_cl_.item())
             train_rb_loss.append(loss_rb.item())
             #print("train_loss:%.4f,train_cl_loss:%.4f,train_rb_loss:%.4f " % (loss.item(), loss_cl.item(), loss_rb.item()))
         model_scheduler.step()
 
         train_loss = np.average(train_loss)
-        train_cl_s_loss = np.average(train_cl_s_loss)
-        train_cl_t_loss = np.average(train_cl_t_loss)
+        train_cl_loss = np.average(train_cl_loss)
         train_rb_loss = np.average(train_rb_loss)
 
-        return train_loss, train_cl_s_loss, train_cl_t_loss, train_rb_loss
+        return train_loss, train_cl_loss,  train_rb_loss
 
     def valid_one_epoch(self, vali_loader):
         valid_loss = []
-        valid_cl_s_loss = []
-        valid_cl_t_loss = []
+        valid_cl_loss = []
         valid_rb_loss = []
 
         self.model.eval()
@@ -214,21 +210,19 @@ class Exp_SimMTM(Exp_Basic):
             batch_x = batch_x.float().to(self.device)
 
             # encoder
-            loss, loss_cl_s, loss_cl_t, loss_rb, _, _, _, _ = self.model( batch_x,batch_x_mark)
+            loss, loss_cl, loss_rb, _, _, _, _ = self.model( batch_x,batch_x_mark)
 
             # Record
             valid_loss.append(loss.item())
-            valid_cl_s_loss.append(loss_cl_s.item())
-            valid_cl_t_loss.append(loss_cl_t.item())
+            valid_cl_loss.append(loss_cl.item())
             valid_rb_loss.append(loss_rb.item())
             #print("valid_loss:{},valid_cl_loss:{},valid_rb_loss:{} " % (loss.item(), loss_cl.item(), loss_rb.item()))
         vali_loss = np.average(valid_loss)
-        valid_cl_s_loss = np.average(valid_cl_s_loss)
-        valid_cl_t_loss = np.average(valid_cl_t_loss)
+        valid_cl_loss = np.average(valid_cl_loss)
         valid_rb_loss = np.average(valid_rb_loss)
 
         self.model.train()
-        return vali_loss, valid_cl_s_loss, valid_cl_t_loss, valid_rb_loss
+        return vali_loss, valid_cl_loss, valid_rb_loss
 
     def train(self, setting):
 

@@ -9,8 +9,8 @@ python -u run.py \
     --data ETTh1 \
     --features M \
     --decomp 1 \
-    --patching_s 1 \
-    --patch_len_s 24 \
+    --patching_s 0 \
+    --patch_len_s 48 \
     --seq_len 336 \
     --e_layers 1 \
     --enc_in 7 \
