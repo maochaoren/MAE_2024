@@ -81,24 +81,22 @@ class Exp_SimMTM(Exp_Basic):
         for epoch in range(self.args.train_epochs):
             start_time = time.time()
 
-            train_loss, train_cl_s_loss, train_cl_t_loss, train_rb_loss = self.pretrain_one_epoch(train_loader, model_optim, model_scheduler, scaler)
-            vali_loss, valid_cl_s_loss, valid_cl_t_loss, valid_rb_loss = self.valid_one_epoch(vali_loader)
+            train_loss, train_cl_loss, train_rb_loss = self.pretrain_one_epoch(train_loader, model_optim, model_scheduler, scaler)
+            vali_loss, valid_cl_loss, valid_rb_loss = self.valid_one_epoch(vali_loader)
 
             # log and Loss
             end_time = time.time()
             print(
-                "Epoch: {0}, Lr: {1:.7f}, Time: {2:.2f}s | Train Loss: {3:.4f}/{4:.4f}/{5:.4f}/{6:.4f}Val Loss: {7:.4f}/{8:.4f}/{9:.4f}/{10:.4f}"
-                .format(epoch, model_scheduler.get_lr()[0], end_time - start_time, train_loss, train_cl_s_loss,train_cl_t_loss,
-                        train_rb_loss, vali_loss, valid_cl_s_loss, valid_cl_t_loss, valid_rb_loss))
+                "Epoch: {0}, Lr: {1:.7f}, Time: {2:.2f}s | Train Loss: {3:.4f}/{4:.4f}/{5:.4f}Val Loss: {6:.4f}/{7:.4f}/{8:.4f}"
+                .format(epoch, model_scheduler.get_lr()[0], end_time - start_time, train_loss, train_cl_loss,
+                        train_rb_loss, vali_loss, valid_cl_loss, valid_rb_loss))
 
             loss_scalar_dict = {
                 'train_loss': train_loss,
-                'train_cl_s_loss': train_cl_s_loss,
-                'train_cl_t_loss': train_cl_t_loss,
+                'train_cl_loss': train_cl_loss,
                 'train_rb_loss': train_rb_loss,
                 'vali_loss': vali_loss,
-                'valid_cl_s_loss': valid_cl_s_loss,
-                'valid_cl_t_loss': valid_cl_t_loss,
+                'valid_cl_loss': valid_cl_loss,
                 'valid_rb_loss': valid_rb_loss,
             }
 
