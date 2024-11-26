@@ -1,4 +1,4 @@
-export CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=5
 
 python -u run.py \
     --task_name pretrain \
@@ -16,14 +16,14 @@ python -u run.py \
     --enc_in 7 \
     --dec_in 7 \
     --c_out 7 \
-    --n_heads 4 \
-    --d_model 4 \
+    --n_heads 16 \
+    --d_model 16 \
     --d_ff 64 \
-    --positive_nums 1 \
+    --positive_nums 3 \
     --mask_rate 0.5 \
     --learning_rate 0.001 \
-    --batch_size 2 \
-    --train_epochs 15  \
+    --batch_size 4 \
+
  
 
 
