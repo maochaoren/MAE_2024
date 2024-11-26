@@ -376,7 +376,7 @@ class Model(nn.Module):
         means = torch.mean(x_enc, 1,keepdim=True).detach()
         #means = means.unsqueeze(1).detach()
         x_enc = x_enc - means
-        stdev  = torch.sqrt(torch.var(x_enc, dim=1, keepdim=True, unbiased=False) + 1e-5)
+        stdev  = torch.sqrt(torch.var(x_enc, dim=1, keepdim=True, unbiased=False) + 1e-5).detach()
         x_enc =x_enc / stdev
         x_enc = x_enc.squeeze(1)
 
@@ -405,9 +405,9 @@ class Model(nn.Module):
         x_enc_t = x_enc_t.reshape(-1, seq_len, 1)
         #print(x_enc_s[0,:,0])
         # embedding
-        enc_out_s = self.enc_embedding_s(x_enc_s)
+        enc_out_s = self.enc_embedding(x_enc_s)
         #print(enc_out_s[0,0,0])
-        enc_out_t = self.enc_embedding_t(x_enc_t)
+        enc_out_t = self.enc_embedding(x_enc_t)
 
         # encoder
         # point-wise representation

@@ -9,7 +9,7 @@ nohup python -u run.py \
     --data ETTh2 \
     --features M \
     --decomp 1 \
-    --patching_s 1 \
+    --patching_s 0 \
     --patch_len_s 12 \
     --seq_len 336 \
     --e_layers 1 \
