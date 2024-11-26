@@ -385,9 +385,9 @@ class Model(nn.Module):
         x_enc_s, x_enc_t = self.series_decomp(x_enc)
 
         #data augmentation
-        x_enc_s_m, x_s_mark_enc, mask = masked_data(x_enc_s, x_mark_enc, self.configs.mask_rate, self.configs.lm, self.configs.positive_nums)
+        x_enc_s_m, x_s_mark_enc, mask = masked_data(x_enc_s, x_mark_enc, self.configs.mask_rate, self.configs.lm, self.configs.positive_nums,self.configs.distribution)
         x_enc_s = torch.cat([x_enc_s, x_enc_s_m], dim=0)
-        x_enc_t_m, x_t_mark_enc, mask = masked_data(x_enc_t, x_mark_enc, self.configs.mask_rate, self.configs.lm, self.configs.positive_nums, mask)
+        x_enc_t_m, x_t_mark_enc, mask = masked_data(x_enc_t, x_mark_enc, self.configs.mask_rate, self.configs.lm, self.configs.positive_nums,self.configs.distribution,mask)
         x_enc_t = torch.cat([x_enc_t, x_enc_t_m], dim=0)
 
         #to device
