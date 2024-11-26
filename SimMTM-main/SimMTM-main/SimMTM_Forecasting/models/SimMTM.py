@@ -444,7 +444,6 @@ class Model(nn.Module):
         pred_batch_x = dec_out[:batch_x.shape[0]]
         #print(pred_batch_x.shape,stdev.shape)
         # de-Normalization
-        #print(pred_batch_x.shape,means.shape)
         pred_batch_x = pred_batch_x * (stdev.repeat(1, self.seq_len, 1))
         pred_batch_x = pred_batch_x + (means.repeat(1, self.seq_len, 1))
         # series reconstruction

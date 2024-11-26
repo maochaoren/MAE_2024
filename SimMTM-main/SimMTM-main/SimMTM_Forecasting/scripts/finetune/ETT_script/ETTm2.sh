@@ -22,6 +22,7 @@ for pred_len in 96 192 336 720; do
         --d_model 8 \
         --d_ff 16 \
         --dropout 0 \
-        --batch_size 64
+        --batch_size 64 \
+        --patience 3
 done
 

@@ -21,5 +21,6 @@ for pred_len in 96 192 336 720; do
         --n_heads 8 \
         --d_model 32 \
         --d_ff 64 \
-        --dropout 0
+        --dropout 0 \
+        --patience 3
 done

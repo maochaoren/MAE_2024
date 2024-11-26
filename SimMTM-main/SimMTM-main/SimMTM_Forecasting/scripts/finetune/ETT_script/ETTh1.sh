@@ -23,7 +23,8 @@ for pred_len in 96 192 336 720; do
         --d_ff 64 \
         --learning_rate 0.0001 \
         --dropout 0.2 \
-        --batch_size 16
+        --batch_size 4 \
+        --patience 3 
 done
 
 
