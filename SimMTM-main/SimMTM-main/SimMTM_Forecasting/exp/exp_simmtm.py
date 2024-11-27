@@ -320,14 +320,13 @@ class Exp_SimMTM(Exp_Basic):
                 batch_x_mark = batch_x_mark.float().to(self.device)
 
                 # encoder
-                with torch.cuda.amp.autocast():
-                    outputs = self.model(batch_x, batch_x_mark)
-
-                    # loss
-                    f_dim = -1 if self.args.features == 'MS' else 0
-                    outputs = outputs[:, -self.args.pred_len:, f_dim:]
-                    batch_y = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)
-                    loss = criterion(outputs, batch_y)
+                #with torch.cuda.amp.autocast():
+                outputs = self.model(batch_x, batch_x_mark)
+                # loss
+                f_dim = -1 if self.args.features == 'MS' else 0
+                outputs = outputs[:, -self.args.pred_len:, f_dim:]
+                batch_y = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)
+                loss = criterion(outputs, batch_y)
                 pred = outputs.detach().cpu()
                 true = batch_y.detach().cpu()
                 
