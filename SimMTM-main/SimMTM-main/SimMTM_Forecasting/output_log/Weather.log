@@ -1,0 +1,43 @@
+nohup: ignoring input
+Args in experiment:
+Namespace(task_name='pretrain', is_training=1, model_id='Weather', model='SimMTM', data='Weather', root_path='./dataset/weather/', data_path='weather.csv', features='M', target='OT', freq='h', checkpoints='./outputs/checkpoints/', pretrain_checkpoints='./outputs/pretrain_checkpoints/', transfer_checkpoints='ckpt_best.pth', load_checkpoints=None, select_channels=1, seq_len=336, label_len=48, pred_len=96, seasonal_patterns='Monthly', top_k=5, num_kernels=3, enc_in=21, dec_in=21, c_out=21, d_model=8, n_heads=8, e_layers=1, s_e_layers=2, t_e_layers=1, d_layers=1, d_ff=64, moving_avg=25, factor=1, distil=True, dropout=0.1, fc_dropout=0, head_dropout=0.1, embed='timeF', activation='gelu', output_attention=False, individual=0, pct_start=0.3, decomp=1, decomp_method='fft', window_size=97, st_sep=5, top_k_fft=25, lpf=50, patching_s=1, patching_t=0, patch_len_s=48, patch_len_t=16, stride=8, num_workers=5, itr=1, train_epochs=50, batch_size=8, is_early_stop=1, patience=3, learning_rate=0.001, des='test', loss='MSE', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0', lm=3, positive_nums=2, rbtp=1, temperature=0.2, masked_rule='geometric', mask_rate=0.5)
+Use GPU: cuda:0
+number of model params 5600899
+>>>>>>>start pre_training : pretrain_SimMTM_Weather_M_isdec1_decmetfft_win97_sep5_topk25_sl336_ll48_pl96_dm8_df64_nh8_el1_dl1_fc1_dp0.1_hdp0.1_ep50_bs8_lr0.001_lm3_pn2_mr0.5_tp0.2>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 36456 4557
+val 5175 646
+Epoch: 0, Lr: 0.0009980, Time: 3195.77s | Train Loss: 4.5379/15.0800/0.2442Val Loss: 3.5191/13.6611/0.1100
+Validation loss decreased (3.5191 --> 3.5191).  Saving model epoch0 ...
+Epoch: 1, Lr: 0.0009931, Time: 3305.80s | Train Loss: 3.6876/14.7109/0.1877Val Loss: 3.4721/13.4699/0.0887
+Validation loss decreased (3.5191 --> 3.4721).  Saving model epoch1 ...
+Epoch: 2, Lr: 0.0009863, Time: 3048.04s | Train Loss: 3.6554/14.5598/0.1737Val Loss: 3.4470/13.3802/0.0824
+Validation loss decreased (3.4721 --> 3.4470).  Saving model epoch2 ...
+Epoch: 3, Lr: 0.0009775, Time: 3104.95s | Train Loss: 3.6369/14.4563/0.1656Val Loss: 3.4237/13.1819/0.0762
+Validation loss decreased (3.4470 --> 3.4237).  Saving model epoch3 ...
+Epoch: 4, Lr: 0.0009668, Time: 2952.01s | Train Loss: 3.6224/14.3681/0.1596Val Loss: 3.4045/13.1243/0.0724
+Validation loss decreased (3.4237 --> 3.4045).  Saving model epoch4 ...
+Epoch: 5, Lr: 0.0009544, Time: 2845.81s | Train Loss: 3.6147/14.3017/0.1573Val Loss: 3.4016/13.0538/0.0712
+Validation loss decreased (3.4045 --> 3.4016).  Saving model epoch5 ...
+Epoch: 6, Lr: 0.0009401, Time: 2741.32s | Train Loss: 3.6073/14.2488/0.1547Val Loss: 3.4041/13.0899/0.0713
+Early stopping count: 1
+Epoch: 7, Lr: 0.0009241, Time: 2721.67s | Train Loss: 3.6022/14.2056/0.1531Val Loss: 3.3981/13.0145/0.0702
+Validation loss decreased (3.4016 --> 3.3981).  Saving model epoch7 ...
+Epoch: 8, Lr: 0.0009064, Time: 2870.53s | Train Loss: 3.5981/14.1726/0.1519Val Loss: 3.3833/12.9262/0.0692
+Validation loss decreased (3.3981 --> 3.3833).  Saving model epoch8 ...
+Epoch: 9, Lr: 0.0008872, Time: 3403.90s | Train Loss: 3.5935/14.1473/0.1500Val Loss: 3.3879/12.9590/0.0691
+Early stopping count: 1
+Epoch: 10, Lr: 0.0008664, Time: 3615.23s | Train Loss: 3.5903/14.1221/0.1489Val Loss: 3.3953/12.9595/0.0724
+Early stopping count: 2
+Epoch: 11, Lr: 0.0008442, Time: 3215.93s | Train Loss: 3.5874/14.0938/0.1483Val Loss: 3.3781/12.8856/0.0685
+Validation loss decreased (3.3833 --> 3.3781).  Saving model epoch11 ...
+Epoch: 12, Lr: 0.0008206, Time: 2860.02s | Train Loss: 3.5855/14.0774/0.1477Val Loss: 3.3888/12.8598/0.0700
+Early stopping count: 1
+Epoch: 13, Lr: 0.0007958, Time: 2825.61s | Train Loss: 3.5826/14.0593/0.1466Val Loss: 3.3738/12.8296/0.0665
+Validation loss decreased (3.3781 --> 3.3738).  Saving model epoch13 ...
+Epoch: 14, Lr: 0.0007698, Time: 2825.15s | Train Loss: 3.5795/14.0447/0.1453Val Loss: 3.3789/12.8326/0.0688
+Early stopping count: 1
+Epoch: 15, Lr: 0.0007428, Time: 2794.82s | Train Loss: 3.5779/14.0301/0.1448Val Loss: 3.3782/12.8448/0.0680
+Early stopping count: 2
+Epoch: 16, Lr: 0.0007148, Time: 2897.65s | Train Loss: 3.5747/14.0168/0.1434Val Loss: 3.3750/12.7881/0.0691
+Early stopping count: 3
+Early stopping

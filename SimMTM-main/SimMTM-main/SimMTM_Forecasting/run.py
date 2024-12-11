@@ -69,8 +69,9 @@ if __name__ == '__main__':
     parser.add_argument('--decomp', type = int, default=0, help='whether to decompose the time series')
     parser.add_argument('--decomp_method', type=str, default='mov_avg', help='decomposition method')
     parser.add_argument('--window_size', type=int, default=24*4+1, help='moving avg decompsition window size')
-    parser.add_argument('--st_sep', type=int, default=24, help='threshold of fft season-trend decomposition')
+    parser.add_argument('--st_sep', type=float, default=24, help='threshold of fft season-trend decomposition')
     parser.add_argument('--top_k_fft', type=int, default=25, help='Top-k strongest frequency selection')
+    parser.add_argument('--lpf', type=int, default=0, help='low pass filter')
 
     #patching
     parser.add_argument('--patching_s', type=int, default=0, help='whether to use patching for seasonal part')
@@ -82,9 +83,10 @@ if __name__ == '__main__':
     # optimization
     parser.add_argument('--num_workers', type=int, default=5, help='data loader num workers')
     parser.add_argument('--itr', type=int, default=1, help='experiments times')
-    parser.add_argument('--train_epochs', type=int, default=50, help='train epochs')
+    parser.add_argument('--train_epochs', type=int, default=40, help='train epochs')
     parser.add_argument('--batch_size', type=int, default=32, help='batch size of train input data')
-    parser.add_argument('--patience', type=int, default=20, help='early stopping patience')
+    parser.add_argument('--is_early_stop', type=int, default=1, help='use early stop')
+    parser.add_argument('--patience', type=int, default=3, help='early stopping patience')
     parser.add_argument('--learning_rate', type=float, default=0.0001, help='optimizer learning rate')
     parser.add_argument('--des', type=str, default='test', help='exp description')
     parser.add_argument('--loss', type=str, default='MSE', help='loss function')

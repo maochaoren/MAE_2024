@@ -1,4 +1,4 @@
-export CUDA_VISIBLE_DEVICES=4
+export CUDA_VISIBLE_DEVICES=2
 
 python -u run.py \
     --task_name pretrain \
@@ -9,9 +9,12 @@ python -u run.py \
     --data ETTm2 \
     --features M \
     --decomp 1 \
-    --patching_s 0 \
-    --patch_len_s 48 \
-    --seq_len 336 \
+    --decomp_method fft \
+    --st_sep  3 \
+    --lpf 30 \
+    --patching_s 1 \
+    --patch_len_s 96 \
+    --seq_len 384 \
     --e_layers 2 \
     --enc_in 7 \
     --dec_in 7 \
@@ -22,5 +25,7 @@ python -u run.py \
     --positive_nums 2 \
     --mask_rate 0.5 \
     --learning_rate 0.001 \
-    --batch_size 4 \
-    --train_epochs 15
+    --batch_size 8 \
+    --is_early_stop 1 \
+
+bash ~/MAE_2024/SimMTM-main/SimMTM-main/SimMTM_Forecasting/scripts/finetune/ETT_script/ETTm2.sh

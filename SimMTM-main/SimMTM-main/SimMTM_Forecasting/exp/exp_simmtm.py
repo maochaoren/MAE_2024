@@ -22,7 +22,7 @@ class Exp_SimMTM(Exp_Basic):
     def __init__(self, args):
         super(Exp_SimMTM, self).__init__(args)
         self.writer = SummaryWriter(f"./outputs/logs")
-        self.decomp_module = series_decomp(kernel_size = args.window_size) if args.decomp_method == 'mov_avg' else fft_decomp()
+        #self.decomp_module = series_decomp(kernel_size = args.window_size) if args.decomp_method == 'mov_avg' else fft_decomp()
 
     def _build_model(self):
         model = self.model_dict[self.args.model].Model(self.args).float()
@@ -103,7 +103,7 @@ class Exp_SimMTM(Exp_Basic):
             self.writer.add_scalars(f"/pretrain_loss", loss_scalar_dict, epoch)
 
             # checkpoint saving
-            if not min_vali_loss or vali_loss <= min_vali_loss:
+            if (not min_vali_loss or vali_loss <= min_vali_loss and self.args.is_early_stop) or not self.args.is_early_stop:
                 earlystop_cnt = 0
                 if epoch == 0:
                     min_vali_loss = vali_loss
@@ -120,12 +120,13 @@ class Exp_SimMTM(Exp_Basic):
                         self.encoder_state_dict[k] = v
                 encoder_ckpt = {'epoch': epoch, 'model_state_dict': self.encoder_state_dict}
                 torch.save(encoder_ckpt, os.path.join(path, f"ckpt_best.pth"))
-            else:
-                earlystop_cnt += 1
-                print(f"Early stopping count: {earlystop_cnt}")
-                if earlystop_cnt >= self.args.patience:
-                    print("Early stopping")
-                    break
+            elif self.args.is_early_stop and vali_loss > min_vali_loss:
+                if self.args.is_early_stop:
+                    earlystop_cnt += 1
+                    print(f"Early stopping count: {earlystop_cnt}")
+                    if earlystop_cnt >= self.args.patience:
+                        print("Early stopping")
+                        break
             #if (epoch + 1) % 10 == 0:
             #    print("Saving model at epoch {}...".format(epoch + 1))
             #

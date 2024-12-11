@@ -125,7 +125,8 @@ class Model(nn.Module):
         self.task_name = configs.task_name
         self.pred_len = configs.pred_len
         self.seq_len = configs.seq_len
-        self.label_len = configs.label_len
+        #self.new_seq_len = (self.seq_len//configs.patch_len_s)*configs.patch_len_s
+        self.label_len = configs.label_len 
         self.output_attention = configs.output_attention
         self.configs = configs
         # Decomposition
@@ -133,7 +134,7 @@ class Model(nn.Module):
         if configs.decomp_method=='mov_avg':
             self.series_decomp=series_decomp(kernel_size=configs.window_size)
         elif configs.decomp_method=='fft':
-            self.series_decomp=fft_decomp(st_sep=configs.st_sep,padding_rate=9,lpf=0)
+            self.series_decomp=fft_decomp(st_sep=configs.st_sep,padding_rate=9,lpf=configs.lpf)
         self.topk_freq=topk_fft_decomp(k=configs.top_k_fft)
         self.patching_s=configs.patching_s
         self.patching_t=configs.patching_t
@@ -148,7 +149,7 @@ class Model(nn.Module):
         if self.configs.decomp:
             self.enc_embedding_s = DataEmbedding(1, configs.d_model, configs.embed, configs.freq, configs.dropout)
             self.enc_embedding_t = DataEmbedding(1, configs.d_model, configs.embed, configs.freq, configs.dropout)
-
+            
         self.enc_embedding = DataEmbedding(1, configs.d_model, configs.embed, configs.freq, configs.dropout)
 
         # Encoder
@@ -417,6 +418,8 @@ class Model(nn.Module):
         # series-wise representation
         if self.patching_s:
             # p_enc_out_s : [(bs*n_vars)*patch_num x self.patch_len_s x d_model]
+            #new_seq_len = (p_enc_out_s.shape[1] // self.patch_len_s) * self.patch_len_s
+            #p_enc_out_s = p_enc_out_s[:, :new_seq_len, :]
             p_enc_out_s = p_enc_out_s.reshape(-1, self.patch_len_s, self.configs.d_model)
         
         s_enc_out_s = self.pooler_s(p_enc_out_s)
