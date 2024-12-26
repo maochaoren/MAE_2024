@@ -1,0 +1,246 @@
+nohup: ignoring input
+Args in experiment:
+Namespace(task_name='pretrain', is_training=1, model_id='ETTh2', model='SimMTM', is_finetune=1, data='ETTh2', root_path='./dataset/ETT-small/', data_path='ETTh2.csv', features='M', target='OT', freq='h', checkpoints='./outputs/checkpoints/', pretrain_checkpoints='./outputs/pretrain_checkpoints/', transfer_checkpoints='ckpt_best.pth', load_checkpoints=None, select_channels=1, seq_len=384, label_len=48, pred_len=96, seasonal_patterns='Monthly', top_k=5, num_kernels=3, enc_in=7, dec_in=7, c_out=7, d_model=8, n_heads=4, e_layers=2, s_e_layers=2, t_e_layers=1, d_layers=1, d_ff=64, moving_avg=25, factor=1, distil=True, dropout=0.1, fc_dropout=0, head_dropout=0.1, embed='timeF', activation='gelu', output_attention=False, individual=0, pct_start=0.3, decomp=1, decomp_method='fft', window_size=97, st_sep=7.0, top_k_fft=25, lpf=50, patching_s=1, patching_t=1, patch_len_s=192, patch_len_t=12, stride=8, num_workers=5, itr=1, train_epochs=40, batch_size=8, is_early_stop=1, patience=4, learning_rate=0.001, des='test', loss='MSE', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0', lm=3, positive_nums=2, rbtp=1, temperature=0.2, masked_rule='geometric', mask_rate=0.5)
+decomp_method:fft,st_sep:7.0,lpf:50,s_patching:1,s_patch_len:192,t_patching:1,t_patch_len:12
+Use GPU: cuda:0
+number of model params 2555851
+>>>>>>>start pre_training : pretrain_SimMTM_ETTh2_M_isdec1_decmetfft_win97_sep7.0_topk25_sl384_ll48_pl96_dm8_df64_nh4_el2_dl1_fc1_dp0.1_hdp0.1_ep40_bs8_lr0.001_lm3_pn2_mr0.5_tp0.2>>>>>>>>>>>>>>>>>>>>>>>>>>
+<class 'numpy.ndarray'>
+(8640, 7)
+train 8161 1020
+<class 'numpy.ndarray'>
+(3264, 7)
+val 2785 348
+Epoch: 0, Lr: 0.0009969, Time: 121.18s | Train Loss: 4.4538/9.2580/0.2238Val Loss: 3.3431/8.3247/0.0847
+Validation loss decreased (3.3431 --> 3.3431).  Saving model epoch0 ...
+Epoch: 1, Lr: 0.0009893, Time: 121.16s | Train Loss: 3.3280/8.6731/0.1362Val Loss: 3.0396/8.2003/0.0686
+Validation loss decreased (3.3431 --> 3.0396).  Saving model epoch1 ...
+Epoch: 2, Lr: 0.0009786, Time: 126.99s | Train Loss: 3.1301/8.5633/0.1105Val Loss: 2.9611/8.1235/0.0619
+Validation loss decreased (3.0396 --> 2.9611).  Saving model epoch2 ...
+Epoch: 3, Lr: 0.0009650, Time: 120.65s | Train Loss: 3.0693/8.4533/0.1016Val Loss: 2.9228/7.9654/0.0556
+Validation loss decreased (2.9611 --> 2.9228).  Saving model epoch3 ...
+Epoch: 4, Lr: 0.0009485, Time: 121.99s | Train Loss: 3.0468/8.3736/0.0970Val Loss: 2.9111/7.8975/0.0542
+Validation loss decreased (2.9228 --> 2.9111).  Saving model epoch4 ...
+Epoch: 5, Lr: 0.0009293, Time: 128.18s | Train Loss: 3.0351/8.3112/0.0946Val Loss: 2.8947/7.8355/0.0506
+Validation loss decreased (2.9111 --> 2.8947).  Saving model epoch5 ...
+Epoch: 6, Lr: 0.0009075, Time: 113.32s | Train Loss: 3.0255/8.2507/0.0929Val Loss: 2.8888/7.7638/0.0518
+Validation loss decreased (2.8947 --> 2.8888).  Saving model epoch6 ...
+Epoch: 7, Lr: 0.0008832, Time: 120.09s | Train Loss: 3.0183/8.2091/0.0915Val Loss: 2.8794/7.7040/0.0498
+Validation loss decreased (2.8888 --> 2.8794).  Saving model epoch7 ...
+Epoch: 8, Lr: 0.0008566, Time: 118.68s | Train Loss: 3.0094/8.1549/0.0898Val Loss: 2.8701/7.6412/0.0483
+Validation loss decreased (2.8794 --> 2.8701).  Saving model epoch8 ...
+Epoch: 9, Lr: 0.0008277, Time: 120.02s | Train Loss: 3.0037/8.1169/0.0890Val Loss: 2.8801/7.6970/0.0514
+Early stopping count: 1
+Epoch: 10, Lr: 0.0007969, Time: 122.85s | Train Loss: 2.9983/8.0828/0.0881Val Loss: 2.8706/7.6290/0.0486
+Early stopping count: 2
+Epoch: 11, Lr: 0.0007642, Time: 112.89s | Train Loss: 2.9935/8.0538/0.0873Val Loss: 2.8628/7.5952/0.0481
+Validation loss decreased (2.8701 --> 2.8628).  Saving model epoch11 ...
+Epoch: 12, Lr: 0.0007299, Time: 119.61s | Train Loss: 2.9880/8.0203/0.0863Val Loss: 2.8587/7.5901/0.0480
+Validation loss decreased (2.8628 --> 2.8587).  Saving model epoch12 ...
+Epoch: 13, Lr: 0.0006943, Time: 121.60s | Train Loss: 2.9838/7.9966/0.0855Val Loss: 2.8557/7.5422/0.0479
+Validation loss decreased (2.8587 --> 2.8557).  Saving model epoch13 ...
+Epoch: 14, Lr: 0.0006574, Time: 116.72s | Train Loss: 2.9810/7.9804/0.0850Val Loss: 2.8484/7.5060/0.0477
+Validation loss decreased (2.8557 --> 2.8484).  Saving model epoch14 ...
+Epoch: 15, Lr: 0.0006196, Time: 126.54s | Train Loss: 2.9779/7.9630/0.0844Val Loss: 2.8463/7.4798/0.0477
+Validation loss decreased (2.8484 --> 2.8463).  Saving model epoch15 ...
+Epoch: 16, Lr: 0.0005811, Time: 118.40s | Train Loss: 2.9751/7.9452/0.0840Val Loss: 2.8449/7.4974/0.0464
+Validation loss decreased (2.8463 --> 2.8449).  Saving model epoch16 ...
+Epoch: 17, Lr: 0.0005421, Time: 113.63s | Train Loss: 2.9722/7.9288/0.0834Val Loss: 2.8460/7.5114/0.0465
+Early stopping count: 1
+Epoch: 18, Lr: 0.0005029, Time: 106.11s | Train Loss: 2.9696/7.9152/0.0829Val Loss: 2.8440/7.4926/0.0460
+Validation loss decreased (2.8449 --> 2.8440).  Saving model epoch18 ...
+Epoch: 19, Lr: 0.0004636, Time: 113.41s | Train Loss: 2.9677/7.9060/0.0825Val Loss: 2.8444/7.4693/0.0472
+Early stopping count: 1
+Epoch: 20, Lr: 0.0004246, Time: 113.89s | Train Loss: 2.9657/7.8937/0.0822Val Loss: 2.8356/7.4358/0.0463
+Validation loss decreased (2.8440 --> 2.8356).  Saving model epoch20 ...
+Epoch: 21, Lr: 0.0003861, Time: 113.58s | Train Loss: 2.9636/7.8803/0.0819Val Loss: 2.8380/7.4488/0.0459
+Early stopping count: 1
+Epoch: 22, Lr: 0.0003483, Time: 115.88s | Train Loss: 2.9624/7.8747/0.0816Val Loss: 2.8445/7.4797/0.0471
+Early stopping count: 2
+Epoch: 23, Lr: 0.0003114, Time: 121.49s | Train Loss: 2.9604/7.8636/0.0812Val Loss: 2.8381/7.4408/0.0463
+Early stopping count: 3
+Epoch: 24, Lr: 0.0002758, Time: 121.36s | Train Loss: 2.9591/7.8597/0.0808Val Loss: 2.8376/7.4475/0.0464
+Early stopping count: 4
+Early stopping
+Args in experiment:
+Namespace(task_name='finetune', is_training=1, model_id='ETTh2', model='SimMTM', is_finetune=1, data='ETTh2', root_path='./dataset/ETT-small/', data_path='ETTh2.csv', features='M', target='OT', freq='h', checkpoints='./outputs/checkpoints/', pretrain_checkpoints='./outputs/pretrain_checkpoints/', transfer_checkpoints='ckpt_best.pth', load_checkpoints=None, select_channels=1, seq_len=384, label_len=48, pred_len=96, seasonal_patterns='Monthly', top_k=5, num_kernels=3, enc_in=7, dec_in=7, c_out=7, d_model=8, n_heads=4, e_layers=2, s_e_layers=2, t_e_layers=1, d_layers=1, d_ff=64, moving_avg=25, factor=1, distil=True, dropout=0.1, fc_dropout=0, head_dropout=0.1, embed='timeF', activation='gelu', output_attention=False, individual=0, pct_start=0.3, decomp=1, decomp_method='fft', window_size=97, st_sep=7.0, top_k_fft=25, lpf=50, patching_s=1, patching_t=1, patch_len_s=192, patch_len_t=12, stride=8, num_workers=5, itr=1, train_epochs=40, batch_size=32, is_early_stop=1, patience=2, learning_rate=0.0001, des='test', loss='MSE', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0', lm=3, positive_nums=3, rbtp=1, temperature=0.2, masked_rule='geometric', mask_rate=0.5)
+./outputs/pretrain_checkpoints/ETTh2/_patchs_1_patchs_len_192_patcht_1_patcht_len_12/ckpt_best.pth
+Use GPU: cuda:0
+Loading ckpt: ./outputs/pretrain_checkpoints/ETTh2/_patchs_1_patchs_len_192_patcht_1_patcht_len_12/ckpt_best.pth
+weights from ./outputs/pretrain_checkpoints/ETTh2/_patchs_1_patchs_len_192_patcht_1_patcht_len_12/ckpt_best.pth successfully transferred!
+
+number of model params 324232
+>>>>>>>start training : finetune_SimMTM_ETTh2_M_isdec1_decmetfft_win97_sep7.0_topk25_sl384_ll48_pl96_dm8_df64_nh4_el2_dl1_fc1_dp0.1_hdp0.1_ep40_bs32_lr0.0001>>>>>>>>>>>>>>>>>>>>>>>>>>
+<class 'numpy.ndarray'>
+(8640, 7)
+train 8161 255
+<class 'numpy.ndarray'>
+(3264, 7)
+val 2785 87
+<class 'numpy.ndarray'>
+(3264, 7)
+test 2785 2785
+Epoch: 1, Steps: 255, Time: 30.74s | Train Loss: 0.6033584 Vali Loss: 0.3490624 Test Loss: 0.3839044
+Validation loss decreased (inf --> 0.349062).  Saving model ...
+Updating learning rate to 0.0001
+Epoch: 2, Steps: 255, Time: 31.69s | Train Loss: 0.5002352 Vali Loss: 0.2434865 Test Loss: 0.3026716
+Validation loss decreased (0.349062 --> 0.243487).  Saving model ...
+Updating learning rate to 5e-05
+Epoch: 3, Steps: 255, Time: 34.21s | Train Loss: 0.4357718 Vali Loss: 0.2352246 Test Loss: 0.2953309
+Validation loss decreased (0.243487 --> 0.235225).  Saving model ...
+Updating learning rate to 2.5e-05
+Epoch: 4, Steps: 255, Time: 31.90s | Train Loss: 0.4241324 Vali Loss: 0.2323475 Test Loss: 0.2931115
+Validation loss decreased (0.235225 --> 0.232347).  Saving model ...
+Updating learning rate to 1.25e-05
+Epoch: 5, Steps: 255, Time: 30.61s | Train Loss: 0.4197845 Vali Loss: 0.2318328 Test Loss: 0.2924153
+Validation loss decreased (0.232347 --> 0.231833).  Saving model ...
+Updating learning rate to 6.25e-06
+Epoch: 6, Steps: 255, Time: 30.57s | Train Loss: 0.4176737 Vali Loss: 0.2314262 Test Loss: 0.2920078
+Validation loss decreased (0.231833 --> 0.231426).  Saving model ...
+Updating learning rate to 3.125e-06
+Epoch: 7, Steps: 255, Time: 30.94s | Train Loss: 0.4167277 Vali Loss: 0.2312384 Test Loss: 0.2918063
+Validation loss decreased (0.231426 --> 0.231238).  Saving model ...
+Updating learning rate to 1.5625e-06
+Epoch: 8, Steps: 255, Time: 31.63s | Train Loss: 0.4158882 Vali Loss: 0.2311969 Test Loss: 0.2917214
+Validation loss decreased (0.231238 --> 0.231197).  Saving model ...
+Updating learning rate to 7.8125e-07
+Epoch: 9, Steps: 255, Time: 30.85s | Train Loss: 0.4160610 Vali Loss: 0.2311297 Test Loss: 0.2916625
+Validation loss decreased (0.231197 --> 0.231130).  Saving model ...
+Updating learning rate to 3.90625e-07
+Epoch: 10, Steps: 255, Time: 30.04s | Train Loss: 0.4156923 Vali Loss: 0.2311058 Test Loss: 0.2916407
+Validation loss decreased (0.231130 --> 0.231106).  Saving model ...
+Updating learning rate to 1.953125e-07
+Epoch: 11, Steps: 255, Time: 30.61s | Train Loss: 0.4159257 Vali Loss: 0.2310560 Test Loss: 0.2916283
+Validation loss decreased (0.231106 --> 0.231056).  Saving model ...
+Updating learning rate to 9.765625e-08
+Epoch: 12, Steps: 255, Time: 31.65s | Train Loss: 0.4156910 Vali Loss: 0.2311088 Test Loss: 0.2916226
+EarlyStopping counter: 1 out of 2
+Updating learning rate to 4.8828125e-08
+Epoch: 13, Steps: 255, Time: 31.64s | Train Loss: 0.4160139 Vali Loss: 0.2311081 Test Loss: 0.2916197
+EarlyStopping counter: 2 out of 2
+Early stopping
+>>>>>>>testing : finetune_SimMTM_ETTh2_M_isdec1_decmetfft_win97_sep7.0_topk25_sl384_ll48_pl96_dm8_df64_nh4_el2_dl1_fc1_dp0.1_hdp0.1_ep40_bs32_lr0.0001<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+<class 'numpy.ndarray'>
+(3264, 7)
+test 2785 2785
+384->96, mse:0.292, mae:0.349
+Args in experiment:
+Namespace(task_name='finetune', is_training=1, model_id='ETTh2', model='SimMTM', is_finetune=1, data='ETTh2', root_path='./dataset/ETT-small/', data_path='ETTh2.csv', features='M', target='OT', freq='h', checkpoints='./outputs/checkpoints/', pretrain_checkpoints='./outputs/pretrain_checkpoints/', transfer_checkpoints='ckpt_best.pth', load_checkpoints=None, select_channels=1, seq_len=384, label_len=48, pred_len=192, seasonal_patterns='Monthly', top_k=5, num_kernels=3, enc_in=7, dec_in=7, c_out=7, d_model=8, n_heads=4, e_layers=2, s_e_layers=2, t_e_layers=1, d_layers=1, d_ff=64, moving_avg=25, factor=1, distil=True, dropout=0.1, fc_dropout=0, head_dropout=0.1, embed='timeF', activation='gelu', output_attention=False, individual=0, pct_start=0.3, decomp=1, decomp_method='fft', window_size=97, st_sep=7.0, top_k_fft=25, lpf=50, patching_s=1, patching_t=1, patch_len_s=192, patch_len_t=12, stride=8, num_workers=5, itr=1, train_epochs=40, batch_size=32, is_early_stop=1, patience=2, learning_rate=0.0001, des='test', loss='MSE', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0', lm=3, positive_nums=3, rbtp=1, temperature=0.2, masked_rule='geometric', mask_rate=0.5)
+./outputs/pretrain_checkpoints/ETTh2/_patchs_1_patchs_len_192_patcht_1_patcht_len_12/ckpt_best.pth
+Use GPU: cuda:0
+Loading ckpt: ./outputs/pretrain_checkpoints/ETTh2/_patchs_1_patchs_len_192_patcht_1_patcht_len_12/ckpt_best.pth
+weights from ./outputs/pretrain_checkpoints/ETTh2/_patchs_1_patchs_len_192_patcht_1_patcht_len_12/ckpt_best.pth successfully transferred!
+
+number of model params 643912
+>>>>>>>start training : finetune_SimMTM_ETTh2_M_isdec1_decmetfft_win97_sep7.0_topk25_sl384_ll48_pl192_dm8_df64_nh4_el2_dl1_fc1_dp0.1_hdp0.1_ep40_bs32_lr0.0001>>>>>>>>>>>>>>>>>>>>>>>>>>
+<class 'numpy.ndarray'>
+(8640, 7)
+train 8065 252
+<class 'numpy.ndarray'>
+(3264, 7)
+val 2689 84
+<class 'numpy.ndarray'>
+(3264, 7)
+test 2689 2689
+Epoch: 1, Steps: 252, Time: 29.40s | Train Loss: 0.6617944 Vali Loss: 0.4051729 Test Loss: 0.3955991
+Validation loss decreased (inf --> 0.405173).  Saving model ...
+Updating learning rate to 0.0001
+Epoch: 2, Steps: 252, Time: 29.23s | Train Loss: 0.5698044 Vali Loss: 0.3109035 Test Loss: 0.3518142
+Validation loss decreased (0.405173 --> 0.310903).  Saving model ...
+Updating learning rate to 5e-05
+Epoch: 3, Steps: 252, Time: 29.97s | Train Loss: 0.5151392 Vali Loss: 0.3011431 Test Loss: 0.3494644
+Validation loss decreased (0.310903 --> 0.301143).  Saving model ...
+Updating learning rate to 2.5e-05
+Epoch: 4, Steps: 252, Time: 29.21s | Train Loss: 0.5046787 Vali Loss: 0.3021192 Test Loss: 0.3494268
+EarlyStopping counter: 1 out of 2
+Updating learning rate to 1.25e-05
+Epoch: 5, Steps: 252, Time: 28.94s | Train Loss: 0.5001110 Vali Loss: 0.3010310 Test Loss: 0.3489747
+Validation loss decreased (0.301143 --> 0.301031).  Saving model ...
+Updating learning rate to 6.25e-06
+Epoch: 6, Steps: 252, Time: 28.80s | Train Loss: 0.4984480 Vali Loss: 0.3013362 Test Loss: 0.3491472
+EarlyStopping counter: 1 out of 2
+Updating learning rate to 3.125e-06
+Epoch: 7, Steps: 252, Time: 29.15s | Train Loss: 0.4975770 Vali Loss: 0.3011549 Test Loss: 0.3490648
+EarlyStopping counter: 2 out of 2
+Early stopping
+>>>>>>>testing : finetune_SimMTM_ETTh2_M_isdec1_decmetfft_win97_sep7.0_topk25_sl384_ll48_pl192_dm8_df64_nh4_el2_dl1_fc1_dp0.1_hdp0.1_ep40_bs32_lr0.0001<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+<class 'numpy.ndarray'>
+(3264, 7)
+test 2689 2689
+384->192, mse:0.349, mae:0.386
+Args in experiment:
+Namespace(task_name='finetune', is_training=1, model_id='ETTh2', model='SimMTM', is_finetune=1, data='ETTh2', root_path='./dataset/ETT-small/', data_path='ETTh2.csv', features='M', target='OT', freq='h', checkpoints='./outputs/checkpoints/', pretrain_checkpoints='./outputs/pretrain_checkpoints/', transfer_checkpoints='ckpt_best.pth', load_checkpoints=None, select_channels=1, seq_len=384, label_len=48, pred_len=336, seasonal_patterns='Monthly', top_k=5, num_kernels=3, enc_in=7, dec_in=7, c_out=7, d_model=8, n_heads=4, e_layers=2, s_e_layers=2, t_e_layers=1, d_layers=1, d_ff=64, moving_avg=25, factor=1, distil=True, dropout=0.1, fc_dropout=0, head_dropout=0.1, embed='timeF', activation='gelu', output_attention=False, individual=0, pct_start=0.3, decomp=1, decomp_method='fft', window_size=97, st_sep=7.0, top_k_fft=25, lpf=50, patching_s=1, patching_t=1, patch_len_s=192, patch_len_t=12, stride=8, num_workers=5, itr=1, train_epochs=40, batch_size=32, is_early_stop=1, patience=2, learning_rate=0.0001, des='test', loss='MSE', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0', lm=3, positive_nums=3, rbtp=1, temperature=0.2, masked_rule='geometric', mask_rate=0.5)
+./outputs/pretrain_checkpoints/ETTh2/_patchs_1_patchs_len_192_patcht_1_patcht_len_12/ckpt_best.pth
+Use GPU: cuda:0
+Loading ckpt: ./outputs/pretrain_checkpoints/ETTh2/_patchs_1_patchs_len_192_patcht_1_patcht_len_12/ckpt_best.pth
+weights from ./outputs/pretrain_checkpoints/ETTh2/_patchs_1_patchs_len_192_patcht_1_patcht_len_12/ckpt_best.pth successfully transferred!
+
+number of model params 1123432
+>>>>>>>start training : finetune_SimMTM_ETTh2_M_isdec1_decmetfft_win97_sep7.0_topk25_sl384_ll48_pl336_dm8_df64_nh4_el2_dl1_fc1_dp0.1_hdp0.1_ep40_bs32_lr0.0001>>>>>>>>>>>>>>>>>>>>>>>>>>
+<class 'numpy.ndarray'>
+(8640, 7)
+train 7921 247
+<class 'numpy.ndarray'>
+(3264, 7)
+val 2545 79
+<class 'numpy.ndarray'>
+(3264, 7)
+test 2545 2545
+Epoch: 1, Steps: 247, Time: 28.38s | Train Loss: 0.7323843 Vali Loss: 0.4860570 Test Loss: 0.3907386
+Validation loss decreased (inf --> 0.486057).  Saving model ...
+Updating learning rate to 0.0001
+Epoch: 2, Steps: 247, Time: 27.65s | Train Loss: 0.6515932 Vali Loss: 0.4014168 Test Loss: 0.3602290
+Validation loss decreased (0.486057 --> 0.401417).  Saving model ...
+Updating learning rate to 5e-05
+Epoch: 3, Steps: 247, Time: 27.90s | Train Loss: 0.6013827 Vali Loss: 0.3914720 Test Loss: 0.3607759
+Validation loss decreased (0.401417 --> 0.391472).  Saving model ...
+Updating learning rate to 2.5e-05
+Epoch: 4, Steps: 247, Time: 27.93s | Train Loss: 0.5907824 Vali Loss: 0.3953474 Test Loss: 0.3613953
+EarlyStopping counter: 1 out of 2
+Updating learning rate to 1.25e-05
+Epoch: 5, Steps: 247, Time: 28.69s | Train Loss: 0.5867833 Vali Loss: 0.3922451 Test Loss: 0.3615611
+EarlyStopping counter: 2 out of 2
+Early stopping
+>>>>>>>testing : finetune_SimMTM_ETTh2_M_isdec1_decmetfft_win97_sep7.0_topk25_sl384_ll48_pl336_dm8_df64_nh4_el2_dl1_fc1_dp0.1_hdp0.1_ep40_bs32_lr0.0001<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+<class 'numpy.ndarray'>
+(3264, 7)
+test 2545 2545
+384->336, mse:0.361, mae:0.400
+Args in experiment:
+Namespace(task_name='finetune', is_training=1, model_id='ETTh2', model='SimMTM', is_finetune=1, data='ETTh2', root_path='./dataset/ETT-small/', data_path='ETTh2.csv', features='M', target='OT', freq='h', checkpoints='./outputs/checkpoints/', pretrain_checkpoints='./outputs/pretrain_checkpoints/', transfer_checkpoints='ckpt_best.pth', load_checkpoints=None, select_channels=1, seq_len=384, label_len=48, pred_len=720, seasonal_patterns='Monthly', top_k=5, num_kernels=3, enc_in=7, dec_in=7, c_out=7, d_model=8, n_heads=4, e_layers=2, s_e_layers=2, t_e_layers=1, d_layers=1, d_ff=64, moving_avg=25, factor=1, distil=True, dropout=0.1, fc_dropout=0, head_dropout=0.1, embed='timeF', activation='gelu', output_attention=False, individual=0, pct_start=0.3, decomp=1, decomp_method='fft', window_size=97, st_sep=7.0, top_k_fft=25, lpf=50, patching_s=1, patching_t=1, patch_len_s=192, patch_len_t=12, stride=8, num_workers=5, itr=1, train_epochs=40, batch_size=32, is_early_stop=1, patience=2, learning_rate=0.0001, des='test', loss='MSE', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0', lm=3, positive_nums=3, rbtp=1, temperature=0.2, masked_rule='geometric', mask_rate=0.5)
+./outputs/pretrain_checkpoints/ETTh2/_patchs_1_patchs_len_192_patcht_1_patcht_len_12/ckpt_best.pth
+Use GPU: cuda:0
+Loading ckpt: ./outputs/pretrain_checkpoints/ETTh2/_patchs_1_patchs_len_192_patcht_1_patcht_len_12/ckpt_best.pth
+weights from ./outputs/pretrain_checkpoints/ETTh2/_patchs_1_patchs_len_192_patcht_1_patcht_len_12/ckpt_best.pth successfully transferred!
+
+number of model params 2402152
+>>>>>>>start training : finetune_SimMTM_ETTh2_M_isdec1_decmetfft_win97_sep7.0_topk25_sl384_ll48_pl720_dm8_df64_nh4_el2_dl1_fc1_dp0.1_hdp0.1_ep40_bs32_lr0.0001>>>>>>>>>>>>>>>>>>>>>>>>>>
+<class 'numpy.ndarray'>
+(8640, 7)
+train 7537 235
+<class 'numpy.ndarray'>
+(3264, 7)
+val 2161 67
+<class 'numpy.ndarray'>
+(3264, 7)
+test 2161 2161
+Epoch: 1, Steps: 235, Time: 25.33s | Train Loss: 0.8991242 Vali Loss: 0.7490130 Test Loss: 0.4311574
+Validation loss decreased (inf --> 0.749013).  Saving model ...
+Updating learning rate to 0.0001
+Epoch: 2, Steps: 235, Time: 25.19s | Train Loss: 0.8280995 Vali Loss: 0.6539743 Test Loss: 0.3904184
+Validation loss decreased (0.749013 --> 0.653974).  Saving model ...
+Updating learning rate to 5e-05
+Epoch: 3, Steps: 235, Time: 25.04s | Train Loss: 0.7866854 Vali Loss: 0.6514797 Test Loss: 0.3872206
+Validation loss decreased (0.653974 --> 0.651480).  Saving model ...
+Updating learning rate to 2.5e-05
+Epoch: 4, Steps: 235, Time: 25.68s | Train Loss: 0.7763417 Vali Loss: 0.6520106 Test Loss: 0.3863435
+EarlyStopping counter: 1 out of 2
+Updating learning rate to 1.25e-05
+Epoch: 5, Steps: 235, Time: 25.77s | Train Loss: 0.7743740 Vali Loss: 0.6527531 Test Loss: 0.3865165
+EarlyStopping counter: 2 out of 2
+Early stopping
+>>>>>>>testing : finetune_SimMTM_ETTh2_M_isdec1_decmetfft_win97_sep7.0_topk25_sl384_ll48_pl720_dm8_df64_nh4_el2_dl1_fc1_dp0.1_hdp0.1_ep40_bs32_lr0.0001<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+<class 'numpy.ndarray'>
+(3264, 7)
+test 2161 2161
+384->720, mse:0.387, mae:0.426

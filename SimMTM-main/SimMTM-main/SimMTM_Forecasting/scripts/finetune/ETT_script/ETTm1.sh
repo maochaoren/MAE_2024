@@ -1,4 +1,4 @@
-export CUDA_VISIBLE_DEVICES=7
+export CUDA_VISIBLE_DEVICES=1
 
 for pred_len in 96 192 336 720; do
     python -u run.py \
@@ -12,10 +12,12 @@ for pred_len in 96 192 336 720; do
         --features M \
         --decomp 1 \
         --decomp_method fft \
+        --patching_t 0 \
+        --patch_len_t 48 \
         --st_sep  3 \
         --lpf 50 \
         --seq_len 384 \
-        --label_len 48 \
+        --label_len 24 \
         --pred_len $pred_len \
         --e_layers 2 \
         --enc_in 7 \
@@ -24,7 +26,7 @@ for pred_len in 96 192 336 720; do
         --n_heads 8 \
         --d_model 8 \
         --d_ff 64 \
-        --dropout 0.1 \
+        --dropout 0 \
         --batch_size 32 \
         --patience 3
 done

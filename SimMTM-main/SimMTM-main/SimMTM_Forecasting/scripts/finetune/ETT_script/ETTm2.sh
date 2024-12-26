@@ -1,4 +1,4 @@
-export CUDA_VISIBLE_DEVICES=2
+export CUDA_VISIBLE_DEVICES=7
 
 for pred_len in 96 192 336 720; do
     python -u run.py \
@@ -15,6 +15,8 @@ for pred_len in 96 192 336 720; do
         --st_sep  3 \
         --lpf 30 \
         --seq_len 384 \
+        --patching_t 0 \
+        --patch_len_t 48 \
         --label_len 48 \
         --pred_len $pred_len \
         --e_layers 3 \
@@ -29,3 +31,4 @@ for pred_len in 96 192 336 720; do
         --patience 3
 done
 
+#bash ~/MAE_2024/SimMTM-main/SimMTM-main/SimMTM_Forecasting/scripts/finetune/ETT_script/ETTm2.sh

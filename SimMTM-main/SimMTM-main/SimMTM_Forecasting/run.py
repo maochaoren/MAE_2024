@@ -19,6 +19,7 @@ if __name__ == '__main__':
     parser.add_argument('--is_training', type=int, default=1, help='status')
     parser.add_argument('--model_id', type=str, required=True, default='SimMTM', help='model id')
     parser.add_argument('--model', type=str, required=True, default='SimMTM', help='model name')
+    parser.add_argument('--is_finetune', type=int, default=1, help='whether to finetune')
 
     # data loader
     parser.add_argument('--data', type=str, required=True, default='ETTh1', help='dataset type')
@@ -121,6 +122,7 @@ if __name__ == '__main__':
 
     Exp = Exp_SimMTM
     if args.task_name == 'pretrain':
+        print('decomp_method:{},st_sep:{},lpf:{},s_patching:{},s_patch_len:{},t_patching:{},t_patch_len:{}'.format(args.decomp_method,args.st_sep,args.lpf,args.patching_s,args.patch_len_s,args.patching_t,args.patch_len_t))       
         for ii in range(args.itr):
             # setting record of experiments
             setting = '{}_{}_{}_{}_isdec{}_decmet{}_win{}_sep{}_topk{}_sl{}_ll{}_pl{}_dm{}_df{}_nh{}_el{}_dl{}_fc{}_dp{}_hdp{}_ep{}_bs{}_lr{}_lm{}_pn{}_mr{}_tp{}'.format(
@@ -184,8 +186,10 @@ if __name__ == '__main__':
                 args.batch_size,
                 args.learning_rate
             )
-            args.load_checkpoints = os.path.join(args.pretrain_checkpoints, args.data, args.transfer_checkpoints)
-            print(args.load_checkpoints)
+            add_info = f"_patchs_{args.patching_s}_patchs_len_{args.patch_len_s}_patcht_{args.patching_t}_patcht_len_{args.patch_len_t}"
+            if args.is_finetune:
+                args.load_checkpoints = os.path.join(args.pretrain_checkpoints, args.data, add_info,args.transfer_checkpoints)
+                print(args.load_checkpoints)
             exp = Exp(args)  # set experiments
             print('>>>>>>>start training : {}>>>>>>>>>>>>>>>>>>>>>>>>>>'.format(setting))
             exp.train(setting)

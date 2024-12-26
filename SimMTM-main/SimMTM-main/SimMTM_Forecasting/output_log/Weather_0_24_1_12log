@@ -1,0 +1,170 @@
+nohup: ignoring input
+Args in experiment:
+Namespace(task_name='finetune', is_training=1, model_id='Weather', model='SimMTM', is_finetune=0, data='Weather', root_path='./dataset/weather/', data_path='weather.csv', features='M', target='OT', freq='h', checkpoints='./outputs/checkpoints/', pretrain_checkpoints='./outputs/pretrain_checkpoints/', transfer_checkpoints='ckpt_best.pth', load_checkpoints=None, select_channels=1, seq_len=384, label_len=48, pred_len=96, seasonal_patterns='Monthly', top_k=5, num_kernels=3, enc_in=21, dec_in=21, c_out=21, d_model=8, n_heads=8, e_layers=1, s_e_layers=2, t_e_layers=1, d_layers=1, d_ff=64, moving_avg=25, factor=1, distil=True, dropout=0.1, fc_dropout=0, head_dropout=0.1, embed='timeF', activation='gelu', output_attention=False, individual=0, pct_start=0.3, decomp=1, decomp_method='mov_avg', window_size=97, st_sep=5.0, top_k_fft=25, lpf=50, patching_s=0, patching_t=1, patch_len_s=24, patch_len_t=12, stride=8, num_workers=5, itr=1, train_epochs=40, batch_size=16, is_early_stop=1, patience=3, learning_rate=0.0001, des='test', loss='MSE', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0', lm=3, positive_nums=3, rbtp=1, temperature=0.2, masked_rule='geometric', mask_rate=0.5)
+None
+Use GPU: cuda:0
+number of model params 324232
+>>>>>>>start training : finetune_SimMTM_Weather_M_isdec1_decmetmov_avg_win97_sep5.0_topk25_sl384_ll48_pl96_dm8_df64_nh8_el1_dl1_fc1_dp0.1_hdp0.1_ep40_bs16_lr0.0001>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 36408 2275
+val 5175 323
+test 10444 10444
+Epoch: 1, Steps: 2275, Time: 838.26s | Train Loss: 0.6594055 Vali Loss: 0.5072057 Test Loss: 0.2280162
+Validation loss decreased (inf --> 0.507206).  Saving model ...
+Updating learning rate to 0.0001
+Epoch: 2, Steps: 2275, Time: 834.04s | Train Loss: 0.4847654 Vali Loss: 0.4236212 Test Loss: 0.1753405
+Validation loss decreased (0.507206 --> 0.423621).  Saving model ...
+Updating learning rate to 5e-05
+Epoch: 3, Steps: 2275, Time: 830.56s | Train Loss: 0.4605973 Vali Loss: 0.4182033 Test Loss: 0.1729787
+Validation loss decreased (0.423621 --> 0.418203).  Saving model ...
+Updating learning rate to 2.5e-05
+Epoch: 4, Steps: 2275, Time: 839.17s | Train Loss: 0.4569361 Vali Loss: 0.4186226 Test Loss: 0.1723465
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 1.25e-05
+Epoch: 5, Steps: 2275, Time: 839.03s | Train Loss: 0.4548971 Vali Loss: 0.4144160 Test Loss: 0.1710419
+Validation loss decreased (0.418203 --> 0.414416).  Saving model ...
+Updating learning rate to 6.25e-06
+Epoch: 6, Steps: 2275, Time: 838.53s | Train Loss: 0.4541626 Vali Loss: 0.4147831 Test Loss: 0.1710192
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 3.125e-06
+Epoch: 7, Steps: 2275, Time: 836.26s | Train Loss: 0.4537769 Vali Loss: 0.4134324 Test Loss: 0.1707382
+Validation loss decreased (0.414416 --> 0.413432).  Saving model ...
+Updating learning rate to 1.5625e-06
+Epoch: 8, Steps: 2275, Time: 838.35s | Train Loss: 0.4534446 Vali Loss: 0.4146228 Test Loss: 0.1708220
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 7.8125e-07
+Epoch: 9, Steps: 2275, Time: 838.78s | Train Loss: 0.4531578 Vali Loss: 0.4146847 Test Loss: 0.1708177
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 3.90625e-07
+Epoch: 10, Steps: 2275, Time: 840.40s | Train Loss: 0.4533248 Vali Loss: 0.4148561 Test Loss: 0.1709442
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : finetune_SimMTM_Weather_M_isdec1_decmetmov_avg_win97_sep5.0_topk25_sl384_ll48_pl96_dm8_df64_nh8_el1_dl1_fc1_dp0.1_hdp0.1_ep40_bs16_lr0.0001<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 10444 10444
+384->96, mse:0.171, mae:0.222
+Args in experiment:
+Namespace(task_name='finetune', is_training=1, model_id='Weather', model='SimMTM', is_finetune=0, data='Weather', root_path='./dataset/weather/', data_path='weather.csv', features='M', target='OT', freq='h', checkpoints='./outputs/checkpoints/', pretrain_checkpoints='./outputs/pretrain_checkpoints/', transfer_checkpoints='ckpt_best.pth', load_checkpoints=None, select_channels=1, seq_len=384, label_len=48, pred_len=192, seasonal_patterns='Monthly', top_k=5, num_kernels=3, enc_in=21, dec_in=21, c_out=21, d_model=8, n_heads=8, e_layers=1, s_e_layers=2, t_e_layers=1, d_layers=1, d_ff=64, moving_avg=25, factor=1, distil=True, dropout=0.1, fc_dropout=0, head_dropout=0.1, embed='timeF', activation='gelu', output_attention=False, individual=0, pct_start=0.3, decomp=1, decomp_method='mov_avg', window_size=97, st_sep=5.0, top_k_fft=25, lpf=50, patching_s=0, patching_t=1, patch_len_s=24, patch_len_t=12, stride=8, num_workers=5, itr=1, train_epochs=40, batch_size=16, is_early_stop=1, patience=3, learning_rate=0.0001, des='test', loss='MSE', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0', lm=3, positive_nums=3, rbtp=1, temperature=0.2, masked_rule='geometric', mask_rate=0.5)
+None
+Use GPU: cuda:0
+number of model params 643912
+>>>>>>>start training : finetune_SimMTM_Weather_M_isdec1_decmetmov_avg_win97_sep5.0_topk25_sl384_ll48_pl192_dm8_df64_nh8_el1_dl1_fc1_dp0.1_hdp0.1_ep40_bs16_lr0.0001>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 36312 2269
+val 5079 317
+test 10348 10348
+Epoch: 1, Steps: 2269, Time: 840.11s | Train Loss: 0.6967029 Vali Loss: 0.5696755 Test Loss: 0.2633246
+Validation loss decreased (inf --> 0.569676).  Saving model ...
+Updating learning rate to 0.0001
+Epoch: 2, Steps: 2269, Time: 836.89s | Train Loss: 0.5365914 Vali Loss: 0.4949048 Test Loss: 0.2188064
+Validation loss decreased (0.569676 --> 0.494905).  Saving model ...
+Updating learning rate to 5e-05
+Epoch: 3, Steps: 2269, Time: 822.88s | Train Loss: 0.5141320 Vali Loss: 0.4939131 Test Loss: 0.2163885
+Validation loss decreased (0.494905 --> 0.493913).  Saving model ...
+Updating learning rate to 2.5e-05
+Epoch: 4, Steps: 2269, Time: 811.09s | Train Loss: 0.5098011 Vali Loss: 0.4928793 Test Loss: 0.2158538
+Validation loss decreased (0.493913 --> 0.492879).  Saving model ...
+Updating learning rate to 1.25e-05
+Epoch: 5, Steps: 2269, Time: 830.09s | Train Loss: 0.5078845 Vali Loss: 0.4918611 Test Loss: 0.2150435
+Validation loss decreased (0.492879 --> 0.491861).  Saving model ...
+Updating learning rate to 6.25e-06
+Epoch: 6, Steps: 2269, Time: 845.19s | Train Loss: 0.5069823 Vali Loss: 0.4908432 Test Loss: 0.2146127
+Validation loss decreased (0.491861 --> 0.490843).  Saving model ...
+Updating learning rate to 3.125e-06
+Epoch: 7, Steps: 2269, Time: 858.25s | Train Loss: 0.5064683 Vali Loss: 0.4897790 Test Loss: 0.2142916
+Validation loss decreased (0.490843 --> 0.489779).  Saving model ...
+Updating learning rate to 1.5625e-06
+Epoch: 8, Steps: 2269, Time: 836.06s | Train Loss: 0.5062247 Vali Loss: 0.4899059 Test Loss: 0.2142010
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 7.8125e-07
+Epoch: 9, Steps: 2269, Time: 832.16s | Train Loss: 0.5061711 Vali Loss: 0.4893797 Test Loss: 0.2141961
+Validation loss decreased (0.489779 --> 0.489380).  Saving model ...
+Updating learning rate to 3.90625e-07
+Epoch: 10, Steps: 2269, Time: 830.68s | Train Loss: 0.5060093 Vali Loss: 0.4894877 Test Loss: 0.2141852
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 1.953125e-07
+Epoch: 11, Steps: 2269, Time: 831.95s | Train Loss: 0.5060237 Vali Loss: 0.4898242 Test Loss: 0.2142461
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 9.765625e-08
+Epoch: 12, Steps: 2269, Time: 830.04s | Train Loss: 0.5060118 Vali Loss: 0.4901405 Test Loss: 0.2142126
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : finetune_SimMTM_Weather_M_isdec1_decmetmov_avg_win97_sep5.0_topk25_sl384_ll48_pl192_dm8_df64_nh8_el1_dl1_fc1_dp0.1_hdp0.1_ep40_bs16_lr0.0001<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 10348 10348
+384->192, mse:0.214, mae:0.259
+Args in experiment:
+Namespace(task_name='finetune', is_training=1, model_id='Weather', model='SimMTM', is_finetune=0, data='Weather', root_path='./dataset/weather/', data_path='weather.csv', features='M', target='OT', freq='h', checkpoints='./outputs/checkpoints/', pretrain_checkpoints='./outputs/pretrain_checkpoints/', transfer_checkpoints='ckpt_best.pth', load_checkpoints=None, select_channels=1, seq_len=384, label_len=48, pred_len=336, seasonal_patterns='Monthly', top_k=5, num_kernels=3, enc_in=21, dec_in=21, c_out=21, d_model=8, n_heads=8, e_layers=1, s_e_layers=2, t_e_layers=1, d_layers=1, d_ff=64, moving_avg=25, factor=1, distil=True, dropout=0.1, fc_dropout=0, head_dropout=0.1, embed='timeF', activation='gelu', output_attention=False, individual=0, pct_start=0.3, decomp=1, decomp_method='mov_avg', window_size=97, st_sep=5.0, top_k_fft=25, lpf=50, patching_s=0, patching_t=1, patch_len_s=24, patch_len_t=12, stride=8, num_workers=5, itr=1, train_epochs=40, batch_size=16, is_early_stop=1, patience=3, learning_rate=0.0001, des='test', loss='MSE', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0', lm=3, positive_nums=3, rbtp=1, temperature=0.2, masked_rule='geometric', mask_rate=0.5)
+None
+Use GPU: cuda:0
+number of model params 1123432
+>>>>>>>start training : finetune_SimMTM_Weather_M_isdec1_decmetmov_avg_win97_sep5.0_topk25_sl384_ll48_pl336_dm8_df64_nh8_el1_dl1_fc1_dp0.1_hdp0.1_ep40_bs16_lr0.0001>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 36168 2260
+val 4935 308
+test 10204 10204
+Epoch: 1, Steps: 2260, Time: 832.86s | Train Loss: 0.7365733 Vali Loss: 0.6378428 Test Loss: 0.3023798
+Validation loss decreased (inf --> 0.637843).  Saving model ...
+Updating learning rate to 0.0001
+Epoch: 2, Steps: 2260, Time: 832.66s | Train Loss: 0.5876699 Vali Loss: 0.5673708 Test Loss: 0.2637928
+Validation loss decreased (0.637843 --> 0.567371).  Saving model ...
+Updating learning rate to 5e-05
+Epoch: 3, Steps: 2260, Time: 835.88s | Train Loss: 0.5651227 Vali Loss: 0.5660280 Test Loss: 0.2620242
+Validation loss decreased (0.567371 --> 0.566028).  Saving model ...
+Updating learning rate to 2.5e-05
+Epoch: 4, Steps: 2260, Time: 836.60s | Train Loss: 0.5608774 Vali Loss: 0.5664868 Test Loss: 0.2613035
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 1.25e-05
+Epoch: 5, Steps: 2260, Time: 834.45s | Train Loss: 0.5591553 Vali Loss: 0.5667909 Test Loss: 0.2611655
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 6.25e-06
+Epoch: 6, Steps: 2260, Time: 834.43s | Train Loss: 0.5582654 Vali Loss: 0.5642521 Test Loss: 0.2603237
+Validation loss decreased (0.566028 --> 0.564252).  Saving model ...
+Updating learning rate to 3.125e-06
+Epoch: 7, Steps: 2260, Time: 834.88s | Train Loss: 0.5578597 Vali Loss: 0.5646557 Test Loss: 0.2602409
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 1.5625e-06
+Epoch: 8, Steps: 2260, Time: 414.73s | Train Loss: 0.5577492 Vali Loss: 0.5650609 Test Loss: 0.2603534
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 7.8125e-07
+Epoch: 9, Steps: 2260, Time: 416.06s | Train Loss: 0.5575174 Vali Loss: 0.5659061 Test Loss: 0.2604398
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : finetune_SimMTM_Weather_M_isdec1_decmetmov_avg_win97_sep5.0_topk25_sl384_ll48_pl336_dm8_df64_nh8_el1_dl1_fc1_dp0.1_hdp0.1_ep40_bs16_lr0.0001<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 10204 10204
+384->336, mse:0.260, mae:0.292
+Args in experiment:
+Namespace(task_name='finetune', is_training=1, model_id='Weather', model='SimMTM', is_finetune=0, data='Weather', root_path='./dataset/weather/', data_path='weather.csv', features='M', target='OT', freq='h', checkpoints='./outputs/checkpoints/', pretrain_checkpoints='./outputs/pretrain_checkpoints/', transfer_checkpoints='ckpt_best.pth', load_checkpoints=None, select_channels=1, seq_len=384, label_len=48, pred_len=720, seasonal_patterns='Monthly', top_k=5, num_kernels=3, enc_in=21, dec_in=21, c_out=21, d_model=8, n_heads=8, e_layers=1, s_e_layers=2, t_e_layers=1, d_layers=1, d_ff=64, moving_avg=25, factor=1, distil=True, dropout=0.1, fc_dropout=0, head_dropout=0.1, embed='timeF', activation='gelu', output_attention=False, individual=0, pct_start=0.3, decomp=1, decomp_method='mov_avg', window_size=97, st_sep=5.0, top_k_fft=25, lpf=50, patching_s=0, patching_t=1, patch_len_s=24, patch_len_t=12, stride=8, num_workers=5, itr=1, train_epochs=40, batch_size=16, is_early_stop=1, patience=3, learning_rate=0.0001, des='test', loss='MSE', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0', lm=3, positive_nums=3, rbtp=1, temperature=0.2, masked_rule='geometric', mask_rate=0.5)
+None
+Use GPU: cuda:0
+number of model params 2402152
+>>>>>>>start training : finetune_SimMTM_Weather_M_isdec1_decmetmov_avg_win97_sep5.0_topk25_sl384_ll48_pl720_dm8_df64_nh8_el1_dl1_fc1_dp0.1_hdp0.1_ep40_bs16_lr0.0001>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 35784 2236
+val 4551 284
+test 9820 9820
+Epoch: 1, Steps: 2236, Time: 410.48s | Train Loss: 0.7927612 Vali Loss: 0.7175397 Test Loss: 0.3572080
+Validation loss decreased (inf --> 0.717540).  Saving model ...
+Updating learning rate to 0.0001
+Epoch: 2, Steps: 2236, Time: 412.01s | Train Loss: 0.6458127 Vali Loss: 0.6635692 Test Loss: 0.3298408
+Validation loss decreased (0.717540 --> 0.663569).  Saving model ...
+Updating learning rate to 5e-05
+Epoch: 3, Steps: 2236, Time: 411.04s | Train Loss: 0.6270231 Vali Loss: 0.6610748 Test Loss: 0.3281820
+Validation loss decreased (0.663569 --> 0.661075).  Saving model ...
+Updating learning rate to 2.5e-05
+Epoch: 4, Steps: 2236, Time: 411.45s | Train Loss: 0.6238291 Vali Loss: 0.6606567 Test Loss: 0.3271242
+Validation loss decreased (0.661075 --> 0.660657).  Saving model ...
+Updating learning rate to 1.25e-05
+Epoch: 5, Steps: 2236, Time: 412.23s | Train Loss: 0.6222353 Vali Loss: 0.6642835 Test Loss: 0.3281875
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 6.25e-06
+Epoch: 6, Steps: 2236, Time: 413.30s | Train Loss: 0.6216050 Vali Loss: 0.6654704 Test Loss: 0.3283617
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 3.125e-06
+Epoch: 7, Steps: 2236, Time: 411.35s | Train Loss: 0.6211851 Vali Loss: 0.6648455 Test Loss: 0.3281461
+EarlyStopping counter: 3 out of 3
+Early stopping
+Traceback (most recent call last):
+  File "/data1/home/xurui/MAE_2024/SimMTM-main/SimMTM-main/SimMTM_Forecasting/run.py", line 195, in <module>
+    exp.train(setting)
+  File "/data1/home/xurui/MAE_2024/SimMTM-main/SimMTM-main/SimMTM_Forecasting/exp/exp_simmtm.py", line 310, in train
+    self.model.load_state_dict(torch.load(best_model_path))
+  File "/data1/home/xurui/.conda/envs/py3.9/lib/python3.9/site-packages/torch/nn/modules/module.py", line 2189, in load_state_dict
+    raise RuntimeError('Error(s) in loading state_dict for {}:\n\t{}'.format(
+RuntimeError: Error(s) in loading state_dict for Model:
+	size mismatch for patch_embedding_t.weight: copying a param with shape torch.Size([8, 2]) from checkpoint, the shape in current model is torch.Size([8, 12]).
+	size mismatch for head_t.linear.weight: copying a param with shape torch.Size([720, 1536]) from checkpoint, the shape in current model is torch.Size([720, 256]).

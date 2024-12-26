@@ -1,0 +1,141 @@
+nohup: ignoring input
+Args in experiment:
+Namespace(task_name='finetune', is_training=1, model_id='ETTh1', model='SimMTM', is_finetune=1, data='ETTh1', root_path='./dataset/ETT-small/', data_path='ETTh1.csv', features='M', target='OT', freq='h', checkpoints='./outputs/checkpoints/', pretrain_checkpoints='./outputs/pretrain_checkpoints/', transfer_checkpoints='ckpt_best.pth', load_checkpoints=None, select_channels=1, seq_len=384, label_len=48, pred_len=96, seasonal_patterns='Monthly', top_k=5, num_kernels=3, enc_in=7, dec_in=7, c_out=7, d_model=8, n_heads=8, e_layers=2, s_e_layers=2, t_e_layers=1, d_layers=1, d_ff=64, moving_avg=25, factor=1, distil=True, dropout=0.1, fc_dropout=0, head_dropout=0.1, embed='timeF', activation='gelu', output_attention=False, individual=0, pct_start=0.3, decomp=1, decomp_method='mov_avg', window_size=97, st_sep=3.0, top_k_fft=25, lpf=50, patching_s=1, patching_t=1, patch_len_s=192, patch_len_t=8, stride=8, num_workers=5, itr=1, train_epochs=6, batch_size=32, is_early_stop=0, patience=3, learning_rate=0.00012, des='test', loss='MSE', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0', lm=3, positive_nums=3, rbtp=1, temperature=0.2, masked_rule='geometric', mask_rate=0.5)
+./outputs/pretrain_checkpoints/ETTh1/_patchs_1_patchs_len_192_patcht_1_patcht_len_8/ckpt_best.pth
+Use GPU: cuda:0
+Loading ckpt: ./outputs/pretrain_checkpoints/ETTh1/_patchs_1_patchs_len_192_patcht_1_patcht_len_8/ckpt_best.pth
+weights from ./outputs/pretrain_checkpoints/ETTh1/_patchs_1_patchs_len_192_patcht_1_patcht_len_8/ckpt_best.pth successfully transferred!
+
+number of model params 336488
+>>>>>>>start training : finetune_SimMTM_ETTh1_M_isdec1_decmetmov_avg_win97_sep3.0_topk25_sl384_ll48_pl96_dm8_df64_nh8_el2_dl1_fc1_dp0.1_hdp0.1_ep6_bs32_lr0.00012>>>>>>>>>>>>>>>>>>>>>>>>>>
+<class 'numpy.ndarray'>
+(8640, 7)
+train 8161 255
+<class 'numpy.ndarray'>
+(3264, 7)
+val 2785 87
+<class 'numpy.ndarray'>
+(3264, 7)
+test 2785 2785
+Epoch: 1, Steps: 255, Time: 42.12s | Train Loss: 0.5775332 Vali Loss: 1.2561969 Test Loss: 0.6405314
+Updating learning rate to 0.00012
+Epoch: 2, Steps: 255, Time: 41.07s | Train Loss: 0.4169506 Vali Loss: 0.7799553 Test Loss: 0.3893630
+Updating learning rate to 6e-05
+Epoch: 3, Steps: 255, Time: 41.06s | Train Loss: 0.3760887 Vali Loss: 0.7466687 Test Loss: 0.3823262
+Updating learning rate to 3e-05
+Epoch: 4, Steps: 255, Time: 40.95s | Train Loss: 0.3688161 Vali Loss: 0.7344006 Test Loss: 0.3794262
+Updating learning rate to 1.5e-05
+Epoch: 5, Steps: 255, Time: 40.86s | Train Loss: 0.3662795 Vali Loss: 0.7296623 Test Loss: 0.3787870
+Updating learning rate to 7.5e-06
+Epoch: 6, Steps: 255, Time: 40.83s | Train Loss: 0.3648279 Vali Loss: 0.7278474 Test Loss: 0.3783253
+Updating learning rate to 3.75e-06
+>>>>>>>testing : finetune_SimMTM_ETTh1_M_isdec1_decmetmov_avg_win97_sep3.0_topk25_sl384_ll48_pl96_dm8_df64_nh8_el2_dl1_fc1_dp0.1_hdp0.1_ep6_bs32_lr0.00012<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+<class 'numpy.ndarray'>
+(3264, 7)
+test 2785 2785
+384->96, mse:0.378, mae:0.405
+Args in experiment:
+Namespace(task_name='finetune', is_training=1, model_id='ETTh1', model='SimMTM', is_finetune=1, data='ETTh1', root_path='./dataset/ETT-small/', data_path='ETTh1.csv', features='M', target='OT', freq='h', checkpoints='./outputs/checkpoints/', pretrain_checkpoints='./outputs/pretrain_checkpoints/', transfer_checkpoints='ckpt_best.pth', load_checkpoints=None, select_channels=1, seq_len=384, label_len=48, pred_len=192, seasonal_patterns='Monthly', top_k=5, num_kernels=3, enc_in=7, dec_in=7, c_out=7, d_model=8, n_heads=8, e_layers=2, s_e_layers=2, t_e_layers=1, d_layers=1, d_ff=64, moving_avg=25, factor=1, distil=True, dropout=0.1, fc_dropout=0, head_dropout=0.1, embed='timeF', activation='gelu', output_attention=False, individual=0, pct_start=0.3, decomp=1, decomp_method='mov_avg', window_size=97, st_sep=3.0, top_k_fft=25, lpf=50, patching_s=1, patching_t=1, patch_len_s=192, patch_len_t=8, stride=8, num_workers=5, itr=1, train_epochs=6, batch_size=32, is_early_stop=0, patience=3, learning_rate=0.00012, des='test', loss='MSE', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0', lm=3, positive_nums=3, rbtp=1, temperature=0.2, masked_rule='geometric', mask_rate=0.5)
+./outputs/pretrain_checkpoints/ETTh1/_patchs_1_patchs_len_192_patcht_1_patcht_len_8/ckpt_best.pth
+Use GPU: cuda:0
+Loading ckpt: ./outputs/pretrain_checkpoints/ETTh1/_patchs_1_patchs_len_192_patcht_1_patcht_len_8/ckpt_best.pth
+weights from ./outputs/pretrain_checkpoints/ETTh1/_patchs_1_patchs_len_192_patcht_1_patcht_len_8/ckpt_best.pth successfully transferred!
+
+number of model params 668456
+>>>>>>>start training : finetune_SimMTM_ETTh1_M_isdec1_decmetmov_avg_win97_sep3.0_topk25_sl384_ll48_pl192_dm8_df64_nh8_el2_dl1_fc1_dp0.1_hdp0.1_ep6_bs32_lr0.00012>>>>>>>>>>>>>>>>>>>>>>>>>>
+<class 'numpy.ndarray'>
+(8640, 7)
+train 8065 252
+<class 'numpy.ndarray'>
+(3264, 7)
+val 2689 84
+<class 'numpy.ndarray'>
+(3264, 7)
+test 2689 2689
+Epoch: 1, Steps: 252, Time: 40.40s | Train Loss: 0.6117667 Vali Loss: 1.3867826 Test Loss: 0.6491462
+Updating learning rate to 0.00012
+Epoch: 2, Steps: 252, Time: 40.01s | Train Loss: 0.4617111 Vali Loss: 0.9998544 Test Loss: 0.4150612
+Updating learning rate to 6e-05
+Epoch: 3, Steps: 252, Time: 40.14s | Train Loss: 0.4259693 Vali Loss: 0.9854254 Test Loss: 0.4089953
+Updating learning rate to 3e-05
+Epoch: 4, Steps: 252, Time: 40.28s | Train Loss: 0.4183679 Vali Loss: 0.9831160 Test Loss: 0.4071437
+Updating learning rate to 1.5e-05
+Epoch: 5, Steps: 252, Time: 40.35s | Train Loss: 0.4154010 Vali Loss: 0.9799430 Test Loss: 0.4060255
+Updating learning rate to 7.5e-06
+Epoch: 6, Steps: 252, Time: 40.21s | Train Loss: 0.4140189 Vali Loss: 0.9795480 Test Loss: 0.4059016
+Updating learning rate to 3.75e-06
+>>>>>>>testing : finetune_SimMTM_ETTh1_M_isdec1_decmetmov_avg_win97_sep3.0_topk25_sl384_ll48_pl192_dm8_df64_nh8_el2_dl1_fc1_dp0.1_hdp0.1_ep6_bs32_lr0.00012<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+<class 'numpy.ndarray'>
+(3264, 7)
+test 2689 2689
+384->192, mse:0.406, mae:0.423
+Args in experiment:
+Namespace(task_name='finetune', is_training=1, model_id='ETTh1', model='SimMTM', is_finetune=1, data='ETTh1', root_path='./dataset/ETT-small/', data_path='ETTh1.csv', features='M', target='OT', freq='h', checkpoints='./outputs/checkpoints/', pretrain_checkpoints='./outputs/pretrain_checkpoints/', transfer_checkpoints='ckpt_best.pth', load_checkpoints=None, select_channels=1, seq_len=384, label_len=48, pred_len=336, seasonal_patterns='Monthly', top_k=5, num_kernels=3, enc_in=7, dec_in=7, c_out=7, d_model=8, n_heads=8, e_layers=2, s_e_layers=2, t_e_layers=1, d_layers=1, d_ff=64, moving_avg=25, factor=1, distil=True, dropout=0.1, fc_dropout=0, head_dropout=0.1, embed='timeF', activation='gelu', output_attention=False, individual=0, pct_start=0.3, decomp=1, decomp_method='mov_avg', window_size=97, st_sep=3.0, top_k_fft=25, lpf=50, patching_s=1, patching_t=1, patch_len_s=192, patch_len_t=8, stride=8, num_workers=5, itr=1, train_epochs=6, batch_size=32, is_early_stop=0, patience=3, learning_rate=0.00012, des='test', loss='MSE', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0', lm=3, positive_nums=3, rbtp=1, temperature=0.2, masked_rule='geometric', mask_rate=0.5)
+./outputs/pretrain_checkpoints/ETTh1/_patchs_1_patchs_len_192_patcht_1_patcht_len_8/ckpt_best.pth
+Use GPU: cuda:0
+Loading ckpt: ./outputs/pretrain_checkpoints/ETTh1/_patchs_1_patchs_len_192_patcht_1_patcht_len_8/ckpt_best.pth
+weights from ./outputs/pretrain_checkpoints/ETTh1/_patchs_1_patchs_len_192_patcht_1_patcht_len_8/ckpt_best.pth successfully transferred!
+
+number of model params 1166408
+>>>>>>>start training : finetune_SimMTM_ETTh1_M_isdec1_decmetmov_avg_win97_sep3.0_topk25_sl384_ll48_pl336_dm8_df64_nh8_el2_dl1_fc1_dp0.1_hdp0.1_ep6_bs32_lr0.00012>>>>>>>>>>>>>>>>>>>>>>>>>>
+<class 'numpy.ndarray'>
+(8640, 7)
+train 7921 247
+<class 'numpy.ndarray'>
+(3264, 7)
+val 2545 79
+<class 'numpy.ndarray'>
+(3264, 7)
+test 2545 2545
+Epoch: 1, Steps: 247, Time: 39.97s | Train Loss: 0.6551156 Vali Loss: 1.5270600 Test Loss: 0.6446576
+Updating learning rate to 0.00012
+Epoch: 2, Steps: 247, Time: 39.04s | Train Loss: 0.5086021 Vali Loss: 1.2345594 Test Loss: 0.4215295
+Updating learning rate to 6e-05
+Epoch: 3, Steps: 247, Time: 39.41s | Train Loss: 0.4711094 Vali Loss: 1.2502267 Test Loss: 0.4175089
+Updating learning rate to 3e-05
+Epoch: 4, Steps: 247, Time: 41.13s | Train Loss: 0.4626677 Vali Loss: 1.2521827 Test Loss: 0.4164516
+Updating learning rate to 1.5e-05
+Epoch: 5, Steps: 247, Time: 39.00s | Train Loss: 0.4591115 Vali Loss: 1.2539520 Test Loss: 0.4166651
+Updating learning rate to 7.5e-06
+Epoch: 6, Steps: 247, Time: 38.94s | Train Loss: 0.4574458 Vali Loss: 1.2551157 Test Loss: 0.4163049
+Updating learning rate to 3.75e-06
+>>>>>>>testing : finetune_SimMTM_ETTh1_M_isdec1_decmetmov_avg_win97_sep3.0_topk25_sl384_ll48_pl336_dm8_df64_nh8_el2_dl1_fc1_dp0.1_hdp0.1_ep6_bs32_lr0.00012<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+<class 'numpy.ndarray'>
+(3264, 7)
+test 2545 2545
+384->336, mse:0.416, mae:0.432
+Args in experiment:
+Namespace(task_name='finetune', is_training=1, model_id='ETTh1', model='SimMTM', is_finetune=1, data='ETTh1', root_path='./dataset/ETT-small/', data_path='ETTh1.csv', features='M', target='OT', freq='h', checkpoints='./outputs/checkpoints/', pretrain_checkpoints='./outputs/pretrain_checkpoints/', transfer_checkpoints='ckpt_best.pth', load_checkpoints=None, select_channels=1, seq_len=384, label_len=48, pred_len=720, seasonal_patterns='Monthly', top_k=5, num_kernels=3, enc_in=7, dec_in=7, c_out=7, d_model=8, n_heads=8, e_layers=2, s_e_layers=2, t_e_layers=1, d_layers=1, d_ff=64, moving_avg=25, factor=1, distil=True, dropout=0.1, fc_dropout=0, head_dropout=0.1, embed='timeF', activation='gelu', output_attention=False, individual=0, pct_start=0.3, decomp=1, decomp_method='mov_avg', window_size=97, st_sep=3.0, top_k_fft=25, lpf=50, patching_s=1, patching_t=1, patch_len_s=192, patch_len_t=8, stride=8, num_workers=5, itr=1, train_epochs=6, batch_size=32, is_early_stop=0, patience=3, learning_rate=0.00012, des='test', loss='MSE', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0', lm=3, positive_nums=3, rbtp=1, temperature=0.2, masked_rule='geometric', mask_rate=0.5)
+./outputs/pretrain_checkpoints/ETTh1/_patchs_1_patchs_len_192_patcht_1_patcht_len_8/ckpt_best.pth
+Use GPU: cuda:0
+Loading ckpt: ./outputs/pretrain_checkpoints/ETTh1/_patchs_1_patchs_len_192_patcht_1_patcht_len_8/ckpt_best.pth
+weights from ./outputs/pretrain_checkpoints/ETTh1/_patchs_1_patchs_len_192_patcht_1_patcht_len_8/ckpt_best.pth successfully transferred!
+
+number of model params 2494280
+>>>>>>>start training : finetune_SimMTM_ETTh1_M_isdec1_decmetmov_avg_win97_sep3.0_topk25_sl384_ll48_pl720_dm8_df64_nh8_el2_dl1_fc1_dp0.1_hdp0.1_ep6_bs32_lr0.00012>>>>>>>>>>>>>>>>>>>>>>>>>>
+<class 'numpy.ndarray'>
+(8640, 7)
+train 7537 235
+<class 'numpy.ndarray'>
+(3264, 7)
+val 2161 67
+<class 'numpy.ndarray'>
+(3264, 7)
+test 2161 2161
+Epoch: 1, Steps: 235, Time: 36.21s | Train Loss: 0.7481869 Vali Loss: 1.7832273 Test Loss: 0.6473601
+Updating learning rate to 0.00012
+Epoch: 2, Steps: 235, Time: 36.48s | Train Loss: 0.6043669 Vali Loss: 1.6701611 Test Loss: 0.4338939
+Updating learning rate to 6e-05
+Epoch: 3, Steps: 235, Time: 35.69s | Train Loss: 0.5572587 Vali Loss: 1.7258356 Test Loss: 0.4233925
+Updating learning rate to 3e-05
+Epoch: 4, Steps: 235, Time: 35.72s | Train Loss: 0.5451158 Vali Loss: 1.7387552 Test Loss: 0.4243432
+Updating learning rate to 1.5e-05
+Epoch: 5, Steps: 235, Time: 35.83s | Train Loss: 0.5409776 Vali Loss: 1.7377757 Test Loss: 0.4250363
+Updating learning rate to 7.5e-06
+Epoch: 6, Steps: 235, Time: 35.85s | Train Loss: 0.5390438 Vali Loss: 1.7445059 Test Loss: 0.4251370
+Updating learning rate to 3.75e-06
+>>>>>>>testing : finetune_SimMTM_ETTh1_M_isdec1_decmetmov_avg_win97_sep3.0_topk25_sl384_ll48_pl720_dm8_df64_nh8_el2_dl1_fc1_dp0.1_hdp0.1_ep6_bs32_lr0.00012<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+<class 'numpy.ndarray'>
+(3264, 7)
+test 2161 2161
+384->720, mse:0.425, mae:0.455

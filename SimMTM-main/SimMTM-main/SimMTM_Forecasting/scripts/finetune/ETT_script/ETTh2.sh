@@ -1,4 +1,4 @@
-export CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=2
 
 for pred_len in 96 192 336 720; do
     python -u run.py \
@@ -11,7 +11,9 @@ for pred_len in 96 192 336 720; do
         --data ETTh2 \
         --features M \
         --decomp 1 \
-        --decomp_method mov_avg \
+        --decomp_method fft \
+        --patching_t 0 \
+        --patch_len_t 4 \
         --st_sep  7 \
         --lpf 50 \
         --seq_len 384 \
@@ -25,8 +27,8 @@ for pred_len in 96 192 336 720; do
         --n_heads 4 \
         --d_model 8 \
         --d_ff 64 \
-        --dropout 0.2 \
+        --dropout 0.1 \
         --batch_size 32 \
         --patience 2 \
-        --learning_rate 7e-5
+        --learning_rate 1e-4
 done

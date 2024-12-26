@@ -138,10 +138,16 @@ class Model(nn.Module):
         self.topk_freq=topk_fft_decomp(k=configs.top_k_fft)
         self.patching_s=configs.patching_s
         self.patching_t=configs.patching_t
-
         if self.patching_t:
-            self.stride=configs.stride  
+            self.patch_embedding_t = nn.Linear(configs.patch_len_t, configs.d_model) #patch tst
+       
+        if configs.patching_t:
+            self.stride=configs.patch_len_t  
             self.patch_len_t = configs.patch_len_t
+            self.patch_num_t = (self.seq_len - self.patch_len_t) // self.stride + 1
+            #print(self.patch_num_t)
+            #print(self.patch_embedding_t)
+            #raise NotImplementedError
 
         if self.patching_s:
             self.patch_len_s = configs.patch_len_s
@@ -209,10 +215,10 @@ class Model(nn.Module):
 
             else:
                 self.projection_s = Flatten_Head(configs.seq_len, configs.d_model, configs.seq_len, head_dropout=configs.head_dropout)
-                self.projection_t = Flatten_Head(configs.seq_len, configs.d_model, configs.seq_len, head_dropout=configs.head_dropout)
+                self.projection_t = Flatten_Head(self.patch_num_t if configs.patching_t else configs.seq_len, configs.d_model, configs.seq_len, head_dropout=configs.head_dropout)
 
                 self.pooler_s = Pooler_Head(configs.patch_len_s if configs.patching_s else  configs.seq_len, configs.d_model, head_dropout=configs.head_dropout)
-                self.pooler_t = Pooler_Head(configs.seq_len, configs.d_model, head_dropout=configs.head_dropout)
+                self.pooler_t = Pooler_Head(self.patch_num_t if configs.patching_t else configs.seq_len, configs.d_model, head_dropout=configs.head_dropout)
 
             self.awl = AutomaticWeightedLoss(3)
             self.contrastive = ContrastiveWeight(self.configs)
@@ -224,7 +230,7 @@ class Model(nn.Module):
                 self.head = Flatten_Head(configs.seq_len, configs.d_model, configs.pred_len, head_dropout=configs.head_dropout)
             else:
                 self.head_s = Flatten_Head(configs.seq_len, configs.d_model, configs.pred_len, head_dropout=configs.head_dropout)
-                self.head_t = Flatten_Head(configs.seq_len, configs.d_model, configs.pred_len, head_dropout=configs.head_dropout)
+                self.head_t = Flatten_Head(self.patch_num_t if self.patching_t else configs.seq_len, configs.d_model, configs.pred_len, head_dropout=configs.head_dropout)
 
     def forecast(self, x_enc, x_mark_enc):
         # data shape
@@ -267,12 +273,21 @@ class Model(nn.Module):
         x_enc_s, x_enc_t = self.series_decomp(x_enc)
         # embedding
         enc_out_s = self.enc_embedding(x_enc_s)
-        enc_out_t = self.enc_embedding(x_enc_t)
+        if self.patching_t:
+            x_enc_t = x_enc_t.squeeze(-1)
+            x_enc_t = x_enc_t.unfold(dimension=-1, size=self.patch_len_t, step=self.stride)
+            enc_out_t = self.patch_embedding_t(x_enc_t)
+        else:
+            enc_out_t = self.enc_embedding(x_enc_t)
         # encoder
         enc_out_s, attns = self.encoder_s(enc_out_s)
         enc_out_t, attns = self.encoder_t(enc_out_t)
+        
         enc_out_s = torch.reshape(enc_out_s, (bs, n_vars, seq_len, -1))
-        enc_out_t = torch.reshape(enc_out_t, (bs, n_vars, seq_len, -1))
+        if self.patching_t:
+            enc_out_t = torch.reshape(enc_out_t, (bs, n_vars, self.patch_num_t, -1))
+        else:
+            enc_out_t = torch.reshape(enc_out_t, (bs, n_vars, seq_len, -1))
         # decoder
         dec_out_s = self.head_s(enc_out_s)
         dec_out_t = self.head_t(enc_out_t)
@@ -408,7 +423,12 @@ class Model(nn.Module):
         # embedding
         enc_out_s = self.enc_embedding(x_enc_s)
         #print(enc_out_s[0,0,0])
-        enc_out_t = self.enc_embedding(x_enc_t)
+        if self.patching_t:
+            x_enc_t = x_enc_t.squeeze(-1)
+            x_enc_t = x_enc_t.unfold(dimension=-1, size=self.patch_len_t, step=self.stride) #bs*n_vars x patch_num x patch_len
+            enc_out_t = self.patch_embedding_t(x_enc_t) #bs*n_vars x patch_num x d_model
+        else:
+            enc_out_t = self.enc_embedding(x_enc_t)
 
         # encoder
         # point-wise representation
@@ -432,9 +452,12 @@ class Model(nn.Module):
         rebuild_weight_matrix_s, agg_enc_out_s = self.aggregation(similarity_matrix_s, p_enc_out_s)
         rebuild_weight_matrix_t, agg_enc_out_t = self.aggregation(similarity_matrix_t, p_enc_out_t)
 
-
+        #print(agg_enc_out_t.shape)
         agg_enc_out_s = agg_enc_out_s.reshape(bs, n_vars, seq_len, -1)
-        agg_enc_out_t = agg_enc_out_t.reshape(bs, n_vars, seq_len, -1)
+        if self.patching_t:
+            agg_enc_out_t = agg_enc_out_t.reshape(bs, n_vars, self.patch_num_t, -1)
+        else:
+            agg_enc_out_t = agg_enc_out_t.reshape(bs, n_vars, seq_len, -1)
         #print(agg_enc_out_s.shape)
         # decoder
         dec_out_s = self.projection_s(agg_enc_out_s)

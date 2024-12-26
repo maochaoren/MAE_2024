@@ -1,4 +1,8 @@
-export CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=6
+patching_s=1
+patch_len_s=192
+patching_t=1
+patch_len_t=8
     for pred_len in 96 192 336 720; do
         python -u run.py \
             --task_name finetune \
@@ -11,6 +15,10 @@ export CUDA_VISIBLE_DEVICES=0
             --features M \
             --decomp 1 \
             --decomp_method mov_avg \
+            --patching_s $patching_s \
+            --patch_len_s $patch_len_s \
+            --patching_t $patching_t \
+            --patch_len_t $patch_len_t \
             --st_sep  3 \
             --lpf 50 \
             --seq_len 384 \
@@ -24,9 +32,10 @@ export CUDA_VISIBLE_DEVICES=0
             --n_heads 8 \
             --d_model 8 \
             --d_ff 64 \
-            --dropout 0.2 \
+            --dropout 0.1 \
             --batch_size 32 \
-            --is_early_stop 1 \
+            --is_early_stop 0 \
             --patience 3 \
+            --train_epochs 6 \
             --learning_rate 1.2e-4  
     done

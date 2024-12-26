@@ -64,6 +64,9 @@ class Exp_SimMTM(Exp_Basic):
         self.valid_show = next(iter(vali_loader))
 
         path = os.path.join(self.args.pretrain_checkpoints, self.args.data)
+        add_info = f"_patchs_{self.args.patching_s}_patchs_len_{self.args.patch_len_s}_patcht_{self.args.patching_t}_patcht_len_{self.args.patch_len_t}"
+        path = os.path.join(path, add_info)
+        
         if not os.path.exists(path):
             os.makedirs(path)
 
@@ -114,7 +117,7 @@ class Exp_SimMTM(Exp_Basic):
                 min_vali_loss = vali_loss
                 self.encoder_state_dict = OrderedDict()
                 for k, v in self.model.state_dict().items():
-                    if 'encoder' in k or 'enc_embedding' in k:
+                    if 'encoder' in k or 'enc_embedding' in k or 'patch_embedding' in k:
                         if 'module.' in k:
                             k = k.replace('module.', '')  # multi-gpu
                         self.encoder_state_dict[k] = v
@@ -235,7 +238,7 @@ class Exp_SimMTM(Exp_Basic):
             os.makedirs(path)
 
         train_steps = len(train_loader)
-        early_stopping = EarlyStopping(patience=self.args.patience, verbose=True)
+        early_stopping = EarlyStopping(is_early_stop=self.args.is_early_stop,patience=self.args.patience, verbose=True)
 
         # Optimizer
         model_optim = self._select_optimizer()

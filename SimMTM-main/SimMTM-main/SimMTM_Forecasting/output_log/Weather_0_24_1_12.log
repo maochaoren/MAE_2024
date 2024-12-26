@@ -1,0 +1,77 @@
+nohup: ignoring input
+Args in experiment:
+Namespace(task_name='finetune', is_training=1, model_id='Weather', model='SimMTM', is_finetune=0, data='Weather', root_path='./dataset/weather/', data_path='weather.csv', features='M', target='OT', freq='h', checkpoints='./outputs/checkpoints/', pretrain_checkpoints='./outputs/pretrain_checkpoints/', transfer_checkpoints='ckpt_best.pth', load_checkpoints=None, select_channels=1, seq_len=384, label_len=48, pred_len=96, seasonal_patterns='Monthly', top_k=5, num_kernels=3, enc_in=21, dec_in=21, c_out=21, d_model=8, n_heads=8, e_layers=1, s_e_layers=2, t_e_layers=1, d_layers=1, d_ff=64, moving_avg=25, factor=1, distil=True, dropout=0.1, fc_dropout=0, head_dropout=0.1, embed='timeF', activation='gelu', output_attention=False, individual=0, pct_start=0.3, decomp=1, decomp_method='mov_avg', window_size=97, st_sep=5.0, top_k_fft=25, lpf=50, patching_s=0, patching_t=1, patch_len_s=24, patch_len_t=12, stride=8, num_workers=5, itr=1, train_epochs=40, batch_size=16, is_early_stop=1, patience=3, learning_rate=0.0001, des='test', loss='MSE', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0', lm=3, positive_nums=3, rbtp=1, temperature=0.2, masked_rule='geometric', mask_rate=0.5)
+None
+Use GPU: cuda:0
+number of model params 324232
+>>>>>>>start training : finetune_SimMTM_Weather_M_isdec1_decmetmov_avg_win97_sep5.0_topk25_sl384_ll48_pl96_dm8_df64_nh8_el1_dl1_fc1_dp0.1_hdp0.1_ep40_bs16_lr0.0001>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 36408 2275
+val 5175 323
+test 10444 10444
+Epoch: 1, Steps: 2275, Time: 421.34s | Train Loss: 0.6564481 Vali Loss: 0.5084211 Test Loss: 0.2300771
+Validation loss decreased (inf --> 0.508421).  Saving model ...
+Updating learning rate to 0.0001
+Epoch: 2, Steps: 2275, Time: 420.74s | Train Loss: 0.4925152 Vali Loss: 0.4288267 Test Loss: 0.1772244
+Validation loss decreased (0.508421 --> 0.428827).  Saving model ...
+Updating learning rate to 5e-05
+Epoch: 3, Steps: 2275, Time: 431.39s | Train Loss: 0.4624599 Vali Loss: 0.4181444 Test Loss: 0.1724904
+Validation loss decreased (0.428827 --> 0.418144).  Saving model ...
+Updating learning rate to 2.5e-05
+Epoch: 4, Steps: 2275, Time: 419.63s | Train Loss: 0.4569773 Vali Loss: 0.4134492 Test Loss: 0.1699581
+Validation loss decreased (0.418144 --> 0.413449).  Saving model ...
+Updating learning rate to 1.25e-05
+Epoch: 5, Steps: 2275, Time: 419.02s | Train Loss: 0.4545591 Vali Loss: 0.4163704 Test Loss: 0.1704480
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 6.25e-06
+Epoch: 6, Steps: 2275, Time: 419.80s | Train Loss: 0.4536163 Vali Loss: 0.4141319 Test Loss: 0.1697677
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 3.125e-06
+Epoch: 7, Steps: 2275, Time: 425.06s | Train Loss: 0.4531069 Vali Loss: 0.4150951 Test Loss: 0.1698133
+EarlyStopping counter: 3 out of 3
+Early stopping
+Traceback (most recent call last):
+  File "/data1/home/xurui/MAE_2024/SimMTM-main/SimMTM-main/SimMTM_Forecasting/run.py", line 195, in <module>
+    exp.train(setting)
+  File "/data1/home/xurui/MAE_2024/SimMTM-main/SimMTM-main/SimMTM_Forecasting/exp/exp_simmtm.py", line 310, in train
+    self.model.load_state_dict(torch.load(best_model_path))
+  File "/data1/home/xurui/.conda/envs/py3.9/lib/python3.9/site-packages/torch/nn/modules/module.py", line 2189, in load_state_dict
+    raise RuntimeError('Error(s) in loading state_dict for {}:\n\t{}'.format(
+RuntimeError: Error(s) in loading state_dict for Model:
+	size mismatch for patch_embedding_t.weight: copying a param with shape torch.Size([8, 2]) from checkpoint, the shape in current model is torch.Size([8, 12]).
+	size mismatch for head_t.linear.weight: copying a param with shape torch.Size([96, 1536]) from checkpoint, the shape in current model is torch.Size([96, 256]).
+Args in experiment:
+Namespace(task_name='finetune', is_training=1, model_id='Weather', model='SimMTM', is_finetune=0, data='Weather', root_path='./dataset/weather/', data_path='weather.csv', features='M', target='OT', freq='h', checkpoints='./outputs/checkpoints/', pretrain_checkpoints='./outputs/pretrain_checkpoints/', transfer_checkpoints='ckpt_best.pth', load_checkpoints=None, select_channels=1, seq_len=384, label_len=48, pred_len=192, seasonal_patterns='Monthly', top_k=5, num_kernels=3, enc_in=21, dec_in=21, c_out=21, d_model=8, n_heads=8, e_layers=1, s_e_layers=2, t_e_layers=1, d_layers=1, d_ff=64, moving_avg=25, factor=1, distil=True, dropout=0.1, fc_dropout=0, head_dropout=0.1, embed='timeF', activation='gelu', output_attention=False, individual=0, pct_start=0.3, decomp=1, decomp_method='mov_avg', window_size=97, st_sep=5.0, top_k_fft=25, lpf=50, patching_s=0, patching_t=1, patch_len_s=24, patch_len_t=12, stride=8, num_workers=5, itr=1, train_epochs=40, batch_size=16, is_early_stop=1, patience=3, learning_rate=0.0001, des='test', loss='MSE', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0', lm=3, positive_nums=3, rbtp=1, temperature=0.2, masked_rule='geometric', mask_rate=0.5)
+None
+Use GPU: cuda:0
+number of model params 643912
+>>>>>>>start training : finetune_SimMTM_Weather_M_isdec1_decmetmov_avg_win97_sep5.0_topk25_sl384_ll48_pl192_dm8_df64_nh8_el1_dl1_fc1_dp0.1_hdp0.1_ep40_bs16_lr0.0001>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 36312 2269
+val 5079 317
+test 10348 10348
+Epoch: 1, Steps: 2269, Time: 428.41s | Train Loss: 0.6769375 Vali Loss: 0.5576729 Test Loss: 0.2592871
+Validation loss decreased (inf --> 0.557673).  Saving model ...
+Updating learning rate to 0.0001
+Epoch: 2, Steps: 2269, Time: 428.27s | Train Loss: 0.5335208 Vali Loss: 0.4969219 Test Loss: 0.2191364
+Validation loss decreased (0.557673 --> 0.496922).  Saving model ...
+Updating learning rate to 5e-05
+scripts/finetune/Weather_script/Weather.sh: line 9: 777702 Killed                  python -u run.py --task_name finetune --is_finetune 0 --is_training 1 --root_path ./dataset/weather/ --data_path weather.csv --model_id Weather --model SimMTM --data Weather --features M --seq_len 384 --label_len 48 --decomp 1 --decomp_method mov_avg --st_sep 5 --lpf 50 --patching_s $patching_s --patch_len_s $patch_len_s --patching_t $patching_t --patch_len_t $patch_len_t --pred_len $pred_len --e_layers 1 --s_e_layers 2 --t_e_layers 1 --enc_in 21 --dec_in 21 --c_out 21 --n_heads 8 --d_model 8 --d_ff 64 --batch_size 16 --learning_rate 1e-4 --is_early_stop 1 --patience 3
+Args in experiment:
+Namespace(task_name='finetune', is_training=1, model_id='Weather', model='SimMTM', is_finetune=0, data='Weather', root_path='./dataset/weather/', data_path='weather.csv', features='M', target='OT', freq='h', checkpoints='./outputs/checkpoints/', pretrain_checkpoints='./outputs/pretrain_checkpoints/', transfer_checkpoints='ckpt_best.pth', load_checkpoints=None, select_channels=1, seq_len=384, label_len=48, pred_len=336, seasonal_patterns='Monthly', top_k=5, num_kernels=3, enc_in=21, dec_in=21, c_out=21, d_model=8, n_heads=8, e_layers=1, s_e_layers=2, t_e_layers=1, d_layers=1, d_ff=64, moving_avg=25, factor=1, distil=True, dropout=0.1, fc_dropout=0, head_dropout=0.1, embed='timeF', activation='gelu', output_attention=False, individual=0, pct_start=0.3, decomp=1, decomp_method='mov_avg', window_size=97, st_sep=5.0, top_k_fft=25, lpf=50, patching_s=0, patching_t=1, patch_len_s=24, patch_len_t=12, stride=8, num_workers=5, itr=1, train_epochs=40, batch_size=16, is_early_stop=1, patience=3, learning_rate=0.0001, des='test', loss='MSE', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0', lm=3, positive_nums=3, rbtp=1, temperature=0.2, masked_rule='geometric', mask_rate=0.5)
+None
+Use GPU: cuda:0
+number of model params 1123432
+>>>>>>>start training : finetune_SimMTM_Weather_M_isdec1_decmetmov_avg_win97_sep5.0_topk25_sl384_ll48_pl336_dm8_df64_nh8_el1_dl1_fc1_dp0.1_hdp0.1_ep40_bs16_lr0.0001>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 36168 2260
+val 4935 308
+test 10204 10204
+scripts/finetune/Weather_script/Weather.sh: line 9: 815991 Killed                  python -u run.py --task_name finetune --is_finetune 0 --is_training 1 --root_path ./dataset/weather/ --data_path weather.csv --model_id Weather --model SimMTM --data Weather --features M --seq_len 384 --label_len 48 --decomp 1 --decomp_method mov_avg --st_sep 5 --lpf 50 --patching_s $patching_s --patch_len_s $patch_len_s --patching_t $patching_t --patch_len_t $patch_len_t --pred_len $pred_len --e_layers 1 --s_e_layers 2 --t_e_layers 1 --enc_in 21 --dec_in 21 --c_out 21 --n_heads 8 --d_model 8 --d_ff 64 --batch_size 16 --learning_rate 1e-4 --is_early_stop 1 --patience 3
+Args in experiment:
+Namespace(task_name='finetune', is_training=1, model_id='Weather', model='SimMTM', is_finetune=0, data='Weather', root_path='./dataset/weather/', data_path='weather.csv', features='M', target='OT', freq='h', checkpoints='./outputs/checkpoints/', pretrain_checkpoints='./outputs/pretrain_checkpoints/', transfer_checkpoints='ckpt_best.pth', load_checkpoints=None, select_channels=1, seq_len=384, label_len=48, pred_len=720, seasonal_patterns='Monthly', top_k=5, num_kernels=3, enc_in=21, dec_in=21, c_out=21, d_model=8, n_heads=8, e_layers=1, s_e_layers=2, t_e_layers=1, d_layers=1, d_ff=64, moving_avg=25, factor=1, distil=True, dropout=0.1, fc_dropout=0, head_dropout=0.1, embed='timeF', activation='gelu', output_attention=False, individual=0, pct_start=0.3, decomp=1, decomp_method='mov_avg', window_size=97, st_sep=5.0, top_k_fft=25, lpf=50, patching_s=0, patching_t=1, patch_len_s=24, patch_len_t=12, stride=8, num_workers=5, itr=1, train_epochs=40, batch_size=16, is_early_stop=1, patience=3, learning_rate=0.0001, des='test', loss='MSE', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0', lm=3, positive_nums=3, rbtp=1, temperature=0.2, masked_rule='geometric', mask_rate=0.5)
+None
+Use GPU: cuda:0
+number of model params 2402152
+>>>>>>>start training : finetune_SimMTM_Weather_M_isdec1_decmetmov_avg_win97_sep5.0_topk25_sl384_ll48_pl720_dm8_df64_nh8_el1_dl1_fc1_dp0.1_hdp0.1_ep40_bs16_lr0.0001>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 35784 2236
+val 4551 284
+test 9820 9820
+scripts/finetune/Weather_script/Weather.sh: line 9: 816729 Killed                  python -u run.py --task_name finetune --is_finetune 0 --is_training 1 --root_path ./dataset/weather/ --data_path weather.csv --model_id Weather --model SimMTM --data Weather --features M --seq_len 384 --label_len 48 --decomp 1 --decomp_method mov_avg --st_sep 5 --lpf 50 --patching_s $patching_s --patch_len_s $patch_len_s --patching_t $patching_t --patch_len_t $patch_len_t --pred_len $pred_len --e_layers 1 --s_e_layers 2 --t_e_layers 1 --enc_in 21 --dec_in 21 --c_out 21 --n_heads 8 --d_model 8 --d_ff 64 --batch_size 16 --learning_rate 1e-4 --is_early_stop 1 --patience 3
